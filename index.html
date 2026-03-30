@@ -238,6 +238,9 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 #spaceShip .ufo-text strong{font-size:16px;color:#fff;font-weight:800;letter-spacing:.2px;text-shadow:0 0 16px rgba(124,58,237,.4)}
 #spaceShip .ufo-text span{font-size:11px;color:var(--gold2);letter-spacing:.7px;text-transform:uppercase}
 @keyframes spaceFloat{0%{transform:translate(0,0) rotate(0deg)}18%{transform:translate(70vw,8vh) rotate(6deg)}36%{transform:translate(52vw,62vh) rotate(-5deg)}54%{transform:translate(10vw,54vh) rotate(5deg)}72%{transform:translate(74vw,28vh) rotate(-6deg)}100%{transform:translate(0,0) rotate(0deg)}}
+.game-controls{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.gbtn{min-width:120px;padding:10px 14px;border-radius:12px;border:1px solid var(--bo2);background:var(--su);color:var(--tx);font:600 14px var(--fb);cursor:pointer;touch-action:manipulation;transition:var(--t)}
+.gbtn:hover,.gbtn:active{transform:translateY(-1px);background:var(--ch);border-color:var(--violet2)}
 .game-note{font-size:12px;color:var(--tx3);margin-top:10px}
 .gscore{font-size:12px;color:var(--tx2);margin:10px 0 2px}
 #spaceGame{width:100%;max-width:420px;height:auto;background:radial-gradient(circle at 50% 18%,rgba(76,29,149,.45),rgba(5,8,18,.96) 38%,#02030a 100%);border-radius:16px;border:1px solid rgba(124,58,237,.28);box-shadow:0 0 24px rgba(124,58,237,.24), inset 0 0 35px rgba(59,130,246,.10);display:block;margin:14px auto 0}
@@ -290,21 +293,21 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
         <div class="badge"><span class="dot"></span>SRCNDZL</div>
         <h1><span class="nl2">Sercan</span><span class="nl2 gr">Düzel</span></h1>
         <p class="hr" data-k="ro">Software Support &amp; Implementation Engineer · <span>Globit</span></p>
-        <p class="hd" data-k="hd">Operating at the intersection of technology and finance building, integrating, and leading critical banking and trading systems.</p>
+        <p class="hd" data-k="hd">Operating at the intersection of technology and finance — building, integrating, and leading critical banking and trading systems.</p>
         <div class="ha">
           <a href="#experience" class="btn bp"><span data-k="c1">View Experience</span> →</a>
           <a href="#contact"    class="btn bo2b"><span data-k="c2">Get in Touch</span></a>
         </div>
         <div class="site-stats">
           <div class="stat-card">
-            <span class="stat-label">Local Views</span>
+            <span class="stat-label" data-k="sv1">Local Views</span>
             <strong id="localVisitorCount">0</strong>
-            <em>This browser only</em>
+            <em data-k="sv1e">This browser only</em>
           </div>
           <div class="stat-card">
-            <span class="stat-label">Session Views</span>
+            <span class="stat-label" data-k="sv2">Session Views</span>
             <strong id="sessionVisitorCount">0</strong>
-            <em>Preview counter</em>
+            <em data-k="sv2e">Preview counter</em>
           </div>
         </div>
 
@@ -331,10 +334,10 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
     </div>
     <div class="ag">
       <div class="at rv">
-        <p>I am an engineer operating at the intersection of <strong>technology and finance</strong>  someone who not only uses systems but understands, improves, and leads them.</p>
-        <p>Currently, I work as a <strong>Software Support &amp; Implementation Engineer at Globit</strong>, where I take responsibility for developing, integrating, and maintaining critical banking and trading systems. My core strengths lie in <strong>system integration, data management, and financial reporting</strong>.</p>
-        <p>During my academic journey at <strong>Marmara University</strong>, I completed my degree in just three years and graduated as the <strong>top student of my department</strong>. I later worked as an academic assistant, developing strong mentoring skills.</p>
-        <p>My proficiency in <strong>German and Arabic</strong> enhances my ability to operate in international environments. For me, software engineering is about <strong>analyzing complex systems and building sustainable solutions</strong>.</p>
+        <p data-k="ab1">I am an engineer operating at the intersection of <strong>technology and finance</strong> — someone who not only uses systems but understands, improves, and leads them.</p>
+        <p data-k="ab2">Currently, I work as a <strong>Software Support &amp; Implementation Engineer at Globit</strong>, where I take responsibility for developing, integrating, and maintaining critical banking and trading systems. My core strengths lie in <strong>system integration, data management, and financial reporting</strong>.</p>
+        <p data-k="ab3">During my academic journey at <strong>Marmara University</strong>, I completed my degree in just three years and graduated as the <strong>top student of my department</strong>. I later worked as an academic assistant, developing strong mentoring skills.</p>
+        <p data-k="ab4">My proficiency in <strong>German and Arabic</strong> enhances my ability to operate in international environments. For me, software engineering is about <strong>analyzing complex systems and building sustainable solutions</strong>.</p>
         <div class="sc">
           <span class="sk">⚙️ ERP Systems</span><span class="sk">🏦 Banking Systems</span>
           <span class="sk">🗄️ SQL / Oracle</span><span class="sk">🔌 API Integration</span>
@@ -358,9 +361,9 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
           <div class="ti">
             <div class="td"></div>
             <div class="tp">2023</div>
-            <div class="tt">Akademi</div>
-            <div class="tc">Professional Development Program</div>
-            <div class="tx2c">Focused on applied technology, systems thinking, and practical delivery skills.</div>
+            <div class="tt" data-k="ak1">Akademi</div>
+            <div class="tc" data-k="ak2">Professional Development Program</div>
+            <div class="tx2c" data-k="ak3">Focused on applied technology, systems thinking, and practical delivery skills.</div>
           </div>
         </div>
         <p class="edu-h2" data-k="lt">Languages</p>
@@ -387,23 +390,23 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
       <div class="ti">
         <div class="td"></div>
         <div class="tp">2023 — Present</div>
-        <div class="tt">Software Support &amp; Implementation Engineer</div>
-        <div class="tc">Globit · Istanbul, Turkey</div>
-        <div class="tx2c">Developing, integrating, and maintaining critical banking and trading systems. Managing data flows across financial institutions, simplifying complex architectures, and delivering tailored solutions. Core focus on system integration, data management, and financial reporting.</div>
+        <div class="tt" data-k="ex1t">Software Support &amp; Implementation Engineer</div>
+        <div class="tc" data-k="ex1c">Globit · Istanbul, Turkey</div>
+        <div class="tx2c" data-k="ex1d">Developing, integrating, and maintaining critical banking and trading systems. Managing data flows across financial institutions, simplifying complex architectures, and delivering tailored solutions. Core focus on system integration, data management, and financial reporting.</div>
       </div>
       <div class="ti">
         <div class="td"></div>
         <div class="tp">2021 — 2022</div>
-        <div class="tt">Academic Assistant</div>
-        <div class="tc">Marmara University · Istanbul, Turkey</div>
-        <div class="tx2c">Guided students in technical subjects, communicated complex knowledge effectively, and developed strong mentoring and leadership skills alongside academic research.</div>
+        <div class="tt" data-k="ex2t">Academic Assistant</div>
+        <div class="tc" data-k="ex2c">Marmara University · Istanbul, Turkey</div>
+        <div class="tx2c" data-k="ex2d">Guided students in technical subjects, communicated complex knowledge effectively, and developed strong mentoring and leadership skills alongside academic research.</div>
       </div>
       <div class="ti">
         <div class="td"></div>
         <div class="tp">2020 — 2021</div>
-        <div class="tt">Business Analyst</div>
-        <div class="tc">Universal Yazılım A.Ş. · Istanbul, Turkey</div>
-        <div class="tx2c">Took an active role in large-scale integration projects. Bridged the gap between technical execution and business needs, strengthening skills in requirements analysis and stakeholder communication.</div>
+        <div class="tt" data-k="ex3t">Business Analyst</div>
+        <div class="tc" data-k="ex3c">Universal Yazılım A.Ş. · Istanbul, Turkey</div>
+        <div class="tx2c" data-k="ex3d">Took an active role in large-scale integration projects. Bridged the gap between technical execution and business needs, strengthening skills in requirements analysis and stakeholder communication.</div>
       </div>
     </div>
   </div>
@@ -470,21 +473,25 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
   </div>
 </section>
 
-<div id="spaceShip" title="Click for play">
+<div id="spaceShip" title="Click to Play">
   <div class="ufo-icon">🛸</div>
   <div class="ufo-text">
-    <strong>Click to Play</strong>
-    <span>UFO Run</span>
+    <strong id="ufoPlayText" data-k="ufo1">Click to Play</strong>
+    <span id="ufoRunText" data-k="ufo2">UFO Run</span>
   </div>
 </div>
 
 <div class="mb" id="gameModal">
   <div class="mo" style="max-width:500px;text-align:center;">
     <button class="mc" onclick="closeSpaceGame()">✕</button>
-    <h3>UFO Run</h3>
-    <p class="gscore">Score: <strong id="spaceScore">0</strong></p>
+    <h3 id="gameTitle" data-k="ufo2">UFO Run</h3>
+    <p class="gscore"><span id="scoreLabel" data-k="gs1">Score</span>: <strong id="spaceScore">0</strong></p>
     <canvas id="spaceGame" width="420" height="520"></canvas>
-    <p class="game-note">Use ← → or A / D to move · Avoid asteroids and satellites.</p>
+    <div class="game-controls" id="gameControls">
+      <button type="button" class="gbtn" id="moveLeftBtn" data-k="gc1">◀ Left</button>
+      <button type="button" class="gbtn" id="moveRightBtn" data-k="gc2">Right ▶</button>
+    </div>
+    <p class="game-note" id="gameNote" data-k="gn1">Use ← → or A / D to move · On mobile, use the buttons below. Avoid asteroids and satellites.</p>
   </div>
 </div>
 
@@ -506,16 +513,16 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 <div class="mb" id="bmod">
   <div class="mo">
     <button class="mc" onclick="CBM()">✕</button>
-    <h3 id="bmh">Add Blog Post</h3>
-    <div class="fg"><label>Emoji</label><input id="bmi" type="text" placeholder="📝" maxlength="4"/></div>
-    <div class="fg"><label>Title</label><input id="bmt" type="text" placeholder="Post title"/></div>
-    <div class="fg"><label>Category</label><input id="bmc" type="text" placeholder="Technology"/></div>
-    <div class="fg"><label>Date</label><input id="bmd" type="date"/></div>
-    <div class="fg"><label>Excerpt</label><textarea id="bme" placeholder="Short description..."></textarea></div>
-    <div class="fg"><label>Link (optional)</label><input id="bml" type="url" placeholder="https://..."/></div>
+    <h3 id="bmh" data-k="bmh">Add Blog Post</h3>
+    <div class="fg"><label data-k="bl1">Emoji</label><input id="bmi" type="text" placeholder="📝" maxlength="4"/></div>
+    <div class="fg"><label data-k="bl2">Title</label><input id="bmt" type="text" data-ph="bph1" placeholder="Post title"/></div>
+    <div class="fg"><label data-k="bl3">Category</label><input id="bmc" type="text" data-ph="bph2" placeholder="Technology"/></div>
+    <div class="fg"><label data-k="bl4">Date</label><input id="bmd" type="date"/></div>
+    <div class="fg"><label data-k="bl5">Excerpt</label><textarea id="bme" data-ph="bph3" placeholder="Short description..."></textarea></div>
+    <div class="fg"><label data-k="bl6">Link (optional)</label><input id="bml" type="url" data-ph="bph4" placeholder="https://..."/></div>
     <div class="ma">
-      <button class="btn bo2b" style="padding:8px 16px;font-size:13px" onclick="CBM()">Cancel</button>
-      <button class="btn bp"   style="padding:8px 16px;font-size:13px" onclick="SB()">💾 Save</button>
+      <button class="btn bo2b" id="blogCancelBtn" data-k="bl7" style="padding:8px 16px;font-size:13px" onclick="CBM()">Cancel</button>
+      <button class="btn bp" id="blogSaveBtn" data-k="bl8" style="padding:8px 16px;font-size:13px" onclick="SB()">💾 Save</button>
     </div>
   </div>
 </div>
@@ -525,7 +532,7 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 const TX={
   en:{na:"About",ne:"Experience",np:"Projects",nb:"Blog",nc:"Contact",
       ro:"Software Support &amp; Implementation Engineer · <span>Globit</span>",
-      hd:"Operating at the intersection of technology and finance building, integrating, and leading critical banking and trading systems.",
+      hd:"Operating at the intersection of technology and finance — building, integrating, and leading critical banking and trading systems.",
       c1:"View Experience",c2:"Get in Touch",cp:"Current Position",
       at:"Who I Am",et:"Education",ed:"Management Information Systems",
       en2:"Graduated in 3 years · Top student · Academic Assistant",
@@ -533,29 +540,68 @@ const TX={
       xt:"Work History",pt:"Featured Projects",blt:"Latest Posts",
       wl:"Work in Progress",wp:"Projects will be added soon.",wb:"Blog posts are being prepared.",
       ct:"Get in Touch",em:"Email",lo:"Location",lc:"Istanbul, Turkey · Remote Friendly",
-      fr:"All rights reserved.",rm:"Read More →"},
+      fr:"All rights reserved.",rm:"Read More →",
+      sv1:"Local Views",sv1e:"This browser only",sv2:"Session Views",sv2e:"Preview counter",
+      ab1:"I am an engineer operating at the intersection of <strong>technology and finance</strong> — someone who not only uses systems but understands, improves, and leads them.",
+      ab2:"Currently, I work as a <strong>Software Support &amp; Implementation Engineer at Globit</strong>, where I take responsibility for developing, integrating, and maintaining critical banking and trading systems. My core strengths lie in <strong>system integration, data management, and financial reporting</strong>.",
+      ab3:"During my academic journey at <strong>Marmara University</strong>, I completed my degree in just three years and graduated as the <strong>top student of my department</strong>. I later worked as an academic assistant, developing strong mentoring skills.",
+      ab4:"My proficiency in <strong>German and Arabic</strong> enhances my ability to operate in international environments. For me, software engineering is about <strong>analyzing complex systems and building sustainable solutions</strong>.",
+      ak1:"Akademi",ak2:"Professional Development Program",ak3:"Focused on applied technology, systems thinking, and practical delivery skills.",
+      ex1t:"Software Support &amp; Implementation Engineer",ex1c:"Globit · Istanbul, Turkey",ex1d:"Developing, integrating, and maintaining critical banking and trading systems. Managing data flows across financial institutions, simplifying complex architectures, and delivering tailored solutions. Core focus on system integration, data management, and financial reporting.",
+      ex2t:"Academic Assistant",ex2c:"Marmara University · Istanbul, Turkey",ex2d:"Guided students in technical subjects, communicated complex knowledge effectively, and developed strong mentoring and leadership skills alongside academic research.",
+      ex3t:"Business Analyst",ex3c:"Universal Yazılım A.Ş. · Istanbul, Turkey",ex3d:"Took an active role in large-scale integration projects. Bridged the gap between technical execution and business needs, strengthening skills in requirements analysis and stakeholder communication.",
+      ufo1:"Click to Play",ufo2:"UFO Run",gs1:"Score",gc1:"◀ Left",gc2:"Right ▶",gn1:"Use ← → or A / D to move · On mobile, use the buttons below. Avoid asteroids and satellites.",
+      gh1:"SCORE",gh2:"BEST",go1:"Game Over",go2:"Click the UFO again to restart",
+      bmh:"Add Blog Post",bl1:"Emoji",bl2:"Title",bl3:"Category",bl4:"Date",bl5:"Excerpt",bl6:"Link (optional)",bl7:"Cancel",bl8:"💾 Save",
+      bph1:"Post title",bph2:"Technology",bph3:"Short description...",bph4:"https://..."},
   tr:{na:"Hakkımda",ne:"Deneyim",np:"Projeler",nb:"Blog",nc:"İletişim",
       ro:"Yazılım Destek &amp; Implementasyon Mühendisi · <span>Globit</span>",
-      hd:"Teknoloji ve finans kesişiminde çalışan, kritik bankacılık ve ticaret sistemlerini geliştiren ve liderlik eden bir mühendis.",
-      c1:"Deneyimlerimi Gör",c2:"İletişime Geç",cp:"Mevcut Pozisyon",
+      hd:"Teknoloji ve finansın kesişiminde; kritik bankacılık ve trading sistemlerini geliştiren, entegre eden ve yöneten bir mühendis.",
+      c1:"Deneyimi Gör",c2:"İletişime Geç",cp:"Mevcut Pozisyon",
       at:"Ben Kimim",et:"Eğitim",ed:"Yönetim Bilişim Sistemleri",
-      en2:"3 yılda mezun · Bölüm birincisi · Araştırma Görevlisi",
+      en2:"3 yılda mezun · Bölüm birincisi · Akademik asistan",
       lt:"Diller",ln:"Anadil",lf:"Akıcı",lp:"Profesyonel",li:"Orta",
-      xt:"İş Deneyimi",pt:"Öne Çıkan Projeler",blt:"Son Yazılar",
+      xt:"İş Geçmişi",pt:"Öne Çıkan Projeler",blt:"Son Yazılar",
       wl:"Yapım Aşamasında",wp:"Projeler yakında eklenecek.",wb:"Blog yazıları hazırlanıyor.",
-      ct:"Bana Ulaşın",em:"E-posta",lo:"Konum",lc:"İstanbul, Türkiye · Uzaktan Çalışmaya Uygun",
-      fr:"Tüm hakları saklıdır.",rm:"Devamını Oku →"},
+      ct:"İletişime Geç",em:"E-posta",lo:"Konum",lc:"İstanbul, Türkiye · Uzaktan çalışmaya uygun",
+      fr:"Tüm hakları saklıdır.",rm:"Devamını Oku →",
+      sv1:"Toplam Görüntüleme",sv1e:"Sadece bu tarayıcı",sv2:"Oturum Görüntüleme",sv2e:"Önizleme sayacı",
+      ab1:"<strong>Teknoloji ve finans</strong> kesişiminde çalışan; sistemleri sadece kullanan değil, anlayan, geliştiren ve yön veren bir mühendisim.",
+      ab2:"Şu anda <strong>Globit’te Yazılım Destek &amp; Implementasyon Mühendisi</strong> olarak kritik bankacılık ve trading sistemlerinin geliştirilmesi, entegrasyonu ve sürekliliğinden sorumluyum. Güçlü olduğum ana alanlar <strong>sistem entegrasyonu, veri yönetimi ve finansal raporlama</strong>.",
+      ab3:"<strong>Marmara Üniversitesi</strong>'ndeki eğitim sürecimde lisansımı sadece üç yılda tamamladım ve <strong>bölüm birincisi</strong> olarak mezun oldum. Sonrasında akademik asistan olarak görev alıp mentorluk becerilerimi geliştirdim.",
+      ab4:"<strong>Almanca ve Arapça</strong> bilgim, uluslararası ortamlarda daha etkili hareket etmemi sağlıyor. Benim için yazılım mühendisliği; <strong>karmaşık sistemleri analiz etmek ve sürdürülebilir çözümler üretmek</strong> demek.",
+      ak1:"Akademi",ak2:"Profesyonel Gelişim Programı",ak3:"Uygulamalı teknoloji, sistem düşüncesi ve pratik teslim becerilerine odaklandı.",
+      ex1t:"Yazılım Destek &amp; Implementasyon Mühendisi",ex1c:"Globit · İstanbul, Türkiye",ex1d:"Kritik bankacılık ve trading sistemlerini geliştiriyor, entegre ediyor ve sürdürüyorum. Finans kuruluşları arasındaki veri akışlarını yönetiyor, karmaşık mimarileri sadeleştiriyor ve ihtiyaca özel çözümler sunuyorum. Ana odağım sistem entegrasyonu, veri yönetimi ve finansal raporlama.",
+      ex2t:"Akademik Asistan",ex2c:"Marmara Üniversitesi · İstanbul, Türkiye",ex2d:"Öğrencilere teknik konularda rehberlik ettim, karmaşık bilgileri etkili biçimde aktardım ve akademik araştırmalar eşliğinde güçlü mentorluk ve liderlik becerileri geliştirdim.",
+      ex3t:"İş Analisti",ex3c:"Universal Yazılım A.Ş. · İstanbul, Türkiye",ex3d:"Büyük ölçekli entegrasyon projelerinde aktif rol aldım. Teknik uygulama ile iş ihtiyaçları arasındaki boşluğu kapatarak gereksinim analizi ve paydaş iletişimi yeteneklerimi güçlendirdim.",
+      ufo1:"Oynamak için tıkla",ufo2:"UFO Kaçışı",gs1:"Skor",gc1:"◀ Sol",gc2:"Sağ ▶",gn1:"Hareket için ← → veya A / D kullan · Mobilde aşağıdaki butonları kullan. Asteroit ve uydulardan kaç.",
+      gh1:"SKOR",gh2:"EN İYİ",go1:"Oyun Bitti",go2:"Yeniden başlamak için UFO’ya tekrar tıkla",
+      bmh:"Blog Yazısı Ekle",bl1:"Emoji",bl2:"Başlık",bl3:"Kategori",bl4:"Tarih",bl5:"Özet",bl6:"Bağlantı (isteğe bağlı)",bl7:"Vazgeç",bl8:"💾 Kaydet",
+      bph1:"Yazı başlığı",bph2:"Teknoloji",bph3:"Kısa açıklama...",bph4:"https://..."},
   de:{na:"Über mich",ne:"Erfahrung",np:"Projekte",nb:"Blog",nc:"Kontakt",
       ro:"Software Support &amp; Implementation Engineer · <span>Globit</span>",
-      hd:"An der Schnittstelle von Technologie und Finanzen tätig — kritische Bank- und Handelssysteme entwickeln und führen.",
+      hd:"An der Schnittstelle von Technologie und Finanzen — Entwicklung, Integration und Führung kritischer Bank- und Handelssysteme.",
       c1:"Erfahrung ansehen",c2:"Kontakt aufnehmen",cp:"Aktuelle Position",
       at:"Wer ich bin",et:"Ausbildung",ed:"Wirtschaftsinformatik",
-      en2:"3 Jahre bis Abschluss · Jahrgangsbester · Wissenschaftlicher Assistent",
+      en2:"In 3 Jahren abgeschlossen · Jahrgangsbester · Wissenschaftlicher Assistent",
       lt:"Sprachen",ln:"Muttersprache",lf:"Fließend",lp:"Professionell",li:"Mittelstufe",
       xt:"Berufserfahrung",pt:"Ausgewählte Projekte",blt:"Neueste Beiträge",
       wl:"In Bearbeitung",wp:"Projekte werden bald hinzugefügt.",wb:"Blogbeiträge werden vorbereitet.",
       ct:"Kontakt aufnehmen",em:"E-Mail",lo:"Standort",lc:"Istanbul, Türkei · Remote-freundlich",
-      fr:"Alle Rechte vorbehalten.",rm:"Weiterlesen →"}
+      fr:"Alle Rechte vorbehalten.",rm:"Weiterlesen →",
+      sv1:"Lokale Aufrufe",sv1e:"Nur in diesem Browser",sv2:"Sitzungsaufrufe",sv2e:"Vorschau-Zähler",
+      ab1:"Ich bin ein Ingenieur an der Schnittstelle von <strong>Technologie und Finanzen</strong> — jemand, der Systeme nicht nur nutzt, sondern sie versteht, verbessert und führt.",
+      ab2:"Derzeit arbeite ich als <strong>Software Support &amp; Implementation Engineer bei Globit</strong>, wo ich für die Entwicklung, Integration und Wartung kritischer Bank- und Handelssysteme verantwortlich bin. Meine Kernstärken liegen in <strong>Systemintegration, Datenmanagement und Finanzreporting</strong>.",
+      ab3:"Während meines Studiums an der <strong>Marmara-Universität</strong> schloss ich mein Studium in nur drei Jahren ab und wurde <strong>Jahrgangsbester meines Fachbereichs</strong>. Später arbeitete ich als wissenschaftlicher Assistent und entwickelte starke Mentoring-Fähigkeiten.",
+      ab4:"Meine Kenntnisse in <strong>Deutsch und Arabisch</strong> helfen mir, in internationalen Umgebungen effektiv zu arbeiten. Für mich bedeutet Software Engineering, <strong>komplexe Systeme zu analysieren und nachhaltige Lösungen zu entwickeln</strong>.",
+      ak1:"Akademi",ak2:"Berufliches Entwicklungsprogramm",ak3:"Fokus auf angewandte Technologie, Systemdenken und praktische Umsetzung.",
+      ex1t:"Software Support &amp; Implementation Engineer",ex1c:"Globit · Istanbul, Türkei",ex1d:"Entwicklung, Integration und Wartung kritischer Bank- und Handelssysteme. Verwaltung von Datenflüssen zwischen Finanzinstituten, Vereinfachung komplexer Architekturen und Bereitstellung maßgeschneiderter Lösungen. Fokus auf Systemintegration, Datenmanagement und Finanzreporting.",
+      ex2t:"Wissenschaftlicher Assistent",ex2c:"Marmara-Universität · Istanbul, Türkei",ex2d:"Ich betreute Studierende in technischen Themen, vermittelte komplexes Wissen effektiv und entwickelte starke Mentoring- und Führungsfähigkeiten parallel zur Forschung.",
+      ex3t:"Business Analyst",ex3c:"Universal Yazılım A.Ş. · Istanbul, Türkei",ex3d:"Ich übernahm eine aktive Rolle in großen Integrationsprojekten. Dabei schlug ich die Brücke zwischen technischer Umsetzung und geschäftlichen Anforderungen und stärkte meine Fähigkeiten in Anforderungsanalyse und Stakeholder-Kommunikation.",
+      ufo1:"Zum Spielen klicken",ufo2:"UFO Run",gs1:"Punktzahl",gc1:"◀ Links",gc2:"Rechts ▶",gn1:"Nutze ← → oder A / D zum Bewegen · Auf Mobilgeräten die Tasten unten verwenden. Weiche Asteroiden und Satelliten aus.",
+      gh1:"PUNKTE",gh2:"BESTE",go1:"Spiel vorbei",go2:"Klicke erneut auf das UFO, um neu zu starten",
+      bmh:"Blogbeitrag hinzufügen",bl1:"Emoji",bl2:"Titel",bl3:"Kategorie",bl4:"Datum",bl5:"Auszug",bl6:"Link (optional)",bl7:"Abbrechen",bl8:"💾 Speichern",
+      bph1:"Beitragstitel",bph2:"Technologie",bph3:"Kurze Beschreibung...",bph4:"https://..."}
 };
 
 let lg='en', dk=true;
@@ -573,7 +619,16 @@ function L(l){
     if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') return;
     el.innerHTML=g(k);
   });
+  document.querySelectorAll('[data-ph]').forEach(el=>{
+    const k=el.getAttribute('data-ph');
+    el.placeholder=g(k);
+  });
+  const ship=document.getElementById('spaceShip');
+  if(ship) ship.title=g('ufo1');
+  const bmh=document.getElementById('bmh');
+  if(bmh && !document.getElementById('bmod').classList.contains('open')) bmh.textContent=g('bmh');
   RC();
+  updateGameLanguageUI();
 }
 
 function TH(){
@@ -656,7 +711,7 @@ function OBM(idx){
   const today=new Date().toISOString().split('T')[0];
   const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
   const b=idx!=null?bl[idx]:null;
-  document.getElementById('bmh').textContent=b?'Edit Post':'Add Blog Post';
+  document.getElementById('bmh').textContent=b ? (lg==='tr' ? 'Yazıyı Düzenle' : lg==='de' ? 'Beitrag bearbeiten' : 'Edit Post') : g('bmh');
   document.getElementById('bmi').value=b?b.icon||'📝':'📝';
   document.getElementById('bmt').value=b?b.title:'';
   document.getElementById('bmc').value=b?b.cat||'':'';
@@ -669,7 +724,7 @@ function CBM(){document.getElementById('bmod').classList.remove('open');}
 function SB(){
   const icon=document.getElementById('bmi').value.trim()||'📝';
   const title=document.getElementById('bmt').value.trim();
-  const cat=document.getElementById('bmc').value.trim()||'Blog';
+  const cat=document.getElementById('bmc').value.trim()||(lg==='tr'?'Blog':lg==='de'?'Blog':'Blog');
   const dateRaw=document.getElementById('bmd').value;
   const excerpt=document.getElementById('bme').value.trim();
   const link=document.getElementById('bml').value.trim();
@@ -682,7 +737,7 @@ function SB(){
   CBM(); RC();
 }
 function DB(i){
-  if(!confirm('Delete this post?')) return;
+  if(!confirm(lg==='tr' ? 'Bu yazı silinsin mi?' : lg==='de' ? 'Diesen Beitrag löschen?' : 'Delete this post?')) return;
   const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
   bl.splice(i,1);
   localStorage.setItem('sd_blogs',JSON.stringify(bl));
@@ -702,6 +757,23 @@ function initLocalStats(){
   const sv=document.getElementById('sessionVisitorCount');
   if(lv) lv.textContent=localViews;
   if(sv) sv.textContent=sessionViews;
+}
+
+function updateGameLanguageUI(){
+  const scoreLabel=document.getElementById('scoreLabel');
+  const note=document.getElementById('gameNote');
+  const title=document.getElementById('gameTitle');
+  const play=document.getElementById('ufoPlayText');
+  const run=document.getElementById('ufoRunText');
+  const leftBtn=document.getElementById('moveLeftBtn');
+  const rightBtn=document.getElementById('moveRightBtn');
+  if(scoreLabel) scoreLabel.textContent=g('gs1');
+  if(note) note.textContent=g('gn1');
+  if(title) title.textContent=g('ufo2');
+  if(play) play.textContent=g('ufo1');
+  if(run) run.textContent=g('ufo2');
+  if(leftBtn) leftBtn.textContent=g('gc1');
+  if(rightBtn) rightBtn.textContent=g('gc2');
 }
 
 /* ══ SPACE MINI GAME ══ */
@@ -918,7 +990,7 @@ function drawHud(){
   gctx.strokeRect(14,14,118,52);
   gctx.fillStyle='#9ba3b8';
   gctx.font='600 11px DM Sans, sans-serif';
-  gctx.fillText('SCORE',24,34);
+  gctx.fillText(g('gh1').toUpperCase(),24,34);
   gctx.fillStyle='#fff';
   gctx.font='700 24px DM Sans, sans-serif';
   gctx.fillText(String(score),24,57);
@@ -929,7 +1001,7 @@ function drawHud(){
   gctx.strokeRect(gameCanvas.width-118,14,104,38);
   gctx.fillStyle='#9ba3b8';
   gctx.font='600 10px DM Sans, sans-serif';
-  gctx.fillText('BEST '+bestScore,gameCanvas.width-104,38);
+  gctx.fillText(g('gh2').toUpperCase()+' '+bestScore,gameCanvas.width-104,38);
 }
 
 function drawGameOver(){
@@ -937,13 +1009,13 @@ function drawGameOver(){
   gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
   gctx.fillStyle='#fff';
   gctx.font='700 30px DM Sans, sans-serif';
-  gctx.fillText('Game Over', 126, 214);
+  gctx.fillText(g('go1'), 126, 214);
   gctx.fillStyle='#f59e0b';
   gctx.font='700 18px DM Sans, sans-serif';
-  gctx.fillText('Score: '+score, 170, 248);
+  gctx.fillText(g('gs1')+': '+score, 170, 248);
   gctx.fillStyle='#9ba3b8';
   gctx.font='500 14px DM Sans, sans-serif';
-  gctx.fillText('Click the UFO again to restart', 118, 282);
+  gctx.fillText(g('go2'), 88, 282);
 }
 
 function updateGame(){
@@ -997,6 +1069,45 @@ window.addEventListener('keyup',e=>{
   if(k==='arrowleft' || k==='a') controls.left=false;
   if(k==='arrowright' || k==='d') controls.right=false;
 });
+
+
+const moveLeftBtn=document.getElementById('moveLeftBtn');
+const moveRightBtn=document.getElementById('moveRightBtn');
+
+function holdControl(key, state){
+  controls[key]=state;
+}
+
+[['pointerdown',true],['pointerup',false],['pointerleave',false],['pointercancel',false]].forEach(([evt,state])=>{
+  if(moveLeftBtn) moveLeftBtn.addEventListener(evt,e=>{e.preventDefault(); holdControl('left',state);});
+  if(moveRightBtn) moveRightBtn.addEventListener(evt,e=>{e.preventDefault(); holdControl('right',state);});
+});
+
+if(gameCanvas){
+  let touchStartX=null;
+  gameCanvas.addEventListener('touchstart',e=>{
+    if(!e.touches.length) return;
+    touchStartX=e.touches[0].clientX;
+    const rect=gameCanvas.getBoundingClientRect();
+    const x=e.touches[0].clientX-rect.left;
+    controls.left = x < rect.width/2;
+    controls.right = x >= rect.width/2;
+    e.preventDefault();
+  },{passive:false});
+  gameCanvas.addEventListener('touchmove',e=>{
+    if(!e.touches.length) return;
+    const rect=gameCanvas.getBoundingClientRect();
+    const x=e.touches[0].clientX-rect.left;
+    controls.left = x < rect.width/2;
+    controls.right = x >= rect.width/2;
+    e.preventDefault();
+  },{passive:false});
+  const clearTouch=()=>{controls.left=false;controls.right=false;touchStartX=null;};
+  gameCanvas.addEventListener('touchend',clearTouch,{passive:true});
+  gameCanvas.addEventListener('touchcancel',clearTouch,{passive:true});
+}
+
+updateGameLanguageUI();
 
 </script>
 </body>
