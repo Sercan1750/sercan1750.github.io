@@ -288,7 +288,49 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 .analytics-meta div{background:rgba(255,255,255,.02);border-radius:10px;padding:8px 8px 7px;border:1px solid rgba(255,255,255,.04)}
 .analytics-meta label{display:block;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
 .analytics-meta b{font-size:13px;color:var(--tx)}
-@media(max-width:960px){.analytics-dock{right:12px;bottom:12px}.analytics-panel{width:min(300px,calc(100vw - 28px));max-height:68vh}}
+.question-analytics{margin-top:12px}
+.question-toggle-btn{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--bo2);background:var(--su);color:var(--tx);font:700 13px var(--fb);cursor:pointer;transition:var(--t)}
+.question-toggle-btn:hover{background:var(--ch);border-color:var(--violet2)}
+.question-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.question-item{background:var(--su);border:1px solid var(--bo);border-radius:12px;padding:10px 11px}
+.question-item b{display:block;font-size:12px;color:var(--gold2);margin-bottom:4px}
+.question-item span{display:block;font-size:12px;color:var(--tx2);line-height:1.5;word-break:break-word}
+.ai-helper{position:fixed;top:84px;right:18px;z-index:345;width:min(360px,calc(100vw - 34px));background:linear-gradient(135deg,rgba(10,14,26,.94),rgba(22,28,48,.92));border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px 14px 12px;box-shadow:0 16px 42px rgba(0,0,0,.28);backdrop-filter:blur(14px)}
+.ai-helper-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.ai-robot{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(59,130,246,.18));border:1px solid rgba(255,255,255,.09)}
+.ai-helper-text strong{display:block;font-size:15px;color:#fff;line-height:1.2}
+.ai-helper-text span{display:block;font-size:11px;color:var(--gold2);margin-top:3px}
+.ai-helper-form{display:flex;gap:8px}
+.ai-helper-form input{flex:1;background:var(--su);border:1px solid var(--bo2);border-radius:12px;padding:11px 12px;color:var(--tx);font:500 13px var(--fb);outline:none}
+.ai-helper-form input:focus{border-color:var(--violet2);box-shadow:0 0 0 3px rgba(124,58,237,.10)}
+.ai-send-btn{border:none;border-radius:12px;padding:0 14px;background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;font:700 13px var(--fb);cursor:pointer}
+.ai-helper-response{margin-top:10px;font-size:12px;color:var(--tx2);line-height:1.55}
+.game-controls{display:grid;grid-template-columns:repeat(3,minmax(72px,1fr));grid-template-areas:". up ." "left flap right" ". down .";gap:10px;justify-items:center;align-items:center;margin-top:14px}
+.control-btn{width:100%;max-width:120px}
+#moveUpBtn{grid-area:up}
+#moveLeftBtn{grid-area:left}
+#flapBtn{grid-area:flap}
+#moveRightBtn{grid-area:right}
+#moveDownBtn{grid-area:down}
+.game-controls .control-btn{display:none}
+.game-controls[data-mode="snake"] #moveUpBtn,
+.game-controls[data-mode="snake"] #moveLeftBtn,
+.game-controls[data-mode="snake"] #moveRightBtn,
+.game-controls[data-mode="snake"] #moveDownBtn{display:block}
+.game-controls[data-mode="ufo"]{grid-template-areas:". . ." "left . right" ". . ."}
+.game-controls[data-mode="ufo"] #moveLeftBtn,
+.game-controls[data-mode="ufo"] #moveRightBtn{display:block}
+.game-controls[data-mode="flappy"]{grid-template-areas:". . ." ". flap ." ". . ."}
+.game-controls[data-mode="flappy"] #flapBtn{display:block;max-width:180px}
+@media(max-width:960px){
+  .analytics-dock{right:12px;bottom:12px}.analytics-panel{width:min(300px,calc(100vw - 28px));max-height:68vh}
+  .ai-helper{top:76px;right:12px;width:min(330px,calc(100vw - 24px))}
+  .game-controls{gap:8px}
+}
+@media(max-width:640px){
+  .ai-helper{top:auto;bottom:104px}
+  .game-controls{grid-template-columns:repeat(3,minmax(64px,1fr))}
+}
 
 </style>
 </head>
@@ -485,6 +527,21 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
   </div>
 </div>
 
+<div class="ai-helper" id="aiHelper">
+  <div class="ai-helper-head">
+    <div class="ai-robot">🤖</div>
+    <div class="ai-helper-text">
+      <strong>Ask me question for AI</strong>
+      <span>Your question is saved locally.</span>
+    </div>
+  </div>
+  <form id="aiQuestionForm" class="ai-helper-form">
+    <input id="aiQuestionInput" type="text" maxlength="220" placeholder="Ask something about me, projects, or this site..." />
+    <button type="submit" class="ai-send-btn">Send</button>
+  </form>
+  <p class="ai-helper-response" id="aiQuestionResponse">Ask a question and I will log it here. You will see a note saying I will review it and get back to you soon.</p>
+</div>
+
 
 <div class="mb" id="gameModal">
   <div class="mo" style="max-width:560px;text-align:center;">
@@ -506,12 +563,12 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
     </div>
     <p class="gscore"><span id="scoreLabel">Score</span>: <strong id="spaceScore">0</strong> · <span id="bestLabel">Best</span>: <strong id="bestScore">0</strong></p>
     <canvas id="spaceGame" width="420" height="520"></canvas>
-    <div class="game-controls hidden" id="gameControls">
-      <button type="button" class="gbtn mobile-only" id="moveUpBtn">▲ Up</button>
-      <button type="button" class="gbtn" id="moveLeftBtn">◀ Left</button>
-      <button type="button" class="gbtn mobile-only" id="flapBtn">Tap / Flap</button>
-      <button type="button" class="gbtn" id="moveRightBtn">Right ▶</button>
-      <button type="button" class="gbtn mobile-only" id="moveDownBtn">▼ Down</button>
+    <div class="game-controls hidden" id="gameControls" data-mode="">
+      <button type="button" class="gbtn control-btn" id="moveUpBtn">▲ Up</button>
+      <button type="button" class="gbtn control-btn" id="moveLeftBtn">◀ Left</button>
+      <button type="button" class="gbtn control-btn" id="flapBtn">Tap / Flap</button>
+      <button type="button" class="gbtn control-btn" id="moveRightBtn">Right ▶</button>
+      <button type="button" class="gbtn control-btn" id="moveDownBtn">▼ Down</button>
     </div>
     <p class="game-note" id="gameNote">Choose a game to start.</p>
     <p class="game-status" id="gameStatus">The previous game stops automatically when you switch.</p>
@@ -533,9 +590,15 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
     <div class="analytics-mini">
       <div class="mini-card"><span>Total Plays</span><strong id="analyticsTotalPlays">0</strong></div>
       <div class="mini-card"><span>Today</span><strong id="analyticsTodayPlays">0</strong></div>
+      <div class="mini-card"><span>AI Questions</span><strong id="analyticsQuestionCount">0</strong></div>
+      <div class="mini-card"><span>Last Question</span><strong id="analyticsLastQuestionDay">-</strong></div>
     </div>
     <canvas id="analyticsChart" width="288" height="180"></canvas>
     <div class="analytics-rows" id="analyticsRows"></div>
+    <div class="question-analytics">
+      <button type="button" class="question-toggle-btn" id="questionToggleBtn">Show Questions</button>
+      <div class="question-list hidden" id="questionList"></div>
+    </div>
   </div>
   <button type="button" class="analytics-toggle" id="analyticsToggle" aria-expanded="false" aria-controls="analyticsPanel">◀</button>
 </div>
@@ -671,9 +734,25 @@ function L(l){
   const bmh=document.getElementById('bmh');
   if(bmh && !document.getElementById('bmod').classList.contains('open')) bmh.textContent=g('bmh');
   RC();
-  if(analyticsToggleBtn) analyticsToggleBtn.addEventListener('click',()=>toggleAnalytics());
+  if(questionToggleBtn) questionToggleBtn.addEventListener('click',()=>{
+  const hidden=questionList ? questionList.classList.contains('hidden') : true;
+  if(questionList) questionList.classList.toggle('hidden', !hidden);
+  questionToggleBtn.textContent=hidden ? 'Hide Questions' : 'Show Questions';
+});
+if(aiQuestionForm) aiQuestionForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  const question=(aiQuestionInput?.value || '').trim();
+  if(!question) return;
+  recordAiQuestion(question);
+  if(aiQuestionResponse) aiQuestionResponse.textContent='Thanks. Your question has been saved. I will review it and get back to you soon.';
+  if(aiQuestionInput) aiQuestionInput.value='';
+  renderAiQuestionAnalytics();
+  renderArcadeAnalytics();
+});
+if(analyticsToggleBtn) analyticsToggleBtn.addEventListener('click',()=>toggleAnalytics());
 renderArcadeAnalytics();
 updateGameLanguageUI();
+renderAiQuestionAnalytics();
 }
 
 function TH(){
@@ -866,7 +945,13 @@ const analyticsToggleBtn=document.getElementById('analyticsToggle');
 const analyticsRows=document.getElementById('analyticsRows');
 const analyticsChart=document.getElementById('analyticsChart');
 const analyticsChartCtx=analyticsChart ? analyticsChart.getContext('2d') : null;
+const questionToggleBtn=document.getElementById('questionToggleBtn');
+const questionList=document.getElementById('questionList');
+const aiQuestionForm=document.getElementById('aiQuestionForm');
+const aiQuestionInput=document.getElementById('aiQuestionInput');
+const aiQuestionResponse=document.getElementById('aiQuestionResponse');
 const GAME_LABELS={ufo:'🛸 UFO Run',snake:'🐍 Snake',flappy:'🐦 Flappy'};
+const AI_QUESTIONS_KEY='sd_ai_questions_v1';
 
 function localDayKey(offset=0){
   const d=new Date();
@@ -904,6 +989,44 @@ function loadArcadeAnalytics(){
 function saveArcadeAnalytics(data){
   localStorage.setItem(ARCADE_ANALYTICS_KEY, JSON.stringify(data));
 }
+function loadAiQuestions(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(AI_QUESTIONS_KEY)||'[]');
+    return Array.isArray(parsed) ? parsed : [];
+  }catch(e){
+    return [];
+  }
+}
+function saveAiQuestions(items){
+  localStorage.setItem(AI_QUESTIONS_KEY, JSON.stringify(items.slice(0,10)));
+}
+function recordAiQuestion(question){
+  const now=new Date();
+  const stamp=now.toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  const day=localDayKey();
+  const items=loadAiQuestions();
+  items.unshift({question, stamp, day});
+  saveAiQuestions(items);
+}
+function renderAiQuestionAnalytics(){
+  const items=loadAiQuestions();
+  const countEl=document.getElementById('analyticsQuestionCount');
+  const lastDayEl=document.getElementById('analyticsLastQuestionDay');
+  if(countEl) countEl.textContent=String(items.length);
+  if(lastDayEl) lastDayEl.textContent=items[0] ? items[0].stamp : '-';
+  if(questionList){
+    questionList.innerHTML='';
+    items.forEach((item,idx)=>{
+      const row=document.createElement('div');
+      row.className='question-item';
+      row.innerHTML=`<b>#${idx+1} · ${item.stamp}</b><span>${item.question}</span>`;
+      questionList.appendChild(row);
+    });
+    if(!items.length){
+      questionList.innerHTML='<div class="question-item"><span>No questions yet.</span></div>';
+    }
+  }
+}
 function recordArcadePlay(game){
   const data=loadArcadeAnalytics();
   const day=localDayKey();
@@ -931,7 +1054,7 @@ function toggleAnalytics(force){
     analyticsToggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     analyticsToggleBtn.textContent=open ? '▶' : '◀';
   }
-  if(open) renderArcadeAnalytics();
+  if(open){ renderArcadeAnalytics(); renderAiQuestionAnalytics(); }
 }
 function renderArcadeAnalytics(){
   const data=loadArcadeAnalytics();
@@ -1003,6 +1126,7 @@ function renderArcadeAnalytics(){
     });
     ctx.textAlign='left';
   }
+  renderAiQuestionAnalytics();
 }
 
 
@@ -1040,17 +1164,7 @@ function setGameControlsVisible(show){
 }
 function setGameControlsMode(mode){
   setGameControlsVisible(!!mode);
-  const all=[
-    ['moveUpBtn', mode==='snake'],
-    ['moveDownBtn', mode==='snake'],
-    ['moveLeftBtn', mode==='snake' || mode==='ufo'],
-    ['moveRightBtn', mode==='snake' || mode==='ufo'],
-    ['flapBtn', mode==='flappy']
-  ];
-  all.forEach(([id,show])=>{
-    const el=document.getElementById(id);
-    if(el) el.classList.toggle('hidden', !show);
-  });
+  if(controlsWrap) controlsWrap.setAttribute('data-mode', mode || '');
 }
 function openArcade(){
   if(!gameModal || !gctx) return;
@@ -1535,5 +1649,65 @@ renderArcadeAnalytics();
 updateGameLanguageUI();
 
 </script>
+
+<script>
+/* PATCH: robust AI question saving + analytics refresh */
+(function(){
+  function bindAiQuestionPatch(){
+    const form = document.getElementById('aiQuestionForm');
+    const input = document.getElementById('aiQuestionInput');
+    const response = document.getElementById('aiQuestionResponse');
+    const toggleBtn = document.getElementById('questionToggleBtn');
+    const list = document.getElementById('questionList');
+
+    if (toggleBtn && !toggleBtn.dataset.boundPatch) {
+      toggleBtn.dataset.boundPatch = '1';
+      toggleBtn.addEventListener('click', function(){
+        const isHidden = list ? list.classList.contains('hidden') : true;
+        if (list) list.classList.toggle('hidden', !isHidden);
+        toggleBtn.textContent = isHidden ? 'Hide Questions' : 'Show Questions';
+        if (typeof renderAiQuestionAnalytics === 'function') renderAiQuestionAnalytics();
+      });
+    }
+
+    if (form && !form.dataset.boundPatch) {
+      form.dataset.boundPatch = '1';
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        const question = (input && input.value ? input.value : '').trim();
+        if (!question) {
+          if (response) response.textContent = 'Please write a question first.';
+          return false;
+        }
+
+        try {
+          if (typeof recordAiQuestion === 'function') recordAiQuestion(question);
+          if (response) response.textContent = 'Thanks. Your question has been saved. I will review it and get back to you soon.';
+          if (input) input.value = '';
+          if (typeof renderAiQuestionAnalytics === 'function') renderAiQuestionAnalytics();
+          if (typeof renderArcadeAnalytics === 'function') renderArcadeAnalytics();
+        } catch (err) {
+          console.error('AI question save error:', err);
+          if (response) response.textContent = 'Your question could not be saved right now.';
+        }
+        return false;
+      }, true);
+    }
+
+    if (typeof renderAiQuestionAnalytics === 'function') renderAiQuestionAnalytics();
+    if (typeof renderArcadeAnalytics === 'function') renderArcadeAnalytics();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindAiQuestionPatch);
+  } else {
+    bindAiQuestionPatch();
+  }
+})();
+</script>
+
 </body>
 </html>
