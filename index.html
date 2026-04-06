@@ -263,99 +263,99 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 @media(max-width:640px){.game-chooser{grid-template-columns:1fr}}
 
 
-/* EXTRA UI */
-.logo{min-width:10px}
-.work-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
-.game-chooser{display:grid;gap:10px}
-.game-card-btn{display:flex;flex-direction:column;gap:4px;text-align:left;border:1px solid var(--bo2);background:var(--su);color:var(--tx);padding:14px 16px;border-radius:14px;cursor:pointer;transition:var(--t)}
-.game-card-btn:hover,.game-card-btn.active{background:var(--ch);border-color:var(--violet2)}
-.game-card-btn strong{font-size:15px}
-.game-card-btn span{font-size:12px;color:var(--tx2);line-height:1.5}
-.game-status{font-size:12px;color:var(--tx3);margin-top:10px}
-.mobile-only{display:none}
-.ai-helper,.analytics-drawer,.analytics-toggle,.ai-open-btn{z-index:360}
-.ai-helper{
-  position:fixed;top:88px;right:18px;width:min(360px,calc(100vw - 24px));
-  background:var(--su);border:1px solid var(--bo2);border-radius:18px;padding:14px;
-  box-shadow:0 16px 40px rgba(0,0,0,.28);
-}
-.ai-helper.hidden{display:none !important}
-.ai-helper-topbar{display:flex;justify-content:flex-end;margin-bottom:6px}
-.ai-close-btn,.analytics-close,.question-toggle-btn,.ai-send-btn,.ai-open-btn,.analytics-toggle{
-  border:none;cursor:pointer;font-family:var(--fb);transition:var(--t)
-}
-.ai-close-btn{
-  width:30px;height:30px;border-radius:999px;background:var(--bg2);color:var(--tx2);
-  border:1px solid var(--bo2);font-size:16px;font-weight:700
-}
-.ai-close-btn:hover,.analytics-close:hover{transform:scale(1.05);background:var(--ch)}
-.ai-helper-head{display:flex;gap:12px;align-items:center;margin-bottom:12px}
-.ai-robot{
-  width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,rgba(59,130,246,.18),rgba(124,58,237,.18));font-size:22px;flex-shrink:0
-}
-.ai-helper-copy strong{display:block;font-size:14px}
-.ai-helper-copy span{display:block;font-size:12px;color:var(--tx2);margin-top:2px}
+
+/* ARCADE ANALYTICS */
+.analytics-dock{position:fixed;right:16px;bottom:18px;z-index:360;display:flex;align-items:flex-end;gap:0;pointer-events:none}
+.analytics-toggle{pointer-events:auto;width:42px;height:42px;border:none;border-radius:12px 0 0 12px;background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.28);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:var(--t)}
+.analytics-toggle:hover{transform:translateX(-2px)}
+.analytics-panel{pointer-events:auto;width:min(320px,calc(100vw - 34px));max-height:min(72vh,560px);overflow:auto;background:rgba(8,10,15,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--bo2);border-right:none;border-radius:18px 0 0 18px;padding:16px 16px 14px;box-shadow:0 18px 42px rgba(0,0,0,.36);transform:translateX(calc(100% + 6px));opacity:0;transition:transform .35s ease,opacity .35s ease}
+.analytics-dock.open .analytics-panel{transform:translateX(0);opacity:1}
+.analytics-dock.open .analytics-toggle{border-radius:12px 12px 0 0;transform:none}
+.analytics-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:10px}
+.analytics-head h4{font-family:var(--ff);font-size:18px;line-height:1.1}
+.analytics-head p{font-size:11px;color:var(--tx3);line-height:1.5;max-width:175px}
+.analytics-mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 14px}
+.analytics-mini .mini-card{background:var(--su);border:1px solid var(--bo);border-radius:12px;padding:10px 11px}
+.analytics-mini .mini-card span{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:4px}
+.analytics-mini .mini-card strong{font-size:18px;color:var(--gold2)}
+#analyticsChart{width:100%;height:auto;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--bo);border-radius:14px;padding:0;margin-bottom:14px;display:block}
+.analytics-rows{display:flex;flex-direction:column;gap:10px}
+.analytics-row{background:var(--su);border:1px solid var(--bo);border-radius:14px;padding:12px 12px 10px}
+.analytics-row-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.analytics-row-top strong{font-size:14px}
+.analytics-row-top span{font-size:12px;color:var(--gold2);font-weight:700}
+.analytics-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.analytics-meta div{background:rgba(255,255,255,.02);border-radius:10px;padding:8px 8px 7px;border:1px solid rgba(255,255,255,.04)}
+.analytics-meta label{display:block;font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+.analytics-meta b{font-size:13px;color:var(--tx)}
+.question-analytics{margin-top:12px}
+.question-toggle-btn{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--bo2);background:var(--su);color:var(--tx);font:700 13px var(--fb);cursor:pointer;transition:var(--t)}
+.question-toggle-btn:hover{background:var(--ch);border-color:var(--violet2)}
+.question-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.question-item{background:var(--su);border:1px solid var(--bo);border-radius:12px;padding:10px 11px}
+.question-item b{display:block;font-size:12px;color:var(--gold2);margin-bottom:4px}
+.question-item span{display:block;font-size:12px;color:var(--tx2);line-height:1.5;word-break:break-word}
+.ai-helper{position:fixed;top:84px;right:18px;z-index:345;width:min(360px,calc(100vw - 34px));background:linear-gradient(135deg,rgba(10,14,26,.94),rgba(22,28,48,.92));border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px 14px 12px;box-shadow:0 16px 42px rgba(0,0,0,.28);backdrop-filter:blur(14px)}
+.ai-helper-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.ai-robot{width:52px;height:52px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(59,130,246,.18));border:1px solid rgba(255,255,255,.09)}
+.ai-helper-text strong{display:block;font-size:15px;color:#fff;line-height:1.2}
+.ai-helper-text span{display:block;font-size:11px;color:var(--gold2);margin-top:3px}
 .ai-helper-form{display:flex;gap:8px}
-.ai-helper-form input{
-  flex:1;background:var(--bg2);border:1px solid var(--bo2);border-radius:12px;padding:11px 12px;
-  color:var(--tx);outline:none
+.ai-helper-form input{flex:1;background:var(--su);border:1px solid var(--bo2);border-radius:12px;padding:11px 12px;color:var(--tx);font:500 13px var(--fb);outline:none}
+.ai-helper-form input:focus{border-color:var(--violet2);box-shadow:0 0 0 3px rgba(124,58,237,.10)}
+.ai-send-btn{border:none;border-radius:12px;padding:0 14px;background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;font:700 13px var(--fb);cursor:pointer}
+.ai-helper-response{margin-top:10px;font-size:12px;color:var(--tx2);line-height:1.55}
+
+.ai-helper-topbar{display:flex;justify-content:flex-end;margin-bottom:8px}
+.ai-hide-btn,.ai-open-btn{
+  border:1px solid rgba(255,255,255,.14);
+  background:var(--su);
+  color:var(--tx);
+  border-radius:10px;
+  cursor:pointer;
+  font:600 12px var(--fb);
 }
-.ai-helper-form input:focus{border-color:var(--violet2)}
-.ai-send-btn{
-  padding:0 14px;border-radius:12px;background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;font-weight:700
+.ai-hide-btn{
+  width:30px;height:30px;padding:0;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;line-height:1;
 }
-.ai-response{font-size:12px;color:var(--tx2);margin-top:10px;line-height:1.6}
 .ai-open-btn{
-  position:fixed;top:88px;right:18px;width:46px;height:46px;border-radius:14px;
-  display:flex;align-items:center;justify-content:center;background:var(--su);color:var(--tx);
-  border:1px solid var(--bo2);box-shadow:0 12px 28px rgba(0,0,0,.26);font-size:22px
+  position:fixed;top:86px;right:18px;z-index:346;
+  width:46px;height:46px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 28px rgba(0,0,0,.26);
+  font-size:22px;
 }
-.ai-open-btn.hidden{display:none !important}
-.analytics-toggle{
-  position:fixed;right:16px;bottom:18px;width:48px;height:48px;border-radius:14px;
-  background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;font-size:18px;font-weight:700;
-  box-shadow:0 14px 34px rgba(0,0,0,.24)
-}
-.analytics-drawer{
-  position:fixed;right:16px;bottom:76px;width:min(360px,calc(100vw - 24px));max-height:min(72vh,720px);overflow:auto;
-  background:var(--su);border:1px solid var(--bo2);border-radius:18px;padding:14px;display:none;
-  box-shadow:0 20px 44px rgba(0,0,0,.34)
-}
-.analytics-drawer.open{display:block}
-.analytics-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
-.analytics-head strong{display:block;font-size:15px}
-.analytics-head span{font-size:12px;color:var(--tx2)}
-.analytics-close{
-  width:30px;height:30px;border-radius:999px;background:var(--bg2);color:var(--tx2);
-  border:1px solid var(--bo2);font-size:16px;font-weight:700;flex-shrink:0
-}
-.analytics-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.analytics-card,.analytics-mini{
-  background:var(--bg2);border:1px solid var(--bo);border-radius:14px;padding:12px
-}
-.analytics-card label,.analytics-mini label{display:block;font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:6px}
-.analytics-card strong,.analytics-mini strong{font-size:18px}
-.analytics-card span{display:block;font-size:12px;color:var(--tx2);margin-top:4px}
-.analytics-section{background:var(--bg2);border:1px solid var(--bo);border-radius:14px;padding:12px;margin-bottom:12px}
-.analytics-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin:6px 0 4px}
-.analytics-bar{height:9px;background:rgba(255,255,255,.05);border-radius:999px;overflow:hidden}
-.analytics-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--violet2));border-radius:999px}
-.analytics-mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.question-toggle-btn{
-  width:100%;padding:11px 12px;border-radius:12px;background:var(--su);color:var(--tx);border:1px solid var(--bo2);font-weight:700
-}
-.question-list{margin-top:10px;display:grid;gap:8px}
-.question-list.hidden{display:none}
-.question-item{background:var(--su);border:1px solid var(--bo);border-radius:12px;padding:10px}
-.question-item p{font-size:13px;line-height:1.5;margin:0 0 4px}
-.question-item span{font-size:11px;color:var(--tx3)}
+.ai-open-btn.hidden{display:none}
+.ai-helper.hidden{display:none !important}
+
+.game-controls{display:grid;grid-template-columns:repeat(3,minmax(72px,1fr));grid-template-areas:". up ." "left flap right" ". down .";gap:10px;justify-items:center;align-items:center;margin-top:14px}
+.control-btn{width:100%;max-width:120px}
+#moveUpBtn{grid-area:up}
+#moveLeftBtn{grid-area:left}
+#flapBtn{grid-area:flap}
+#moveRightBtn{grid-area:right}
+#moveDownBtn{grid-area:down}
+.game-controls .control-btn{display:none}
+.game-controls[data-mode="snake"] #moveUpBtn,
+.game-controls[data-mode="snake"] #moveLeftBtn,
+.game-controls[data-mode="snake"] #moveRightBtn,
+.game-controls[data-mode="snake"] #moveDownBtn{display:block}
+.game-controls[data-mode="ufo"]{grid-template-areas:". . ." "left . right" ". . ."}
+.game-controls[data-mode="ufo"] #moveLeftBtn,
+.game-controls[data-mode="ufo"] #moveRightBtn{display:block}
+.game-controls[data-mode="flappy"]{grid-template-areas:". . ." ". flap ." ". . ."}
+.game-controls[data-mode="flappy"] #flapBtn{display:block;max-width:180px}
 @media(max-width:960px){
-  .ai-helper{top:auto;bottom:140px;right:12px}
-  .ai-open-btn{top:auto;bottom:140px;right:12px}
-  .analytics-toggle{right:12px;bottom:12px}
-  .analytics-drawer{right:12px;bottom:70px}
-  .mobile-only{display:inline-flex}
+  .analytics-dock{right:12px;bottom:12px}.analytics-panel{width:min(300px,calc(100vw - 28px));max-height:68vh}
+  .ai-helper{top:76px;right:12px;width:min(330px,calc(100vw - 24px))}
+  .game-controls{gap:8px}
+}
+@media(max-width:640px){
+  .ai-helper{top:auto;bottom:104px}
+  .ai-open-btn{top:auto;bottom:104px;right:12px}
+  .game-controls{grid-template-columns:repeat(3,minmax(64px,1fr))}
 }
 
 </style>
@@ -554,6 +554,26 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 </div>
 
 
+<div class="ai-helper" id="aiHelper">
+  <div class="ai-helper-topbar">
+    <button type="button" class="ai-hide-btn" id="aiHideBtn" aria-label="Close AI box">✕</button>
+  </div>
+  <div class="ai-helper-head">
+    <div class="ai-robot">🤖</div>
+    <div class="ai-helper-text">
+      <strong id="aiHelperTitle">Ask me a question for AI</strong>
+      <span id="aiHelperSubtext">Your question is saved locally.</span>
+    </div>
+  </div>
+  <form id="aiQuestionForm" class="ai-helper-form">
+    <input id="aiQuestionInput" type="text" maxlength="220" placeholder="Ask something about me, projects, or this site..." />
+    <button type="submit" class="ai-send-btn" id="aiSendBtn">Send</button>
+  </form>
+  <p class="ai-helper-response" id="aiQuestionResponse">Ask a question and I will log it here. You will see a note saying I will review it and get back to you soon.</p>
+</div>
+
+<button type="button" class="ai-open-btn hidden" id="aiOpenBtn" aria-label="Open AI question box" title="Open AI question box">🤖</button>
+
 <div class="mb" id="gameModal">
   <div class="mo" style="max-width:560px;text-align:center;">
     <button class="mc" onclick="closeArcade()">✕</button>
@@ -574,12 +594,12 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
     </div>
     <p class="gscore"><span id="scoreLabel">Score</span>: <strong id="spaceScore">0</strong> · <span id="bestLabel">Best</span>: <strong id="bestScore">0</strong></p>
     <canvas id="spaceGame" width="420" height="520"></canvas>
-    <div class="game-controls hidden" id="gameControls">
-      <button type="button" class="gbtn mobile-only" id="moveUpBtn">▲ Up</button>
-      <button type="button" class="gbtn" id="moveLeftBtn">◀ Left</button>
-      <button type="button" class="gbtn mobile-only" id="flapBtn">Tap / Flap</button>
-      <button type="button" class="gbtn" id="moveRightBtn">Right ▶</button>
-      <button type="button" class="gbtn mobile-only" id="moveDownBtn">▼ Down</button>
+    <div class="game-controls hidden" id="gameControls" data-mode="">
+      <button type="button" class="gbtn control-btn" id="moveUpBtn">▲ Up</button>
+      <button type="button" class="gbtn control-btn" id="moveLeftBtn">◀ Left</button>
+      <button type="button" class="gbtn control-btn" id="flapBtn">Tap / Flap</button>
+      <button type="button" class="gbtn control-btn" id="moveRightBtn">Right ▶</button>
+      <button type="button" class="gbtn control-btn" id="moveDownBtn">▼ Down</button>
     </div>
     <p class="game-note" id="gameNote">Choose a game to start.</p>
     <p class="game-status" id="gameStatus">The previous game stops automatically when you switch.</p>
@@ -588,88 +608,34 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 
 <!-- Analytics placeholder: replace with Cloudflare Web Analytics or GA4 after deploying -->
 
-<!-- FOOTER -->
 
-<div class="ai-helper" id="aiHelper">
-  <div class="ai-helper-topbar">
-    <button type="button" class="ai-close-btn" id="aiCloseBtn" aria-label="Close AI box">✕</button>
-  </div>
-  <div class="ai-helper-head">
-    <div class="ai-robot">🤖</div>
-    <div class="ai-helper-copy">
-      <strong id="aiTitle">Ask me a question for AI</strong>
-      <span id="aiSubtitle">Your question is saved locally in this browser.</span>
+<div class="analytics-dock" id="analyticsDock">
+  <div class="analytics-panel" id="analyticsPanel" aria-hidden="true">
+    <div class="analytics-head">
+      <div>
+        <h4>Arcade Analytics</h4>
+        <p>Local browser only. No IP, no account tracking, no server-side storage.</p>
+      </div>
+      <button type="button" class="mc" onclick="toggleAnalytics(false)" aria-label="Close analytics">✕</button>
+    </div>
+    <div class="analytics-mini">
+      <div class="mini-card"><span>Total Plays</span><strong id="analyticsTotalPlays">0</strong></div>
+      <div class="mini-card"><span>Today</span><strong id="analyticsTodayPlays">0</strong></div>
+      <div class="mini-card"><span>AI Questions</span><strong id="analyticsQuestionCount">0</strong></div>
+      <div class="mini-card"><span>Last Question</span><strong id="analyticsLastQuestionDay">-</strong></div>
+    </div>
+    <canvas id="analyticsChart" width="288" height="180"></canvas>
+    <div class="analytics-rows" id="analyticsRows"></div>
+    <div class="question-analytics">
+      <button type="button" class="question-toggle-btn" id="questionToggleBtn">Show Questions</button>
+      <div class="question-list hidden" id="questionList"></div>
     </div>
   </div>
-  <form id="aiQuestionForm" class="ai-helper-form">
-    <input id="aiQuestionInput" type="text" maxlength="220" placeholder="Ask something about me, projects, or this site..." />
-    <button type="submit" class="ai-send-btn" id="aiSendBtn">Send</button>
-  </form>
-  <p class="ai-response" id="aiQuestionResponse">When you ask a question, I save it here and show a short note saying I will review it soon.</p>
+  <button type="button" class="analytics-toggle" id="analyticsToggle" aria-expanded="false" aria-controls="analyticsPanel">◀</button>
 </div>
-<button type="button" class="ai-open-btn hidden" id="aiOpenBtn" title="Open AI box" aria-label="Open AI box">🤖</button>
 
-<button type="button" class="analytics-toggle" id="analyticsToggle" aria-label="Open analytics">◀</button>
-<aside class="analytics-drawer" id="analyticsDrawer" aria-hidden="true">
-  <div class="analytics-head">
-    <div>
-      <strong>Arcade Analytics</strong>
-      <span>Local browser data only</span>
-    </div>
-    <button type="button" class="analytics-close" id="analyticsCloseBtn" aria-label="Close analytics">✕</button>
-  </div>
-
-  <div class="analytics-grid">
-    <div class="analytics-card">
-      <label>Total Questions</label>
-      <strong id="analyticsQuestionTotal">0</strong>
-      <span>Saved in this browser</span>
-    </div>
-    <div class="analytics-card">
-      <label>Most Played</label>
-      <strong id="analyticsMostPlayed">-</strong>
-      <span id="analyticsMostPlayedCount">0 plays</span>
-    </div>
-  </div>
-
-  <div class="analytics-section">
-    <div class="analytics-row">
-      <span>UFO Run</span>
-      <strong id="total-ufo">0</strong>
-    </div>
-    <div class="analytics-bar"><i id="bar-ufo"></i></div>
-
-    <div class="analytics-row">
-      <span>Snake</span>
-      <strong id="total-snake">0</strong>
-    </div>
-    <div class="analytics-bar"><i id="bar-snake"></i></div>
-
-    <div class="analytics-row">
-      <span>Flappy</span>
-      <strong id="total-flappy">0</strong>
-    </div>
-    <div class="analytics-bar"><i id="bar-flappy"></i></div>
-  </div>
-
-  <div class="analytics-section">
-    <div class="analytics-mini-grid">
-      <div class="analytics-mini"><label>Today</label><strong id="analyticsToday">0</strong></div>
-      <div class="analytics-mini"><label>Yesterday</label><strong id="analyticsYesterday">0</strong></div>
-      <div class="analytics-mini"><label>Best UFO</label><strong id="best-ufo">0</strong></div>
-      <div class="analytics-mini"><label>Best Snake</label><strong id="best-snake">0</strong></div>
-      <div class="analytics-mini"><label>Best Flappy</label><strong id="best-flappy">0</strong></div>
-    </div>
-  </div>
-
-  <div class="analytics-section">
-    <button type="button" class="question-toggle-btn" id="questionToggleBtn">Show Questions</button>
-    <div class="question-list hidden" id="questionList"></div>
-  </div>
-</aside>
-
+<!-- FOOTER -->
 <footer>
-
   <div class="fi">
     <p>© 2025 Sercan Düzel. <span data-k="fr">All rights reserved.</span></p>
     <div class="fl">
@@ -698,742 +664,1238 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
   </div>
 </div>
 
-
 <script>
-(() => {
-  const $ = (id) => document.getElementById(id);
-  const q = (sel, root=document) => root.querySelector(sel);
-  const qa = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+/* ══ TRANSLATIONS ══ */
+const TX={
+  en:{na:"About",ne:"Experience",np:"Projects",nb:"Blog",nc:"Contact",
+      ro:"Software Support &amp; Implementation Engineer · <span>Globit</span>",
+      hd:"Operating at the intersection of technology and finance — building, integrating, and leading critical banking and trading systems.",
+      c1:"View Experience",c2:"Get in Touch",cp:"Current Position",
+      at:"Who I Am",et:"Education",ed:"Management Information Systems",
+      en2:"Graduated in 3 years · Top student · Academic Assistant",
+      lt:"Languages",ln:"Native",lf:"Fluent",lp:"Professional",li:"Intermediate",
+      xt:"Work History",pt:"Featured Projects",blt:"Latest Posts",
+      wl:"Work in Progress",wp:"Projects will be added soon.",wb:"Blog posts are being prepared.",
+      ct:"Get in Touch",em:"Email",lo:"Location",lc:"Istanbul, Turkey · Remote Friendly",
+      fr:"All rights reserved.",rm:"Read More →",
+      sv1:"Local Views",sv1e:"This browser only",sv2:"Session Views",sv2e:"Preview counter",
+      ab1:"I am an engineer operating at the intersection of <strong>technology and finance</strong> — someone who not only uses systems but understands, improves, and leads them.",
+      ab2:"Currently, I work as a <strong>Software Support &amp; Implementation Engineer at Globit</strong>, where I take responsibility for developing, integrating, and maintaining critical banking and trading systems. My core strengths lie in <strong>system integration, data management, and financial reporting</strong>.",
+      ab3:"During my academic journey at <strong>Marmara University</strong>, I completed my degree in just three years and graduated as the <strong>top student of my department</strong>. I later worked as an academic assistant, developing strong mentoring skills.",
+      ab4:"My proficiency in <strong>German and Arabic</strong> enhances my ability to operate in international environments. For me, software engineering is about <strong>analyzing complex systems and building sustainable solutions</strong>.",
+      ak1:"Akademi",ak2:"Professional Development Program",ak3:"Focused on applied technology, systems thinking, and practical delivery skills.",
+      ex1t:"Software Support &amp; Implementation Engineer",ex1c:"Globit · Istanbul, Turkey",ex1d:"Developing, integrating, and maintaining critical banking and trading systems. Managing data flows across financial institutions, simplifying complex architectures, and delivering tailored solutions. Core focus on system integration, data management, and financial reporting.",
+      ex2t:"Academic Assistant",ex2c:"Marmara University · Istanbul, Turkey",ex2d:"Guided students in technical subjects, communicated complex knowledge effectively, and developed strong mentoring and leadership skills alongside academic research.",
+      ex3t:"Business Analyst",ex3c:"Universal Yazılım A.Ş. · Istanbul, Turkey",ex3d:"Took an active role in large-scale integration projects. Bridged the gap between technical execution and business needs, strengthening skills in requirements analysis and stakeholder communication.",
+      ufo1:"Click to Play",ufo2:"UFO Run",gs1:"Score",gc1:"◀ Left",gc2:"Right ▶",gn1:"Use ← → or A / D to move · On mobile, use the buttons below. Avoid asteroids and satellites.",
+      gh1:"SCORE",gh2:"BEST",go1:"Game Over",go2:"Click the UFO again to restart",
+      bmh:"Add Blog Post",bl1:"Emoji",bl2:"Title",bl3:"Category",bl4:"Date",bl5:"Excerpt",bl6:"Link (optional)",bl7:"Cancel",bl8:"💾 Save",
+      bph1:"Post title",bph2:"Technology",bph3:"Short description...",bph4:"https://..."},
+  tr:{na:"Hakkımda",ne:"Deneyim",np:"Projeler",nb:"Blog",nc:"İletişim",
+      ro:"Yazılım Destek &amp; Implementasyon Mühendisi · <span>Globit</span>",
+      hd:"Teknoloji ve finansın kesişiminde; kritik bankacılık ve trading sistemlerini geliştiren, entegre eden ve yöneten bir mühendis.",
+      c1:"Deneyimi Gör",c2:"İletişime Geç",cp:"Mevcut Pozisyon",
+      at:"Ben Kimim",et:"Eğitim",ed:"Yönetim Bilişim Sistemleri",
+      en2:"3 yılda mezun · Bölüm birincisi · Akademik asistan",
+      lt:"Diller",ln:"Anadil",lf:"Akıcı",lp:"Profesyonel",li:"Orta",
+      xt:"İş Geçmişi",pt:"Öne Çıkan Projeler",blt:"Son Yazılar",
+      wl:"Yapım Aşamasında",wp:"Projeler yakında eklenecek.",wb:"Blog yazıları hazırlanıyor.",
+      ct:"İletişime Geç",em:"E-posta",lo:"Konum",lc:"İstanbul, Türkiye · Uzaktan çalışmaya uygun",
+      fr:"Tüm hakları saklıdır.",rm:"Devamını Oku →",
+      sv1:"Toplam Görüntüleme",sv1e:"Sadece bu tarayıcı",sv2:"Oturum Görüntüleme",sv2e:"Önizleme sayacı",
+      ab1:"<strong>Teknoloji ve finans</strong> kesişiminde çalışan; sistemleri sadece kullanan değil, anlayan, geliştiren ve yön veren bir mühendisim.",
+      ab2:"Şu anda <strong>Globit’te Yazılım Destek &amp; Implementasyon Mühendisi</strong> olarak kritik bankacılık ve trading sistemlerinin geliştirilmesi, entegrasyonu ve sürekliliğinden sorumluyum. Güçlü olduğum ana alanlar <strong>sistem entegrasyonu, veri yönetimi ve finansal raporlama</strong>.",
+      ab3:"<strong>Marmara Üniversitesi</strong>'ndeki eğitim sürecimde lisansımı sadece üç yılda tamamladım ve <strong>bölüm birincisi</strong> olarak mezun oldum. Sonrasında akademik asistan olarak görev alıp mentorluk becerilerimi geliştirdim.",
+      ab4:"<strong>Almanca ve Arapça</strong> bilgim, uluslararası ortamlarda daha etkili hareket etmemi sağlıyor. Benim için yazılım mühendisliği; <strong>karmaşık sistemleri analiz etmek ve sürdürülebilir çözümler üretmek</strong> demek.",
+      ak1:"Akademi",ak2:"Profesyonel Gelişim Programı",ak3:"Uygulamalı teknoloji, sistem düşüncesi ve pratik teslim becerilerine odaklandı.",
+      ex1t:"Yazılım Destek &amp; Implementasyon Mühendisi",ex1c:"Globit · İstanbul, Türkiye",ex1d:"Kritik bankacılık ve trading sistemlerini geliştiriyor, entegre ediyor ve sürdürüyorum. Finans kuruluşları arasındaki veri akışlarını yönetiyor, karmaşık mimarileri sadeleştiriyor ve ihtiyaca özel çözümler sunuyorum. Ana odağım sistem entegrasyonu, veri yönetimi ve finansal raporlama.",
+      ex2t:"Akademik Asistan",ex2c:"Marmara Üniversitesi · İstanbul, Türkiye",ex2d:"Öğrencilere teknik konularda rehberlik ettim, karmaşık bilgileri etkili biçimde aktardım ve akademik araştırmalar eşliğinde güçlü mentorluk ve liderlik becerileri geliştirdim.",
+      ex3t:"İş Analisti",ex3c:"Universal Yazılım A.Ş. · İstanbul, Türkiye",ex3d:"Büyük ölçekli entegrasyon projelerinde aktif rol aldım. Teknik uygulama ile iş ihtiyaçları arasındaki boşluğu kapatarak gereksinim analizi ve paydaş iletişimi yeteneklerimi güçlendirdim.",
+      ufo1:"Oynamak için tıkla",ufo2:"UFO Kaçışı",gs1:"Skor",gc1:"◀ Sol",gc2:"Sağ ▶",gn1:"Hareket için ← → veya A / D kullan · Mobilde aşağıdaki butonları kullan. Asteroit ve uydulardan kaç.",
+      gh1:"SKOR",gh2:"EN İYİ",go1:"Oyun Bitti",go2:"Yeniden başlamak için UFO’ya tekrar tıkla",
+      bmh:"Blog Yazısı Ekle",bl1:"Emoji",bl2:"Başlık",bl3:"Kategori",bl4:"Tarih",bl5:"Özet",bl6:"Bağlantı (isteğe bağlı)",bl7:"Vazgeç",bl8:"💾 Kaydet",
+      bph1:"Yazı başlığı",bph2:"Teknoloji",bph3:"Kısa açıklama...",bph4:"https://..."},
+  de:{na:"Über mich",ne:"Erfahrung",np:"Projekte",nb:"Blog",nc:"Kontakt",
+      ro:"Software Support &amp; Implementation Engineer · <span>Globit</span>",
+      hd:"An der Schnittstelle von Technologie und Finanzen — Entwicklung, Integration und Führung kritischer Bank- und Handelssysteme.",
+      c1:"Erfahrung ansehen",c2:"Kontakt aufnehmen",cp:"Aktuelle Position",
+      at:"Wer ich bin",et:"Ausbildung",ed:"Wirtschaftsinformatik",
+      en2:"In 3 Jahren abgeschlossen · Jahrgangsbester · Wissenschaftlicher Assistent",
+      lt:"Sprachen",ln:"Muttersprache",lf:"Fließend",lp:"Professionell",li:"Mittelstufe",
+      xt:"Berufserfahrung",pt:"Ausgewählte Projekte",blt:"Neueste Beiträge",
+      wl:"In Bearbeitung",wp:"Projekte werden bald hinzugefügt.",wb:"Blogbeiträge werden vorbereitet.",
+      ct:"Kontakt aufnehmen",em:"E-Mail",lo:"Standort",lc:"Istanbul, Türkei · Remote-freundlich",
+      fr:"Alle Rechte vorbehalten.",rm:"Weiterlesen →",
+      sv1:"Lokale Aufrufe",sv1e:"Nur in diesem Browser",sv2:"Sitzungsaufrufe",sv2e:"Vorschau-Zähler",
+      ab1:"Ich bin ein Ingenieur an der Schnittstelle von <strong>Technologie und Finanzen</strong> — jemand, der Systeme nicht nur nutzt, sondern sie versteht, verbessert und führt.",
+      ab2:"Derzeit arbeite ich als <strong>Software Support &amp; Implementation Engineer bei Globit</strong>, wo ich für die Entwicklung, Integration und Wartung kritischer Bank- und Handelssysteme verantwortlich bin. Meine Kernstärken liegen in <strong>Systemintegration, Datenmanagement und Finanzreporting</strong>.",
+      ab3:"Während meines Studiums an der <strong>Marmara-Universität</strong> schloss ich mein Studium in nur drei Jahren ab und wurde <strong>Jahrgangsbester meines Fachbereichs</strong>. Später arbeitete ich als wissenschaftlicher Assistent und entwickelte starke Mentoring-Fähigkeiten.",
+      ab4:"Meine Kenntnisse in <strong>Deutsch und Arabisch</strong> helfen mir, in internationalen Umgebungen effektiv zu arbeiten. Für mich bedeutet Software Engineering, <strong>komplexe Systeme zu analysieren und nachhaltige Lösungen zu entwickeln</strong>.",
+      ak1:"Akademi",ak2:"Berufliches Entwicklungsprogramm",ak3:"Fokus auf angewandte Technologie, Systemdenken und praktische Umsetzung.",
+      ex1t:"Software Support &amp; Implementation Engineer",ex1c:"Globit · Istanbul, Türkei",ex1d:"Entwicklung, Integration und Wartung kritischer Bank- und Handelssysteme. Verwaltung von Datenflüssen zwischen Finanzinstituten, Vereinfachung komplexer Architekturen und Bereitstellung maßgeschneiderter Lösungen. Fokus auf Systemintegration, Datenmanagement und Finanzreporting.",
+      ex2t:"Wissenschaftlicher Assistent",ex2c:"Marmara-Universität · Istanbul, Türkei",ex2d:"Ich betreute Studierende in technischen Themen, vermittelte komplexes Wissen effektiv und entwickelte starke Mentoring- und Führungsfähigkeiten parallel zur Forschung.",
+      ex3t:"Business Analyst",ex3c:"Universal Yazılım A.Ş. · Istanbul, Türkei",ex3d:"Ich übernahm eine aktive Rolle in großen Integrationsprojekten. Dabei schlug ich die Brücke zwischen technischer Umsetzung und geschäftlichen Anforderungen und stärkte meine Fähigkeiten in Anforderungsanalyse und Stakeholder-Kommunikation.",
+      ufo1:"Zum Spielen klicken",ufo2:"UFO Run",gs1:"Punktzahl",gc1:"◀ Links",gc2:"Rechts ▶",gn1:"Nutze ← → oder A / D zum Bewegen · Auf Mobilgeräten die Tasten unten verwenden. Weiche Asteroiden und Satelliten aus.",
+      gh1:"PUNKTE",gh2:"BESTE",go1:"Spiel vorbei",go2:"Klicke erneut auf das UFO, um neu zu starten",
+      bmh:"Blogbeitrag hinzufügen",bl1:"Emoji",bl2:"Titel",bl3:"Kategorie",bl4:"Datum",bl5:"Auszug",bl6:"Link (optional)",bl7:"Abbrechen",bl8:"💾 Speichern",
+      bph1:"Beitragstitel",bph2:"Technologie",bph3:"Kurze Beschreibung...",bph4:"https://..."}
+};
 
-  const STORAGE_KEYS = {
-    theme: 'srcndzl_theme',
-    lang: 'srcndzl_lang',
-    arcade: 'srcndzl_arcade_analytics_v1',
-    questions: 'srcndzl_ai_questions_v1'
-  };
+let lg='en', dk=true;
+const g=k=>(TX[lg]||TX.en)[k]||TX.en[k]||k;
 
-  const LANG = {
-    en: {
-      aiTitle: 'Ask me a question for AI',
-      aiSubtitle: 'Your question is saved locally in this browser.',
-      aiPlaceholder: 'Ask something about me, projects, or this site...',
-      aiButton: 'Send',
-      aiSaved: 'Thanks. Your question has been saved. I will review it and get back to you soon.',
-      aiEmpty: 'Please write a question first.',
-      aiDefault: 'When you ask a question, I save it here and show a short note saying I will review it soon.',
-      showQuestions: 'Show Questions',
-      hideQuestions: 'Hide Questions',
-      score: 'Score',
-      best: 'Best',
-      noteUfo: 'UFO: use left / right only. Avoid falling obstacles.',
-      noteSnake: 'Snake: use up / down / left / right. Mobile controls are enabled.',
-      noteFlappy: 'Flappy: tap the flap button, canvas, or press space.',
-      status: 'Games switch cleanly. Previous game stops automatically.'
+let aiHelperVisible=true;
+
+function getAiLangPack(){
+  const packs={
+    en:{
+      title:'Ask me a question for AI',
+      sub:'Your question is saved locally.',
+      ph:'Ask something about me, projects, or this site...',
+      send:'Send',
+      response:'Ask a question and I will log it here. You will see a note saying I will review it and get back to you soon.',
+      saved:'Thanks. Your question has been saved. I will review it and get back to you soon.',
+      empty:'Please write a question first.',
+      hide:'✕',
+      show:'🤖'
     },
-    tr: {
-      aiTitle: 'Yapay zekâ için bana soru sor',
-      aiSubtitle: 'Sorun bu tarayıcıda yerel olarak kaydedilir.',
-      aiPlaceholder: 'Benim hakkımda, projelerim veya bu siteyle ilgili bir soru sor...',
-      aiButton: 'Gönder',
-      aiSaved: 'Teşekkürler. Sorunuz kaydedildi. Yakında inceleyip sizi bilgilendireceğim.',
-      aiEmpty: 'Lütfen önce bir soru yazın.',
-      aiDefault: 'Bir soru sorduğunda burada kaydederim ve yakında inceleyip sizi bilgilendireceğim mesajını gösteririm.',
-      showQuestions: 'Soruları Göster',
-      hideQuestions: 'Soruları Gizle',
-      score: 'Skor',
-      best: 'En İyi',
-      noteUfo: 'UFO: sadece sol / sağ kullan. Düşen engellerden kaç.',
-      noteSnake: 'Yılan: yukarı / aşağı / sol / sağ kullan. Mobil kontroller açık.',
-      noteFlappy: 'Flappy: flap düğmesi, tuval veya boşluk tuşu ile zıpla.',
-      status: 'Oyun değiştirince eski oyun otomatik durur.'
+    tr:{
+      title:'Yapay zekâ için bana soru sor',
+      sub:'Sorun tarayıcıda yerel olarak kaydedilir.',
+      ph:'Benim hakkımda, projelerim veya bu siteyle ilgili bir soru sor...',
+      send:'Gönder',
+      response:'Bir soru sor; burada kaydedeyim. Yakında inceleyip sizi bilgilendireceğim.',
+      saved:'Teşekkürler. Sorunuz kaydedildi. Yakında inceleyip sizi bilgilendireceğim.',
+      empty:'Lütfen önce bir soru yazın.',
+      hide:'✕',
+      show:'🤖'
     },
-    de: {
-      aiTitle: 'Stell mir eine Frage für KI',
-      aiSubtitle: 'Deine Frage wird lokal in diesem Browser gespeichert.',
-      aiPlaceholder: 'Frag etwas über mich, meine Projekte oder diese Website...',
-      aiButton: 'Senden',
-      aiSaved: 'Danke. Deine Frage wurde gespeichert. Ich prüfe sie bald und gebe dir Bescheid.',
-      aiEmpty: 'Bitte zuerst eine Frage eingeben.',
-      aiDefault: 'Wenn du eine Frage stellst, speichere ich sie hier und zeige eine kurze Notiz an.',
-      showQuestions: 'Fragen anzeigen',
-      hideQuestions: 'Fragen ausblenden',
-      score: 'Punktzahl',
-      best: 'Bestwert',
-      noteUfo: 'UFO: nur links / rechts nutzen. Fallenden Hindernissen ausweichen.',
-      noteSnake: 'Snake: oben / unten / links / rechts nutzen. Mobile Steuerung aktiv.',
-      noteFlappy: 'Flappy: Flap-Taste, Canvas oder Leertaste nutzen.',
-      status: 'Beim Spielwechsel stoppt das vorige Spiel automatisch.'
+    de:{
+      title:'Stell mir eine Frage für KI',
+      sub:'Deine Frage wird lokal im Browser gespeichert.',
+      ph:'Frage etwas über mich, meine Projekte oder diese Website...',
+      send:'Senden',
+      response:'Stelle eine Frage; ich speichere sie hier. Ich prüfe sie bald und informiere dich.',
+      saved:'Danke. Deine Frage wurde gespeichert. Ich werde sie bald prüfen und dich informieren.',
+      empty:'Bitte zuerst eine Frage eingeben.',
+      hide:'✕',
+      show:'🤖'
     }
   };
+  return packs[lg] || packs.en;
+}
 
-  let currentLang = localStorage.getItem(STORAGE_KEYS.lang) || 'en';
-  let currentTheme = localStorage.getItem(STORAGE_KEYS.theme) || document.documentElement.getAttribute('data-theme') || 'dark';
-
-  function langPack() {
-    return LANG[currentLang] || LANG.en;
+function updateAiHelperLanguage(){
+  const p=getAiLangPack();
+  if(aiHelperTitle) aiHelperTitle.textContent=p.title;
+  if(aiHelperSubtext) aiHelperSubtext.textContent=p.sub;
+  if(aiQuestionInput) aiQuestionInput.placeholder=p.ph;
+  if(aiSendBtn) aiSendBtn.textContent=p.send;
+  if(aiQuestionResponse && !aiQuestionResponse.dataset.userSet){
+    aiQuestionResponse.textContent=p.response;
   }
+  if(aiHideBtn) aiHideBtn.textContent=aiHelperVisible ? p.hide : p.show;
+}
 
-  function saveJSON(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-  }
-  function loadJSON(key, fallback) {
-    try {
-      const raw = localStorage.getItem(key);
-      return raw ? JSON.parse(raw) : fallback;
-    } catch {
-      return fallback;
+function setAiHelperVisible(visible){
+  aiHelperVisible=!!visible;
+  if(aiHelper){
+    if(aiHelperVisible){
+      aiHelper.classList.remove('hidden');
+      aiHelper.style.display='block';
+      aiHelper.style.visibility='visible';
+      aiHelper.style.opacity='1';
+      aiHelper.style.pointerEvents='auto';
+    }else{
+      aiHelper.classList.add('hidden');
+      aiHelper.style.display='none';
+      aiHelper.style.visibility='hidden';
+      aiHelper.style.opacity='0';
+      aiHelper.style.pointerEvents='none';
     }
   }
-  function todayStr(offset=0){
-    const d = new Date();
-    d.setDate(d.getDate() + offset);
-    return d.toISOString().slice(0,10);
+  if(aiOpenBtn){
+    if(aiHelperVisible){
+      aiOpenBtn.classList.add('hidden');
+      aiOpenBtn.style.display='none';
+    }else{
+      aiOpenBtn.classList.remove('hidden');
+      aiOpenBtn.style.display='flex';
+    }
+  }
+  updateAiHelperLanguage();
+}
+
+function L(l){
+  lg=l;
+  document.documentElement.lang=l;
+  ['len','ltr','lde'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.toggle('on', id==='l'+l);
+  });
+  document.querySelectorAll('[data-k]').forEach(el=>{
+    const k=el.getAttribute('data-k');
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') return;
+    el.innerHTML=g(k);
+  });
+  document.querySelectorAll('[data-ph]').forEach(el=>{
+    const k=el.getAttribute('data-ph');
+    el.placeholder=g(k);
+  });
+  const ship=document.getElementById('spaceShip');
+  if(ship) ship.title=g('ufo1');
+  const bmh=document.getElementById('bmh');
+  if(bmh && !document.getElementById('bmod').classList.contains('open')) bmh.textContent=g('bmh');
+  RC();
+  renderArcadeAnalytics();
+updateGameLanguageUI();
+updateAiHelperLanguage();
+renderAiQuestionAnalytics();
+}
+
+function TH(){
+  dk=!dk;
+  document.documentElement.setAttribute('data-theme',dk?'dark':'light');
+  document.getElementById('tb').textContent=dk?'🌙':'☀️';
+}
+
+/* Device */
+(function(){
+  const m=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  const el=document.getElementById('dl');
+  if(el) el.textContent=m?'📱 Mobile':'🖥️ Web';
+  if(m){
+    const p=document.querySelector('.dp');
+    if(p){p.style.borderColor='rgba(34,197,94,.35)';p.style.color='#22c55e';}
+  }
+})();
+
+/* Nav */
+const hb=document.getElementById('hb');
+const dr=document.getElementById('dr');
+if(hb) hb.addEventListener('click',()=>dr.classList.toggle('open'));
+function CD(){if(dr) dr.classList.remove('open');}
+
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  const sb=document.getElementById('sb');
+  const bt=document.getElementById('bt');
+  if(sb) sb.style.width=(window.scrollY/(d.scrollHeight-d.clientHeight)*100)+'%';
+  if(bt) bt.classList.toggle('show',window.scrollY>400);
+  let cur='';
+  document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-90)cur=s.id;});
+  document.querySelectorAll('.nl a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
+});
+
+/* Reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:0.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* ══ CONTENT ══ */
+function RC(){
+  const pr=JSON.parse(localStorage.getItem('sd_projects')||'[]');
+  const pw=document.getElementById('pwip');
+  const pg=document.getElementById('pgrid');
+  if(pw) pw.style.display=pr.length?'none':'flex';
+  if(pg){
+    pg.innerHTML='';
+    pr.forEach(p=>{
+      const tags=(p.tags||[]).map((t,i)=>`<span class="ptag">${t}</span>`).join('');
+      const d=document.createElement('div');d.className='pc2';
+      d.innerHTML=`<div class="pio">${p.icon||'🚀'}</div><div class="ptit">${p.title}</div><div class="pde">${p.desc||''}</div><div class="ptags">${tags}</div>`;
+      pg.appendChild(d);
+    });
+  }
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  const bw=document.getElementById('bwip');
+  const bg=document.getElementById('bgrid');
+  if(bw) bw.style.display=bl.length?'none':'flex';
+  if(bg){
+    bg.innerHTML='';
+    bl.forEach((b,i)=>{
+      const feat=i===0;
+      const a=document.createElement('a');
+      a.className='bc'+(feat?' f':'');
+      a.href=b.link||'#';
+      if(b.link) a.target='_blank';
+      a.innerHTML=`<div class="bth">${b.icon||'📝'}</div><div class="bco"><div class="bm"><span class="bcat">${b.cat||''}</span><span class="bdt">${b.date||''}</span></div><div class="btit">${b.title}</div><div class="bex">${b.excerpt||''}</div><span class="brm">${g('rm')}</span><div class="ber"><button class="bab" onclick="event.preventDefault();OBM(${i})">✏️ Edit</button><button class="bab dl" onclick="event.preventDefault();DB(${i})">🗑️ Del</button></div></div>`;
+      bg.appendChild(a);
+    });
+  }
+}
+
+/* ══ BLOG CRUD ══ */
+let ebi=null;
+function OBM(idx){
+  ebi=idx==null?null:idx;
+  const today=new Date().toISOString().split('T')[0];
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  const b=idx!=null?bl[idx]:null;
+  document.getElementById('bmh').textContent=b ? (lg==='tr' ? 'Yazıyı Düzenle' : lg==='de' ? 'Beitrag bearbeiten' : 'Edit Post') : g('bmh');
+  document.getElementById('bmi').value=b?b.icon||'📝':'📝';
+  document.getElementById('bmt').value=b?b.title:'';
+  document.getElementById('bmc').value=b?b.cat||'':'';
+  document.getElementById('bmd').value=b?b.dateRaw||today:today;
+  document.getElementById('bme').value=b?b.excerpt||'':'';
+  document.getElementById('bml').value=b?b.link||'':'';
+  document.getElementById('bmod').classList.add('open');
+}
+function CBM(){document.getElementById('bmod').classList.remove('open');}
+function SB(){
+  const icon=document.getElementById('bmi').value.trim()||'📝';
+  const title=document.getElementById('bmt').value.trim();
+  const cat=document.getElementById('bmc').value.trim()||(lg==='tr'?'Blog':lg==='de'?'Blog':'Blog');
+  const dateRaw=document.getElementById('bmd').value;
+  const excerpt=document.getElementById('bme').value.trim();
+  const link=document.getElementById('bml').value.trim();
+  if(!title) return;
+  const date=dateRaw?new Date(dateRaw).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):'';
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  const post={icon,title,cat,dateRaw,date,excerpt,link};
+  if(ebi==null) bl.push(post); else bl[ebi]=post;
+  localStorage.setItem('sd_blogs',JSON.stringify(bl));
+  CBM(); RC();
+}
+function DB(i){
+  if(!confirm(lg==='tr' ? 'Bu yazı silinsin mi?' : lg==='de' ? 'Diesen Beitrag löschen?' : 'Delete this post?')) return;
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  bl.splice(i,1);
+  localStorage.setItem('sd_blogs',JSON.stringify(bl));
+  RC();
+}
+document.getElementById('bmod').addEventListener('click',function(e){if(e.target===this)CBM();});
+
+/* ══ LOCAL STATS + LOCATION ══ */
+function initLocalStats(){
+  const localKey='sd_local_views';
+  const sessionKey='sd_session_views';
+  let localViews=Number(localStorage.getItem(localKey)||'0')+1;
+  let sessionViews=Number(sessionStorage.getItem(sessionKey)||'0')+1;
+  localStorage.setItem(localKey,String(localViews));
+  sessionStorage.setItem(sessionKey,String(sessionViews));
+  const lv=document.getElementById('localVisitorCount');
+  const sv=document.getElementById('sessionVisitorCount');
+  if(lv) lv.textContent=localViews;
+  if(sv) sv.textContent=sessionViews;
+}
+
+
+function updateGameLanguageUI(){
+  const scoreLabel=document.getElementById('scoreLabel');
+  const bestLabel=document.getElementById('bestLabel');
+  const title=document.getElementById('gameTitle');
+  const play=document.getElementById('ufoPlayText');
+  const run=document.getElementById('ufoRunText');
+  const upBtn=document.getElementById('moveUpBtn');
+  const leftBtn=document.getElementById('moveLeftBtn');
+  const flapButton=document.getElementById('flapBtn');
+  const rightBtn=document.getElementById('moveRightBtn');
+  const downBtn=document.getElementById('moveDownBtn');
+  if(scoreLabel) scoreLabel.textContent='Score';
+  if(bestLabel) bestLabel.textContent='Best';
+  if(title) title.textContent='Mini Arcade';
+  if(play) play.textContent='Mini Arcade';
+  if(run) run.textContent='3 Games';
+  if(upBtn) upBtn.textContent='▲ Up';
+  if(leftBtn) leftBtn.textContent='◀ Left';
+  if(flapButton) flapButton.textContent='Tap / Flap';
+  if(rightBtn) rightBtn.textContent='Right ▶';
+  if(downBtn) downBtn.textContent='▼ Down';
+}
+
+/* ══ MINI ARCADE ══ */
+const gameModal=document.getElementById('gameModal');
+const shipTrigger=document.getElementById('spaceShip');
+const gameCanvas=document.getElementById('spaceGame');
+const scoreEl=document.getElementById('spaceScore');
+const bestEl=document.getElementById('bestScore');
+const titleEl=document.getElementById('gameTitle');
+const noteEl=document.getElementById('gameNote');
+const statusEl=document.getElementById('gameStatus');
+const controlsWrap=document.getElementById('gameControls');
+const moveUpBtn=document.getElementById('moveUpBtn');
+const moveLeftBtn=document.getElementById('moveLeftBtn');
+const flapBtn=document.getElementById('flapBtn');
+const moveRightBtn=document.getElementById('moveRightBtn');
+const moveDownBtn=document.getElementById('moveDownBtn');
+const gctx=gameCanvas ? gameCanvas.getContext('2d') : null;
+
+const arcade={
+  active:'ufo',
+  frame:null,
+  timer:null,
+  gameOver:false,
+  score:0,
+  best:0,
+  bestSession:0,
+  cleanup:null,
+  state:{},
+  controls:{left:false,right:false},
+  counted:false,
+  interacted:false
+};
+const birdImage=new Image();
+birdImage.src='data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><ellipse cx="30" cy="34" rx="18" ry="16" fill="#fbbf24"/><circle cx="40" cy="26" r="10" fill="#fcd34d"/><circle cx="43" cy="24" r="2.5" fill="#111827"/><polygon points="49,27 60,31 49,35" fill="#f97316"/><path d="M16 31c-6-5-10-3-10 0s4 5 10 0z" fill="#f59e0b"/><path d="M25 46c4 5 12 5 16 0" fill="none" stroke="#92400e" stroke-width="3" stroke-linecap="round"/><path d="M18 22c4-7 14-11 23-8" fill="none" stroke="#fff7ed" stroke-width="3" stroke-linecap="round" opacity=".8"/></svg>`);
+
+const ARCADE_ANALYTICS_KEY='sd_arcade_analytics_v1';
+const analyticsDock=document.getElementById('analyticsDock');
+const analyticsPanel=document.getElementById('analyticsPanel');
+const analyticsToggleBtn=document.getElementById('analyticsToggle');
+const analyticsRows=document.getElementById('analyticsRows');
+const analyticsChart=document.getElementById('analyticsChart');
+const analyticsChartCtx=analyticsChart ? analyticsChart.getContext('2d') : null;
+const questionToggleBtn=document.getElementById('questionToggleBtn');
+const questionList=document.getElementById('questionList');
+const aiQuestionForm=document.getElementById('aiQuestionForm');
+const aiQuestionInput=document.getElementById('aiQuestionInput');
+const aiQuestionResponse=document.getElementById('aiQuestionResponse');
+
+if(aiHideBtn && !aiHideBtn.dataset.bound){
+  aiHideBtn.dataset.bound='1';
+  aiHideBtn.addEventListener('click',()=>setAiHelperVisible(false));
+}
+if(aiOpenBtn && !aiOpenBtn.dataset.bound){
+  aiOpenBtn.dataset.bound='1';
+  aiOpenBtn.addEventListener('click',()=>setAiHelperVisible(true));
+}
+const aiHelper=document.getElementById('aiHelper');
+const aiOpenBtn=document.getElementById('aiOpenBtn');
+const aiHideBtn=document.getElementById('aiHideBtn');
+const aiHelperTitle=document.getElementById('aiHelperTitle');
+const aiHelperSubtext=document.getElementById('aiHelperSubtext');
+const aiSendBtn=document.getElementById('aiSendBtn');
+const GAME_LABELS={ufo:'🛸 UFO Run',snake:'🐍 Snake',flappy:'🐦 Flappy'};
+const AI_QUESTIONS_KEY='sd_ai_questions_v1';
+
+function localDayKey(offset=0){
+  const d=new Date();
+  d.setHours(0,0,0,0);
+  d.setDate(d.getDate()+offset);
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function defaultAnalytics(){
+  return {
+    games:{
+      ufo:{plays:0,best:0,days:{}},
+      snake:{plays:0,best:0,days:{}},
+      flappy:{plays:0,best:0,days:{}}
+    }
+  };
+}
+function loadArcadeAnalytics(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(ARCADE_ANALYTICS_KEY)||'null');
+    const base=defaultAnalytics();
+    if(!parsed || typeof parsed!=='object') return base;
+    ['ufo','snake','flappy'].forEach(game=>{
+      const src=(parsed.games&&parsed.games[game])||{};
+      base.games[game]={
+        plays:Number(src.plays)||0,
+        best:Number(src.best)||0,
+        days:(src.days&&typeof src.days==='object')?src.days:{}
+      };
+    });
+    return base;
+  }catch(e){
+    return defaultAnalytics();
+  }
+}
+function saveArcadeAnalytics(data){
+  localStorage.setItem(ARCADE_ANALYTICS_KEY, JSON.stringify(data));
+}
+function loadAiQuestions(){
+  try{
+    const parsed=JSON.parse(localStorage.getItem(AI_QUESTIONS_KEY)||'[]');
+    return Array.isArray(parsed) ? parsed : [];
+  }catch(e){
+    return [];
+  }
+}
+function saveAiQuestions(items){
+  localStorage.setItem(AI_QUESTIONS_KEY, JSON.stringify(items.slice(0,10)));
+}
+function recordAiQuestion(question){
+  const now=new Date();
+  const stamp=now.toLocaleString('en-GB',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+  const day=localDayKey();
+  const items=loadAiQuestions();
+  items.unshift({question, stamp, day});
+  saveAiQuestions(items);
+}
+function renderAiQuestionAnalytics(){
+  const items=loadAiQuestions();
+  const countEl=document.getElementById('analyticsQuestionCount');
+  const lastDayEl=document.getElementById('analyticsLastQuestionDay');
+  if(countEl) countEl.textContent=String(items.length);
+  if(lastDayEl) lastDayEl.textContent=items[0] ? items[0].stamp : '-';
+  if(questionList){
+    questionList.innerHTML='';
+    items.forEach((item,idx)=>{
+      const row=document.createElement('div');
+      row.className='question-item';
+      row.innerHTML=`<b>#${idx+1} · ${item.stamp}</b><span>${item.question}</span>`;
+      questionList.appendChild(row);
+    });
+    if(!items.length){
+      questionList.innerHTML='<div class="question-item"><span>No questions yet.</span></div>';
+    }
+  }
+}
+function recordArcadePlay(game){
+  const data=loadArcadeAnalytics();
+  const day=localDayKey();
+  const entry=data.games[game];
+  entry.plays += 1;
+  entry.days[day]=(Number(entry.days[day])||0)+1;
+  saveArcadeAnalytics(data);
+  renderArcadeAnalytics();
+}
+function recordArcadeBest(game, score){
+  const data=loadArcadeAnalytics();
+  const entry=data.games[game];
+  if(score>entry.best){
+    entry.best=score;
+    saveArcadeAnalytics(data);
+    renderArcadeAnalytics();
+  }
+}
+
+function arcadeMarkPlayed(){
+  if(arcade.counted) return;
+  arcade.counted=true;
+  arcade.interacted=true;
+  recordArcadePlay(arcade.active);
+}
+function arcadeRegisterScore(value){
+  arcade.interacted=true;
+  if(typeof value==='number' && value>arcade.bestSession){
+    arcade.bestSession=value;
+  }
+  recordArcadeBest(arcade.active, arcade.bestSession);
+  renderArcadeAnalytics();
+}
+function toggleAnalytics(force){
+  if(!analyticsDock) return;
+  const open=typeof force==='boolean' ? force : !analyticsDock.classList.contains('open');
+  analyticsDock.classList.toggle('open', open);
+  if(analyticsPanel) analyticsPanel.setAttribute('aria-hidden', open ? 'false' : 'true');
+  if(analyticsToggleBtn){
+    analyticsToggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    analyticsToggleBtn.textContent=open ? '▶' : '◀';
+  }
+  if(open){ renderArcadeAnalytics(); renderAiQuestionAnalytics(); }
+}
+function renderArcadeAnalytics(){
+  const data=loadArcadeAnalytics();
+  const today=localDayKey();
+  const yesterday=localDayKey(-1);
+  const games=['ufo','snake','flappy'];
+  const totals=games.map(game=>data.games[game].plays);
+  const totalPlays=totals.reduce((a,b)=>a+b,0);
+  const todayPlays=games.reduce((sum,game)=>sum+(Number(data.games[game].days[today])||0),0);
+  const totalEl=document.getElementById('analyticsTotalPlays');
+  const todayEl=document.getElementById('analyticsTodayPlays');
+  if(totalEl) totalEl.textContent=String(totalPlays);
+  if(todayEl) todayEl.textContent=String(todayPlays);
+
+  if(analyticsRows){
+    analyticsRows.innerHTML='';
+    games.forEach(game=>{
+      const entry=data.games[game];
+      const row=document.createElement('div');
+      row.className='analytics-row';
+      row.innerHTML=`
+        <div class="analytics-row-top">
+          <strong>${GAME_LABELS[game]}</strong>
+          <span>${entry.plays} plays</span>
+        </div>
+        <div class="analytics-meta">
+          <div><label>Today</label><b>${Number(entry.days[today])||0}</b></div>
+          <div><label>Yesterday</label><b>${Number(entry.days[yesterday])||0}</b></div>
+          <div><label>Best</label><b>${entry.best}</b></div>
+        </div>`;
+      analyticsRows.appendChild(row);
+    });
   }
 
-  function defaultArcadeData() {
-    return {
-      games: {
-        ufo: { total: 0, best: 0, byDay: {} },
-        snake: { total: 0, best: 0, byDay: {} },
-        flappy: { total: 0, best: 0, byDay: {} }
+  if(analyticsChartCtx && analyticsChart){
+    const ctx=analyticsChartCtx;
+    const w=analyticsChart.width;
+    const h=analyticsChart.height;
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle='rgba(8,10,15,1)';
+    ctx.fillRect(0,0,w,h);
+    const max=Math.max(1,...totals);
+    const left=38, bottom=h-28, top=18, barWidth=44, gap=32;
+    const colors=['#a78bfa','#60a5fa','#f59e0b'];
+    ctx.strokeStyle='rgba(255,255,255,.08)';
+    ctx.lineWidth=1;
+    for(let i=0;i<4;i++){
+      const y=top + ((bottom-top)/3)*i;
+      ctx.beginPath(); ctx.moveTo(left,y); ctx.lineTo(w-12,y); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(left,top); ctx.lineTo(left,bottom); ctx.lineTo(w-12,bottom); ctx.stroke();
+    games.forEach((game,i)=>{
+      const value=totals[i];
+      const x=left+22 + i*(barWidth+gap);
+      const barH=((bottom-top-10)*value)/max;
+      const y=bottom-barH;
+      const grad=ctx.createLinearGradient(x,y,x,y+barH);
+      grad.addColorStop(0,colors[i]);
+      grad.addColorStop(1,'rgba(255,255,255,.2)');
+      ctx.fillStyle=grad;
+      ctx.fillRect(x,y,barWidth,barH);
+      ctx.fillStyle='#e8eaf0';
+      ctx.font='700 12px DM Sans, sans-serif';
+      ctx.textAlign='center';
+      ctx.fillText(String(value), x+barWidth/2, y-6);
+      ctx.fillStyle='#9ba3b8';
+      ctx.font='600 11px DM Sans, sans-serif';
+      ctx.fillText(game==='ufo'?'UFO':game==='snake'?'Snake':'Flappy', x+barWidth/2, bottom+16);
+    });
+    ctx.textAlign='left';
+  }
+  renderAiQuestionAnalytics();
+}
+
+
+function arcadeSetScore(v){
+  arcade.score=v;
+  if(scoreEl) scoreEl.textContent=String(v);
+}
+function arcadeLoadBest(game){
+  arcade.best=Math.max(Number(localStorage.getItem('sd_best_'+game)||0),0);
+  if(bestEl) bestEl.textContent=String(arcade.best);
+}
+function arcadeSaveBest(){
+  if(arcade.score>arcade.best){
+    arcade.best=arcade.score;
+    localStorage.setItem('sd_best_'+arcade.active, String(arcade.best));
+    if(bestEl) bestEl.textContent=String(arcade.best);
+    recordArcadeBest(arcade.active, arcade.best);
+  }
+}
+function arcadeStop(){
+  if(arcade.frame){ cancelAnimationFrame(arcade.frame); arcade.frame=null; }
+  if(arcade.timer){ clearInterval(arcade.timer); arcade.timer=null; }
+  if(typeof arcade.cleanup==='function'){ arcade.cleanup(); arcade.cleanup=null; }
+  arcade.controls.left=false;
+  arcade.controls.right=false;
+}
+function clearGameCanvas(){
+  if(gctx) gctx.clearRect(0,0,gameCanvas.width,gameCanvas.height);
+}
+function setActiveGameCard(game){
+  document.querySelectorAll('.game-card-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.game===game));
+}
+function setGameControlsVisible(show){
+  if(controlsWrap) controlsWrap.classList.toggle('hidden', !show);
+}
+function setGameControlsMode(mode){
+  setGameControlsVisible(!!mode);
+  if(controlsWrap) controlsWrap.setAttribute('data-mode', mode || '');
+}
+function openArcade(){
+  if(!gameModal || !gctx) return;
+  gameModal.classList.add('open');
+  startArcadeGame(arcade.active);
+}
+function closeArcade(){
+  arcadeStop();
+  if(gameModal) gameModal.classList.remove('open');
+}
+function startArcadeGame(game){
+  if(!gctx) return;
+  arcadeStop();
+  clearGameCanvas();
+  arcade.active=game;
+  arcade.gameOver=false;
+  arcade.counted=false;
+  arcade.interacted=false;
+  arcade.bestSession=0;
+  arcadeSetScore(0);
+  arcadeLoadBest(game);
+  setActiveGameCard(game);
+  renderArcadeAnalytics();
+  if(game==='ufo') initUfoGame();
+  else if(game==='snake') initSnakeGame();
+  else initFlappyGame();
+}
+
+function drawOverlayGameOver(message){
+  gctx.fillStyle='rgba(2,4,10,.72)';
+  gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+  gctx.fillStyle='#fff';
+  gctx.font='700 30px DM Sans, sans-serif';
+  gctx.fillText('Game Over', 120, 214);
+  gctx.fillStyle='#f59e0b';
+  gctx.font='700 18px DM Sans, sans-serif';
+  gctx.fillText('Score: '+arcade.score, 168, 248);
+  gctx.fillStyle='#9ba3b8';
+  gctx.font='500 14px DM Sans, sans-serif';
+  gctx.fillText(message, 92, 282);
+}
+
+/* UFO RUN */
+function initUfoGame(){
+  titleEl.textContent='UFO Run';
+  noteEl.textContent='Use ← → or A / D to move. On mobile, use the buttons below. Avoid asteroids and satellites.';
+  statusEl.textContent='Original UFO game preserved.';
+  setGameControlsMode('ufo');
+
+  const state={
+    laneStars:Array.from({length:85},()=>({
+      x:Math.random()*gameCanvas.width,
+      y:Math.random()*gameCanvas.height,
+      r:Math.random()*1.9+0.3,
+      spd:Math.random()*1.8+0.7,
+      a:Math.random()*0.55+0.25
+    })),
+    nebulaDots:Array.from({length:18},()=>({
+      x:Math.random()*gameCanvas.width,
+      y:Math.random()*gameCanvas.height,
+      r:Math.random()*55+25,
+      c:Math.random()>0.5 ? '124,58,237' : '59,130,246',
+      a:Math.random()*0.10+0.03
+    })),
+    ufo:{x:gameCanvas.width/2-26,y:gameCanvas.height-92,w:52,h:34,speed:5.4,bob:0},
+    obstacles:[],
+    tick:0
+  };
+  arcade.state=state;
+
+  function spawnObstacle(){
+    const isAsteroid=Math.random()>0.38;
+    const size=isAsteroid ? 36+Math.random()*16 : 28+Math.random()*10;
+    state.obstacles.push({
+      x:Math.random()*(gameCanvas.width-size-22)+11,
+      y:-size-10,
+      w:size,
+      h:size,
+      speed:3.2+Math.random()*1.6+Math.min(arcade.score/300,1.8),
+      type:isAsteroid?'asteroid':'satellite',
+      rot:Math.random()*Math.PI
+    });
+  }
+  function drawBackground(){
+    gctx.clearRect(0,0,gameCanvas.width,gameCanvas.height);
+    const grad=gctx.createLinearGradient(0,0,0,gameCanvas.height);
+    grad.addColorStop(0,'#090b16');
+    grad.addColorStop(0.45,'#050812');
+    grad.addColorStop(1,'#010208');
+    gctx.fillStyle=grad;
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+
+    state.nebulaDots.forEach(n=>{
+      const ng=gctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
+      ng.addColorStop(0,`rgba(${n.c},${n.a})`);
+      ng.addColorStop(1,'rgba(0,0,0,0)');
+      gctx.fillStyle=ng;
+      gctx.beginPath();
+      gctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      gctx.fill();
+    });
+
+    state.laneStars.forEach(st=>{
+      st.y += st.spd;
+      if(st.y>gameCanvas.height+4){
+        st.y=-8;
+        st.x=Math.random()*gameCanvas.width;
+        st.r=Math.random()*1.9+0.3;
+        st.spd=Math.random()*1.8+0.7;
+        st.a=Math.random()*0.55+0.25;
       }
-    };
-  }
-  function loadArcadeData() {
-    const data = loadJSON(STORAGE_KEYS.arcade, defaultArcadeData());
-    ['ufo','snake','flappy'].forEach(name => {
-      if (!data.games[name]) data.games[name] = { total: 0, best: 0, byDay: {} };
+      gctx.fillStyle=`rgba(255,255,255,${st.a})`;
+      gctx.beginPath();
+      gctx.arc(st.x,st.y,st.r,0,Math.PI*2);
+      gctx.fill();
     });
-    return data;
-  }
-  function saveArcadeData(data) { saveJSON(STORAGE_KEYS.arcade, data); }
-  function loadQuestions() {
-    const list = loadJSON(STORAGE_KEYS.questions, []);
-    return Array.isArray(list) ? list : [];
-  }
-  function saveQuestions(list) { saveJSON(STORAGE_KEYS.questions, list.slice(0, 50)); }
 
-  function recordPlay(game) {
-    const data = loadArcadeData();
-    const g = data.games[game];
-    const t = todayStr();
-    g.total += 1;
-    g.byDay[t] = (g.byDay[t] || 0) + 1;
-    saveArcadeData(data);
-    renderAnalytics();
+    gctx.strokeStyle='rgba(96,165,250,.14)';
+    gctx.lineWidth=2;
+    gctx.strokeRect(8,8,gameCanvas.width-16,gameCanvas.height-16);
   }
-  function recordBest(game, score) {
-    const data = loadArcadeData();
-    if (score > data.games[game].best) {
-      data.games[game].best = score;
-      saveArcadeData(data);
-      renderAnalytics();
+  function drawUfo(){
+    state.ufo.bob += 0.12;
+    const y=state.ufo.y + Math.sin(state.ufo.bob)*2;
+    const x=state.ufo.x;
+    gctx.save();
+    gctx.shadowColor='rgba(124,58,237,.55)';
+    gctx.shadowBlur=22;
+    const beam=gctx.createLinearGradient(x+state.ufo.w/2,y+18,x+state.ufo.w/2,y+50);
+    beam.addColorStop(0,'rgba(96,165,250,.28)');
+    beam.addColorStop(1,'rgba(96,165,250,0)');
+    gctx.fillStyle=beam;
+    gctx.beginPath();
+    gctx.moveTo(x+14,y+18);
+    gctx.lineTo(x+state.ufo.w-14,y+18);
+    gctx.lineTo(x+state.ufo.w-6,y+50);
+    gctx.lineTo(x+6,y+50);
+    gctx.closePath();
+    gctx.fill();
+
+    const dome=gctx.createRadialGradient(x+state.ufo.w/2,y+10,2,x+state.ufo.w/2,y+10,18);
+    dome.addColorStop(0,'rgba(255,255,255,.95)');
+    dome.addColorStop(1,'rgba(96,165,250,.48)');
+    gctx.fillStyle=dome;
+    gctx.beginPath();
+    gctx.ellipse(x+state.ufo.w/2,y+12,15,11,0,Math.PI,0,true);
+    gctx.fill();
+
+    const hull=gctx.createLinearGradient(x,y+16,x+state.ufo.w,y+26);
+    hull.addColorStop(0,'#f8fafc');
+    hull.addColorStop(.55,'#cbd5e1');
+    hull.addColorStop(1,'#94a3b8');
+    gctx.fillStyle=hull;
+    gctx.beginPath();
+    gctx.ellipse(x+state.ufo.w/2,y+22,26,10,0,0,Math.PI*2);
+    gctx.fill();
+
+    gctx.fillStyle='rgba(245,158,11,.95)';
+    [10,22,34].forEach(dx=>{
+      gctx.beginPath();
+      gctx.arc(x+dx,y+23,2.2,0,Math.PI*2);
+      gctx.fill();
+    });
+    gctx.restore();
+  }
+  function obstacleIcon(type,x,y,size,rot=0){
+    gctx.save();
+    gctx.translate(x+size/2,y+size/2);
+    gctx.rotate(rot);
+    if(type==='asteroid'){
+      const grad=gctx.createRadialGradient(-4,-4,3,0,0,size/2);
+      grad.addColorStop(0,'#cbd5e1');
+      grad.addColorStop(.55,'#94a3b8');
+      grad.addColorStop(1,'#475569');
+      gctx.fillStyle=grad;
+      gctx.beginPath();
+      const r=size/2;
+      gctx.moveTo(-r*0.2,-r);
+      gctx.lineTo(r*0.55,-r*0.7);
+      gctx.lineTo(r*0.92,-r*0.1);
+      gctx.lineTo(r*0.6,r*0.75);
+      gctx.lineTo(-r*0.15,r*0.96);
+      gctx.lineTo(-r*0.85,r*0.35);
+      gctx.lineTo(-r*0.7,-r*0.35);
+      gctx.closePath();
+      gctx.fill();
+      gctx.fillStyle='rgba(15,23,42,.25)';
+      gctx.beginPath(); gctx.arc(-4,-2,4,0,Math.PI*2); gctx.fill();
+      gctx.beginPath(); gctx.arc(5,6,3,0,Math.PI*2); gctx.fill();
+    }else{
+      gctx.shadowColor='rgba(96,165,250,.4)';
+      gctx.shadowBlur=12;
+      gctx.fillStyle='#cbd5e1';
+      gctx.fillRect(-3,-size/2,6,size);
+      gctx.fillStyle='#60a5fa';
+      gctx.fillRect(-size/2,-3,size,6);
+      gctx.fillStyle='#f59e0b';
+      gctx.beginPath();
+      gctx.arc(0,0,4,0,Math.PI*2);
+      gctx.fill();
+      gctx.shadowBlur=0;
     }
+    gctx.restore();
   }
-  function recordQuestion(text) {
-    const list = loadQuestions();
-    list.unshift({ text, time: new Date().toISOString() });
-    saveQuestions(list);
-    renderAnalytics();
-  }
-
-  // Theme / language
-  function TH() {
-    currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    applyTheme();
-  }
-  function applyTheme() {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    localStorage.setItem(STORAGE_KEYS.theme, currentTheme);
-    const tb = $('tb');
-    if (tb) tb.textContent = currentTheme === 'dark' ? '🌙' : '☀️';
-  }
-  function L(lang) {
-    currentLang = LANG[lang] ? lang : 'en';
-    localStorage.setItem(STORAGE_KEYS.lang, currentLang);
-    document.documentElement.lang = currentLang;
-    ['len','ltr','lde'].forEach(id => {
-      const el = $(id);
-      if (!el) return;
-      el.classList.toggle('on', (id === 'len' && currentLang === 'en') || (id === 'ltr' && currentLang === 'tr') || (id === 'lde' && currentLang === 'de'));
+  function drawObstacles(){
+    state.obstacles.forEach(ob=>{
+      ob.y += ob.speed;
+      ob.rot += ob.type==='asteroid' ? 0.02 : 0.01;
+      obstacleIcon(ob.type,ob.x,ob.y,ob.w,ob.rot);
     });
-    applyAiLanguage();
-    updateScoreLine();
-    updateGameTexts();
-    renderAnalytics();
+    state.obstacles=state.obstacles.filter(ob=>ob.y<gameCanvas.height+70);
   }
-  window.TH = TH;
-  window.L = L;
-
-  // Basic nav / utility
-  function setupShellUI() {
-    const hb = $('hb'), dr = $('dr');
-    if (hb && dr) hb.addEventListener('click', () => dr.classList.toggle('open'));
-    window.CD = () => dr && dr.classList.remove('open');
-
-    const bt = $('bt'), sb = $('sb');
-    const onScroll = () => {
-      const y = window.scrollY;
-      const h = document.documentElement.scrollHeight - window.innerHeight;
-      if (bt) bt.classList.toggle('show', y > 300);
-      if (sb) sb.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    qa('.rv').forEach(el => el.classList.add('vis'));
+  function drawHud(){
+    gctx.fillStyle='rgba(8,10,15,.62)';
+    gctx.fillRect(14,14,118,52);
+    gctx.strokeStyle='rgba(255,255,255,.08)';
+    gctx.strokeRect(14,14,118,52);
+    gctx.fillStyle='#9ba3b8';
+    gctx.font='600 11px DM Sans, sans-serif';
+    gctx.fillText('SCORE',24,34);
+    gctx.fillStyle='#fff';
+    gctx.font='700 24px DM Sans, sans-serif';
+    gctx.fillText(String(arcade.score),24,57);
   }
-
-  function removeUnwantedBlocks() {
-    const cp = qa('[data-k="cp"], [data-k="et"], [data-k="lt"]').map(el => el.closest('.ti,.lg-info,.at,.ag,.tl,.rv,div'));
-    cp.forEach(el => {
-      if (!el) return;
-      const txt = el.textContent || '';
-      if (/Current Position|Education|Languages/i.test(txt)) el.remove();
-    });
+  function rectHit(a,b){
+    return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
   }
-
-  // AI helper
-  const aiEls = {};
-  function setupAiHelper() {
-    aiEls.box = $('aiHelper');
-    aiEls.openBtn = $('aiOpenBtn');
-    aiEls.closeBtn = $('aiCloseBtn');
-    aiEls.title = $('aiTitle');
-    aiEls.subtitle = $('aiSubtitle');
-    aiEls.input = $('aiQuestionInput');
-    aiEls.form = $('aiQuestionForm');
-    aiEls.send = $('aiSendBtn');
-    aiEls.response = $('aiQuestionResponse');
-
-    if (aiEls.closeBtn) aiEls.closeBtn.addEventListener('click', () => setAiVisible(false));
-    if (aiEls.openBtn) aiEls.openBtn.addEventListener('click', () => setAiVisible(true));
-    if (aiEls.form) {
-      aiEls.form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const text = (aiEls.input?.value || '').trim();
-        if (!text) {
-          if (aiEls.response) aiEls.response.textContent = langPack().aiEmpty;
-          return;
+  function loop(){
+    drawBackground();
+    drawObstacles();
+    if(!arcade.gameOver){
+      if(arcade.controls.left) state.ufo.x=Math.max(12,state.ufo.x-state.ufo.speed);
+      if(arcade.controls.right) state.ufo.x=Math.min(gameCanvas.width-state.ufo.w-12,state.ufo.x+state.ufo.speed);
+      state.tick++;
+      if(state.tick%24===0) spawnObstacle();
+      if(state.tick%8===0) arcadeSetScore(arcade.score+1);
+      const hitBox={x:state.ufo.x+6,y:state.ufo.y+7,w:state.ufo.w-12,h:state.ufo.h+10};
+      for(const ob of state.obstacles){
+        const obBox={x:ob.x+4,y:ob.y+4,w:ob.w-8,h:ob.h-8};
+        if(rectHit(hitBox,obBox)){
+          arcade.gameOver=true;
+          arcadeSaveBest();
+          break;
         }
-        recordQuestion(text);
-        if (aiEls.input) aiEls.input.value = '';
-        if (aiEls.response) aiEls.response.textContent = langPack().aiSaved;
-      });
+      }
     }
-    setAiVisible(true);
-    applyAiLanguage();
+    drawUfo();
+    drawHud();
+    if(arcade.gameOver){
+      drawOverlayGameOver('Select UFO Run again to restart.');
+    }else{
+      arcade.frame=requestAnimationFrame(loop);
+    }
   }
-  function setAiVisible(show) {
-    if (aiEls.box) aiEls.box.classList.toggle('hidden', !show);
-    if (aiEls.openBtn) aiEls.openBtn.classList.toggle('hidden', show);
-  }
-  function applyAiLanguage() {
-    const p = langPack();
-    if (aiEls.title) aiEls.title.textContent = p.aiTitle;
-    if (aiEls.subtitle) aiEls.subtitle.textContent = p.aiSubtitle;
-    if (aiEls.input) aiEls.input.placeholder = p.aiPlaceholder;
-    if (aiEls.send) aiEls.send.textContent = p.aiButton;
-    if (aiEls.response && !aiEls.response.textContent.trim()) aiEls.response.textContent = p.aiDefault;
-  }
+  loop();
+}
 
-  // Analytics drawer
-  const analyticsEls = {};
-  function setupAnalyticsDrawer() {
-    analyticsEls.toggle = $('analyticsToggle');
-    analyticsEls.drawer = $('analyticsDrawer');
-    analyticsEls.close = $('analyticsCloseBtn');
-    analyticsEls.questionToggle = $('questionToggleBtn');
-    analyticsEls.questionList = $('questionList');
+/* SNAKE */
+function initSnakeGame(){
+  titleEl.textContent='Snake';
+  noteEl.textContent='Use arrow keys, W A S D, or the mobile buttons. Eat food, grow, and avoid walls or yourself.';
+  statusEl.textContent='Classic snake with growing tail.';
+  setGameControlsMode('snake');
 
-    analyticsEls.toggle?.addEventListener('click', () => {
-      const open = analyticsEls.drawer.classList.toggle('open');
-      analyticsEls.drawer.setAttribute('aria-hidden', open ? 'false' : 'true');
-      analyticsEls.toggle.textContent = open ? '▶' : '◀';
-      if (open) renderAnalytics();
+  const cell=20;
+  const cols=Math.floor(gameCanvas.width/cell);
+  const rows=Math.floor(gameCanvas.height/cell);
+  const state={
+    snake:[{x:8,y:10},{x:7,y:10},{x:6,y:10}],
+    dir:{x:1,y:0},
+    nextDir:{x:1,y:0},
+    food:{x:14,y:10}
+  };
+  arcade.state=state;
+
+  function randomFood(){
+    do{
+      state.food={x:Math.floor(Math.random()*cols),y:Math.floor(Math.random()*rows)};
+    }while(state.snake.some(s=>s.x===state.food.x && s.y===state.food.y));
+  }
+  function draw(){
+    gctx.fillStyle='#050816';
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+    for(let y=0;y<rows;y++){
+      for(let x=0;x<cols;x++){
+        gctx.fillStyle=(x+y)%2===0?'rgba(255,255,255,.02)':'rgba(255,255,255,.035)';
+        gctx.fillRect(x*cell,y*cell,cell,cell);
+      }
+    }
+    gctx.fillStyle='#f59e0b';
+    gctx.beginPath();
+    gctx.arc(state.food.x*cell+cell/2,state.food.y*cell+cell/2,cell/2.8,0,Math.PI*2);
+    gctx.fill();
+
+    state.snake.forEach((s,i)=>{
+      gctx.fillStyle=i===0?'#22c55e':'#86efac';
+      gctx.fillRect(s.x*cell+1,s.y*cell+1,cell-2,cell-2);
     });
-    analyticsEls.close?.addEventListener('click', () => {
-      analyticsEls.drawer.classList.remove('open');
-      analyticsEls.drawer.setAttribute('aria-hidden', 'true');
-      analyticsEls.toggle.textContent = '◀';
-    });
-    analyticsEls.questionToggle?.addEventListener('click', () => {
-      const hidden = analyticsEls.questionList.classList.toggle('hidden');
-      analyticsEls.questionToggle.textContent = hidden ? langPack().showQuestions : langPack().hideQuestions;
-      if (!hidden) renderQuestionList();
-    });
 
-    renderAnalytics();
+    gctx.fillStyle='#fff';
+    gctx.font='700 18px DM Sans, sans-serif';
+    gctx.fillText('Score: '+arcade.score,14,26);
+
+    if(arcade.gameOver){
+      drawOverlayGameOver('Select Snake again to restart.');
+    }
   }
-
-  function renderQuestionList() {
-    const box = $('questionList');
-    if (!box) return;
-    const list = loadQuestions().slice(0, 10);
-    box.innerHTML = '';
-    if (!list.length) {
-      box.innerHTML = '<div class="question-item"><p>No questions yet.</p><span>Ask one from the AI box.</span></div>';
+  function tick(){
+    if(arcade.gameOver){ draw(); return; }
+    state.dir=state.nextDir;
+    const head={x:state.snake[0].x+state.dir.x,y:state.snake[0].y+state.dir.y};
+    const hitWall=head.x<0 || head.y<0 || head.x>=cols || head.y>=rows;
+    const hitSelf=state.snake.some(s=>s.x===head.x && s.y===head.y);
+    if(hitWall || hitSelf){
+      arcade.gameOver=true;
+      arcadeSaveBest();
+      draw();
       return;
     }
-    list.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'question-item';
-      const dt = new Date(item.time);
-      div.innerHTML = `<p>${escapeHtml(item.text)}</p><span>${dt.toLocaleString()}</span>`;
-      box.appendChild(div);
-    });
-  }
-
-  function renderAnalytics() {
-    const data = loadArcadeData();
-    const questions = loadQuestions();
-    const totals = {};
-    let maxTotal = 1;
-    ['ufo','snake','flappy'].forEach(game => {
-      totals[game] = data.games[game].total || 0;
-      maxTotal = Math.max(maxTotal, totals[game]);
-      const totalEl = $('total-' + game);
-      const bestEl = $('best-' + game);
-      const barEl = $('bar-' + game);
-      if (totalEl) totalEl.textContent = totals[game];
-      if (bestEl) bestEl.textContent = data.games[game].best || 0;
-      if (barEl) barEl.style.width = ((totals[game] / maxTotal) * 100) + '%';
-    });
-
-    const mostPlayed = Object.entries(totals).sort((a,b) => b[1] - a[1])[0];
-    $('analyticsMostPlayed').textContent = mostPlayed && mostPlayed[1] ? nameForGame(mostPlayed[0]) : '-';
-    $('analyticsMostPlayedCount').textContent = mostPlayed && mostPlayed[1] ? `${mostPlayed[1]} plays` : '0 plays';
-    $('analyticsQuestionTotal').textContent = questions.length;
-
-    const todayTotal = ['ufo','snake','flappy'].reduce((sum,g) => sum + (data.games[g].byDay[todayStr()] || 0), 0);
-    const yesterdayTotal = ['ufo','snake','flappy'].reduce((sum,g) => sum + (data.games[g].byDay[todayStr(-1)] || 0), 0);
-    $('analyticsToday').textContent = todayTotal;
-    $('analyticsYesterday').textContent = yesterdayTotal;
-
-    if (analyticsEls.questionToggle) {
-      analyticsEls.questionToggle.textContent = analyticsEls.questionList?.classList.contains('hidden') ? langPack().showQuestions : langPack().hideQuestions;
+    state.snake.unshift(head);
+    if(head.x===state.food.x && head.y===state.food.y){
+      arcadeSetScore(arcade.score+1);
+      randomFood();
+    }else{
+      state.snake.pop();
     }
-    if (analyticsEls.questionList && !analyticsEls.questionList.classList.contains('hidden')) {
-      renderQuestionList();
-    }
+    draw();
   }
+  draw();
+  arcade.timer=setInterval(tick,120);
+}
 
-  function nameForGame(game) {
-    return game === 'ufo' ? 'UFO Run' : game === 'snake' ? 'Snake' : 'Flappy';
-  }
+/* FLAPPY */
+function initFlappyGame(){
+  titleEl.textContent='Flappy';
+  noteEl.textContent='Press Space, Arrow Up, W, tap the canvas, or use the flap button on mobile. Pass through the pipes.';
+  statusEl.textContent='Simple flappy mode with local best score.';
+  setGameControlsMode('flappy');
 
-  // Arcade
-  const arcade = {
-    active: 'ufo',
-    counted: false,
-    score: 0,
-    best: 0,
-    raf: null,
-    timer: null,
-    keyDown: null,
-    keyUp: null,
-    cleanup: null,
-    controls: { left: false, right: false },
-    state: {}
+  const state={
+    bird:{x:92,y:220,w:28,h:22,vy:0},
+    pipes:[],
+    tick:0
   };
-  let gCanvas, gCtx, scoreLabel, scoreValue, bestLabel, bestValue, gameNote, gameStatus, gameControls;
-  const birdImg = new Image();
-  birdImg.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(`
-    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="36" viewBox="0 0 48 36">
-      <ellipse cx="22" cy="20" rx="14" ry="10" fill="#f59e0b"/>
-      <circle cx="30" cy="18" r="8" fill="#fbbf24"/>
-      <circle cx="33" cy="16" r="2.2" fill="#111827"/>
-      <polygon points="38,20 47,17 39,24" fill="#f97316"/>
-      <path d="M8 18c4-8 9-11 16-11-4 5-4 10 0 15-6 0-11-1-16-4z" fill="#fb7185"/>
-      <path d="M20 27c3 0 6 2 8 5-4 0-8-1-11-3 1-1 2-2 3-2z" fill="#ef4444"/>
-    </svg>
-  `);
+  arcade.state=state;
 
-  function setupArcade() {
-    gCanvas = $('spaceGame');
-    gCtx = gCanvas.getContext('2d');
-    scoreLabel = $('scoreLabel');
-    scoreValue = $('spaceScore');
-    bestLabel = $('bestLabel');
-    bestValue = $('bestScore');
-    gameNote = $('gameNote');
-    gameStatus = $('gameStatus');
-    gameControls = $('gameControls');
+  const flap=()=>{ if(!arcade.gameOver){ arcadeMarkPlayed(); state.bird.vy=-5.6; } };
+  const pointerHandler=(e)=>{ e.preventDefault(); if(arcade.active==='flappy') flap(); };
+  gameCanvas.addEventListener('pointerdown', pointerHandler);
+  arcade.cleanup=()=> gameCanvas.removeEventListener('pointerdown', pointerHandler);
 
-    $('spaceShip')?.addEventListener('click', openArcade);
-    updateScoreLine();
-    updateGameTexts();
+  function spawnPipe(){
+    const gap=140;
+    const top=60+Math.random()*180;
+    state.pipes.push({x:gameCanvas.width+20,w:60,top,bottom:top+gap,passed:false});
   }
+  function draw(){
+    gctx.fillStyle='#07111f';
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+    const bg=gctx.createLinearGradient(0,0,0,gameCanvas.height);
+    bg.addColorStop(0,'rgba(59,130,246,.18)');
+    bg.addColorStop(1,'rgba(2,6,23,.1)');
+    gctx.fillStyle=bg;
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
 
-  function openArcade() {
-    $('gameModal')?.classList.add('open');
-    startArcadeGame('ufo');
-  }
-  function closeArcade() {
-    $('gameModal')?.classList.remove('open');
-    stopArcade();
-  }
-  window.closeArcade = closeArcade;
+    state.pipes.forEach(p=>{
+      gctx.fillStyle='#22c55e';
+      gctx.fillRect(p.x,0,p.w,p.top);
+      gctx.fillRect(p.x,p.bottom,p.w,gameCanvas.height-p.bottom);
+    });
 
-  function clearCanvas() {
-    if (!gCtx || !gCanvas) return;
-    gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-  }
-  function stopArcade() {
-    if (arcade.raf) cancelAnimationFrame(arcade.raf);
-    if (arcade.timer) clearInterval(arcade.timer);
-    arcade.raf = null;
-    arcade.timer = null;
-    if (arcade.keyDown) window.removeEventListener('keydown', arcade.keyDown);
-    if (arcade.keyUp) window.removeEventListener('keyup', arcade.keyUp);
-    arcade.keyDown = null;
-    arcade.keyUp = null;
-    if (typeof arcade.cleanup === 'function') arcade.cleanup();
-    arcade.cleanup = null;
-    arcade.controls.left = false;
-    arcade.controls.right = false;
-    clearCanvas();
-  }
-  function setArcadeScore(value) {
-    arcade.score = value;
-    if (scoreValue) scoreValue.textContent = String(value);
-  }
-  function loadBest(game) {
-    const data = loadArcadeData();
-    arcade.best = data.games[game].best || 0;
-    if (bestValue) bestValue.textContent = String(arcade.best);
-  }
-  function maybeCountPlay() {
-    if (arcade.counted) return;
-    arcade.counted = true;
-    recordPlay(arcade.active);
-  }
-  function maybeBest() {
-    if (arcade.score > arcade.best) {
-      arcade.best = arcade.score;
-      if (bestValue) bestValue.textContent = String(arcade.best);
-      recordBest(arcade.active, arcade.best);
+    gctx.save();
+    gctx.translate(state.bird.x+state.bird.w/2,state.bird.y+state.bird.h/2);
+    gctx.rotate(Math.max(-0.45, Math.min(0.55, state.bird.vy*0.06)));
+    if(birdImage.complete){
+      gctx.drawImage(birdImage,-24,-20,48,40);
+    }else{
+      gctx.fillStyle='#fbbf24';
+      gctx.beginPath();
+      gctx.ellipse(0,0,14,11,0,0,Math.PI*2);
+      gctx.fill();
+    }
+    gctx.restore();
+
+    gctx.fillStyle='#fff';
+    gctx.font='700 18px DM Sans, sans-serif';
+    gctx.fillText('Score: '+arcade.score,14,26);
+
+    if(arcade.gameOver){
+      drawOverlayGameOver('Select Flappy again to restart.');
     }
   }
-  function setActiveGameCard(game) {
-    qa('.game-card-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.game === game));
-  }
-  function updateScoreLine() {
-    const p = langPack();
-    if (scoreLabel) scoreLabel.textContent = p.score;
-    if (bestLabel) bestLabel.textContent = p.best;
-  }
-  function updateGameTexts() {
-    const p = langPack();
-    if (gameStatus) gameStatus.textContent = p.status;
-    if (gameNote) {
-      gameNote.textContent = arcade.active === 'snake' ? p.noteSnake : arcade.active === 'flappy' ? p.noteFlappy : p.noteUfo;
-    }
-  }
-  function setControls(type) {
-    if (!gameControls) return;
-    gameControls.classList.remove('hidden');
-    const up = $('moveUpBtn'), left = $('moveLeftBtn'), right = $('moveRightBtn'), down = $('moveDownBtn'), flap = $('flapBtn');
-    [up,left,right,down,flap].forEach(btn => btn && btn.classList.add('hidden'));
-    if (type === 'ufo') { left?.classList.remove('hidden'); right?.classList.remove('hidden'); }
-    if (type === 'snake') { up?.classList.remove('hidden'); left?.classList.remove('hidden'); right?.classList.remove('hidden'); down?.classList.remove('hidden'); }
-    if (type === 'flappy') { flap?.classList.remove('hidden'); }
-  }
+  function loop(){
+    if(!arcade.gameOver){
+      state.tick++;
+      if(state.tick%95===0) spawnPipe();
+      state.bird.vy += 0.32;
+      state.bird.y += state.bird.vy;
 
-  function startArcadeGame(game, btn) {
-    if (!gCtx) return;
-    stopArcade();
-    arcade.active = game;
-    arcade.counted = false;
-    arcade.state = {};
-    setArcadeScore(0);
-    loadBest(game);
-    setActiveGameCard(game);
-    setControls(game);
-    updateGameTexts();
-    if (game === 'ufo') initUfo();
-    else if (game === 'snake') initSnake();
-    else initFlappy();
-  }
-  window.startArcadeGame = startArcadeGame;
-
-  function bindControlButtons(mapper) {
-    const pairs = [
-      ['moveUpBtn', 'up'],
-      ['moveLeftBtn', 'left'],
-      ['moveRightBtn', 'right'],
-      ['moveDownBtn', 'down'],
-      ['flapBtn', 'flap']
-    ];
-    const handlers = [];
-    pairs.forEach(([id, action]) => {
-      const el = $(id);
-      if (!el) return;
-      const handler = (e) => { e.preventDefault(); mapper(action, true); };
-      el.addEventListener('click', handler);
-      handlers.push(() => el.removeEventListener('click', handler));
-    });
-    arcade.cleanup = () => handlers.forEach(fn => fn());
-  }
-
-  function initUfo() {
-    const s = arcade.state = { x: 190, y: 470, w: 40, h: 18, obstacles: [], tick: 0 };
-    arcade.keyDown = (e) => {
-      const k = e.key.toLowerCase();
-      if (k === 'arrowleft' || k === 'a') { arcade.controls.left = true; maybeCountPlay(); }
-      if (k === 'arrowright' || k === 'd') { arcade.controls.right = true; maybeCountPlay(); }
-    };
-    arcade.keyUp = (e) => {
-      const k = e.key.toLowerCase();
-      if (k === 'arrowleft' || k === 'a') arcade.controls.left = false;
-      if (k === 'arrowright' || k === 'd') arcade.controls.right = false;
-    };
-    window.addEventListener('keydown', arcade.keyDown);
-    window.addEventListener('keyup', arcade.keyUp);
-    bindControlButtons((action) => {
-      if (action === 'left') { arcade.controls.left = true; arcade.controls.right = false; maybeCountPlay(); setTimeout(()=>arcade.controls.left=false,120); }
-      if (action === 'right') { arcade.controls.right = true; arcade.controls.left = false; maybeCountPlay(); setTimeout(()=>arcade.controls.right=false,120); }
-    });
-
-    const loop = () => {
-      clearCanvas();
-      gCtx.fillStyle = '#050816';
-      gCtx.fillRect(0,0,gCanvas.width,gCanvas.height);
-
-      s.tick++;
-      if (arcade.controls.left) s.x -= 6;
-      if (arcade.controls.right) s.x += 6;
-      s.x = Math.max(0, Math.min(gCanvas.width - s.w, s.x));
-
-      if (s.tick % 18 === 0) {
-        s.obstacles.push({ x: Math.random() * (gCanvas.width - 28), y: -30, w: 18 + Math.random()*16, h: 18 + Math.random()*26, v: 3 + Math.random()*2 });
-      }
-
-      gCtx.fillStyle = 'rgba(255,255,255,.8)';
-      for (let i=0;i<16;i++) gCtx.fillRect((i*31 + s.tick*2)%gCanvas.width, (i*47)%gCanvas.height, 2, 2);
-
-      gCtx.fillStyle = '#c4b5fd';
-      gCtx.fillRect(s.x, s.y+7, s.w, 8);
-      gCtx.fillStyle = '#a78bfa';
-      gCtx.fillRect(s.x+8, s.y, 24, 8);
-
-      gCtx.fillStyle = '#f59e0b';
-      s.obstacles = s.obstacles.filter(o => {
-        o.y += o.v;
-        gCtx.fillRect(o.x, o.y, o.w, o.h);
-        const hit = s.x < o.x + o.w && s.x + s.w > o.x && s.y < o.y + o.h && s.y + s.h > o.y;
-        if (hit) {
-          gameOver();
-          return false;
+      state.pipes.forEach(p=>{
+        p.x -= 2.6;
+        if(!p.passed && p.x + p.w < state.bird.x){
+          p.passed=true;
+          arcadeSetScore(arcade.score+1);
         }
-        if (o.y > gCanvas.height + 30) {
-          setArcadeScore(arcade.score + 1);
-          maybeBest();
-          return false;
-        }
-        return true;
+        const hit = state.bird.x < p.x+p.w && state.bird.x+state.bird.w > p.x && (state.bird.y < p.top || state.bird.y+state.bird.h > p.bottom);
+        if(hit) arcade.gameOver=true;
       });
 
-      if ($('gameModal')?.classList.contains('open')) arcade.raf = requestAnimationFrame(loop);
-    };
-    loop();
-  }
+      state.pipes=state.pipes.filter(p=>p.x>-80);
 
-  function initSnake() {
-    const grid = 20;
-    const s = arcade.state = {
-      dir: 'right',
-      next: 'right',
-      snake: [{x:160,y:260},{x:140,y:260},{x:120,y:260}],
-      food: {x:260,y:180}
-    };
-    const setDir = (dir) => {
-      const opposite = { up:'down', down:'up', left:'right', right:'left' };
-      if (opposite[dir] !== s.dir) {
-        s.next = dir;
-        maybeCountPlay();
+      if(state.bird.y<0 || state.bird.y+state.bird.h>gameCanvas.height){
+        arcade.gameOver=true;
       }
-    };
-    arcade.keyDown = (e) => {
-      const k = e.key.toLowerCase();
-      if (k === 'arrowup' || k === 'w') setDir('up');
-      else if (k === 'arrowdown' || k === 's') setDir('down');
-      else if (k === 'arrowleft' || k === 'a') setDir('left');
-      else if (k === 'arrowright' || k === 'd') setDir('right');
-    };
-    window.addEventListener('keydown', arcade.keyDown);
-    bindControlButtons((action) => {
-      if (['up','down','left','right'].includes(action)) setDir(action);
-    });
-
-    function spawnFood() {
-      let food;
-      do {
-        food = {
-          x: Math.floor(Math.random() * (gCanvas.width / grid)) * grid,
-          y: Math.floor(Math.random() * (gCanvas.height / grid)) * grid
-        };
-      } while (s.snake.some(seg => seg.x === food.x && seg.y === food.y));
-      s.food = food;
+      if(arcade.gameOver) arcadeSaveBest();
     }
 
-    arcade.timer = setInterval(() => {
-      clearCanvas();
-      gCtx.fillStyle = '#07101f';
-      gCtx.fillRect(0,0,gCanvas.width,gCanvas.height);
-
-      s.dir = s.next;
-      const head = { ...s.snake[0] };
-      if (s.dir === 'up') head.y -= grid;
-      if (s.dir === 'down') head.y += grid;
-      if (s.dir === 'left') head.x -= grid;
-      if (s.dir === 'right') head.x += grid;
-
-      const hitWall = head.x < 0 || head.y < 0 || head.x >= gCanvas.width || head.y >= gCanvas.height;
-      const hitSelf = s.snake.some(seg => seg.x === head.x && seg.y === head.y);
-      if (hitWall || hitSelf) return gameOver();
-
-      s.snake.unshift(head);
-      if (head.x === s.food.x && head.y === s.food.y) {
-        setArcadeScore(arcade.score + 1);
-        maybeBest();
-        spawnFood();
-      } else {
-        s.snake.pop();
-      }
-
-      gCtx.fillStyle = '#ef4444';
-      gCtx.fillRect(s.food.x, s.food.y, grid, grid);
-      s.snake.forEach((seg, i) => {
-        gCtx.fillStyle = i === 0 ? '#22c55e' : '#86efac';
-        gCtx.fillRect(seg.x, seg.y, grid, grid);
-      });
-    }, 120);
+    draw();
+    if(!arcade.gameOver){
+      arcade.frame=requestAnimationFrame(loop);
+    }
   }
+  draw();
+  arcade.frame=requestAnimationFrame(loop);
+}
 
-  function initFlappy() {
-    const s = arcade.state = {
-      birdY: 220,
-      birdV: 0,
-      pipes: [],
-      frame: 0
-    };
-    const flap = () => {
-      s.birdV = -5.8;
-      maybeCountPlay();
-    };
-    arcade.keyDown = (e) => {
-      if (e.code === 'Space') {
-        e.preventDefault();
-        flap();
-      }
-    };
-    window.addEventListener('keydown', arcade.keyDown);
-    const canvasFlap = (e) => { e.preventDefault(); flap(); };
-    gCanvas.addEventListener('click', canvasFlap);
-    bindControlButtons((action) => { if (action === 'flap') flap(); });
-    const prevCleanup = arcade.cleanup;
-    arcade.cleanup = () => {
-      prevCleanup && prevCleanup();
-      gCanvas.removeEventListener('click', canvasFlap);
-    };
+if(shipTrigger) shipTrigger.addEventListener('click',openArcade);
+if(gameModal) gameModal.addEventListener('click',e=>{ if(e.target===gameModal) closeArcade(); });
 
-    const loop = () => {
-      clearCanvas();
-      gCtx.fillStyle = '#0a1022';
-      gCtx.fillRect(0,0,gCanvas.width,gCanvas.height);
+function setSnakeDirection(x,y){
+  const state=arcade.state;
+  if(!state || !state.nextDir || arcade.gameOver) return;
+  if(y===-1 && state.dir.y===0) state.nextDir={x:0,y:-1};
+  if(y===1 && state.dir.y===0) state.nextDir={x:0,y:1};
+  if(x===-1 && state.dir.x===0) state.nextDir={x:-1,y:0};
+  if(x===1 && state.dir.x===0) state.nextDir={x:1,y:0};
+}
+function triggerFlap(){
+  const state=arcade.state;
+  if(state && !arcade.gameOver && arcade.active==='flappy') state.bird.vy=-5.6;
+}
 
-      s.frame++;
-      s.birdV += 0.34;
-      s.birdY += s.birdV;
-
-      if (s.frame % 95 === 0) {
-        const gap = 145;
-        const top = 60 + Math.random() * 190;
-        s.pipes.push({ x: gCanvas.width, w: 54, top, bottom: top + gap, counted: false });
-      }
-
-      s.pipes.forEach(pipe => {
-        pipe.x -= 2.4;
-        gCtx.fillStyle = '#22c55e';
-        gCtx.fillRect(pipe.x, 0, pipe.w, pipe.top);
-        gCtx.fillRect(pipe.x, pipe.bottom, pipe.w, gCanvas.height - pipe.bottom);
-
-        const bx = 98, by = s.birdY, bw = 36, bh = 28;
-        const hit = bx < pipe.x + pipe.w && bx + bw > pipe.x && (by < pipe.top || by + bh > pipe.bottom);
-        if (hit) return gameOver();
-        if (!pipe.counted && pipe.x + pipe.w < bx) {
-          pipe.counted = true;
-          setArcadeScore(arcade.score + 1);
-          maybeBest();
-        }
-      });
-      s.pipes = s.pipes.filter(pipe => pipe.x + pipe.w > -60);
-
-      if (s.birdY < 0 || s.birdY + 28 > gCanvas.height) return gameOver();
-
-      if (birdImg.complete) gCtx.drawImage(birdImg, 94, s.birdY, 40, 30);
-      else {
-        gCtx.fillStyle = '#facc15';
-        gCtx.fillRect(98, s.birdY, 24, 24);
-      }
-
-      if ($('gameModal')?.classList.contains('open')) arcade.raf = requestAnimationFrame(loop);
-    };
-    loop();
+window.addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();
+  if(arcade.active==='ufo'){
+    if(k==='arrowleft' || k==='a') arcade.controls.left=true;
+    if(k==='arrowright' || k==='d') arcade.controls.right=true;
+  }else if(arcade.active==='snake' && !arcade.gameOver){
+    if(k==='arrowup' || k==='w') setSnakeDirection(0,-1);
+    if(k==='arrowdown' || k==='s') setSnakeDirection(0,1);
+    if(k==='arrowleft' || k==='a') setSnakeDirection(-1,0);
+    if(k==='arrowright' || k==='d') setSnakeDirection(1,0);
+  }else if(arcade.active==='flappy'){
+    if(k===' ' || k==='arrowup' || k==='w'){
+      e.preventDefault();
+      triggerFlap();
+    }
   }
+});
 
-  function gameOver() {
-    stopArcade();
-    clearCanvas();
-    gCtx.fillStyle = 'rgba(0,0,0,.55)';
-    gCtx.fillRect(80, 210, 260, 88);
-    gCtx.fillStyle = '#ef4444';
-    gCtx.font = 'bold 28px Arial';
-    gCtx.fillText('Game Over', 145, 250);
-    gCtx.fillStyle = '#fff';
-    gCtx.font = '16px Arial';
-    gCtx.fillText('Choose the game again to restart', 102, 278);
-  }
+window.addEventListener('keyup',e=>{
+  const k=e.key.toLowerCase();
+  if(k==='arrowleft' || k==='a') arcade.controls.left=false;
+  if(k==='arrowright' || k==='d') arcade.controls.right=false;
+});
 
-  // Blog modal stubs
-  window.CBM = () => $('bmod')?.classList.remove('open');
-  window.SB = () => {
-    const title = $('bmt')?.value?.trim();
-    if (!title) return window.CBM();
-    const grid = $('bgrid');
-    const card = document.createElement('a');
-    card.className = 'bc';
-    card.href = $('bml')?.value?.trim() || '#blog';
-    card.innerHTML = `<div class="bth">${escapeHtml($('bmi')?.value || '📝')}</div>
-      <div class="bco"><div class="bm"><span class="bcat">${escapeHtml($('bmc')?.value || 'Note')}</span>
-      <span class="bdt">${escapeHtml($('bmd')?.value || new Date().toISOString().slice(0,10))}</span></div>
-      <div class="btit">${escapeHtml(title)}</div>
-      <div class="bex">${escapeHtml($('bme')?.value || '')}</div></div>`;
-    grid?.prepend(card);
-    window.CBM();
-  };
-
-  function escapeHtml(str) {
-    return String(str).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    applyTheme();
-    setupShellUI();
-    removeUnwantedBlocks();
-    setupAiHelper();
-    setupAnalyticsDrawer();
-    setupArcade();
-    L(currentLang);
-
-    qa('.game-card-btn').forEach(btn => btn.addEventListener('click', () => startArcadeGame(btn.dataset.game, btn)));
-
-    const modal = $('gameModal');
-    modal?.addEventListener('click', (e) => {
-      if (e.target === modal) closeArcade();
-    });
+[['pointerdown',true],['pointerup',false],['pointerleave',false],['pointercancel',false]].forEach(([evt,state])=>{
+  if(moveLeftBtn) moveLeftBtn.addEventListener(evt,e=>{
+    e.preventDefault();
+    if(arcade.active==='ufo') arcade.controls.left=state;
+    else if(arcade.active==='snake' && state) setSnakeDirection(-1,0);
   });
+  if(moveRightBtn) moveRightBtn.addEventListener(evt,e=>{
+    e.preventDefault();
+    if(arcade.active==='ufo') arcade.controls.right=state;
+    else if(arcade.active==='snake' && state) setSnakeDirection(1,0);
+  });
+  if(moveUpBtn) moveUpBtn.addEventListener(evt,e=>{ e.preventDefault(); if(arcade.active==='snake' && state) setSnakeDirection(0,-1); });
+  if(moveDownBtn) moveDownBtn.addEventListener(evt,e=>{ e.preventDefault(); if(arcade.active==='snake' && state) setSnakeDirection(0,1); });
+  if(flapBtn) flapBtn.addEventListener(evt,e=>{ e.preventDefault(); if(arcade.active==='flappy' && state) triggerFlap(); });
+});
+
+if(analyticsToggleBtn) analyticsToggleBtn.addEventListener('click',()=>toggleAnalytics());
+renderArcadeAnalytics();
+updateGameLanguageUI();
+setAiHelperVisible(true);
+updateAiHelperLanguage();
+
+</script>
+
+<script>
+/* PATCH: robust AI question saving + analytics refresh */
+(function(){
+  function bindAiQuestionPatch(){
+    const form = document.getElementById('aiQuestionForm');
+    const input = document.getElementById('aiQuestionInput');
+    const response = document.getElementById('aiQuestionResponse');
+    const toggleBtn = document.getElementById('questionToggleBtn');
+    const list = document.getElementById('questionList');
+
+    if (toggleBtn && !toggleBtn.dataset.boundPatch) {
+      toggleBtn.dataset.boundPatch = '1';
+      toggleBtn.addEventListener('click', function(){
+        const isHidden = list ? list.classList.contains('hidden') : true;
+        if (list) list.classList.toggle('hidden', !isHidden);
+        toggleBtn.textContent = isHidden ? 'Hide Questions' : 'Show Questions';
+        if (typeof renderAiQuestionAnalytics === 'function') renderAiQuestionAnalytics();
+      });
+    }
+
+    if (form && !form.dataset.boundPatch) {
+      form.dataset.boundPatch = '1';
+
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        const question = (input && input.value ? input.value : '').trim();
+        if (!question) {
+          if (response) { response.dataset.userSet='1'; response.textContent = getAiLangPack().empty; }
+          return false;
+        }
+
+        try {
+          if (typeof recordAiQuestion === 'function') recordAiQuestion(question);
+          if (response) { response.dataset.userSet='1'; response.textContent = getAiLangPack().saved; }
+          if (input) input.value = '';
+          if (typeof renderAiQuestionAnalytics === 'function') renderAiQuestionAnalytics();
+          if (typeof renderArcadeAnalytics === 'function') renderArcadeAnalytics();
+        } catch (err) {
+          console.error('AI question save error:', err);
+          if (response) response.textContent = 'Your question could not be saved right now.';
+        }
+        return false;
+      }, true);
+    }
+
+    if (typeof renderAiQuestionAnalytics === 'function') renderAiQuestionAnalytics();
+    if (typeof renderArcadeAnalytics === 'function') renderArcadeAnalytics();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindAiQuestionPatch);
+  } else {
+    bindAiQuestionPatch();
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  function bindAiHideControls(){
+    const aiHelper = document.getElementById('aiHelper');
+    const aiOpenBtn = document.getElementById('aiOpenBtn');
+    const aiHideBtn = document.getElementById('aiHideBtn');
+
+    function forceSetAiVisible(visible){
+      if(typeof setAiHelperVisible === 'function'){
+        setAiHelperVisible(visible);
+      }else{
+        if(aiHelper){
+          aiHelper.style.display = visible ? 'block' : 'none';
+          aiHelper.classList.toggle('hidden', !visible);
+        }
+        if(aiOpenBtn){
+          aiOpenBtn.style.display = visible ? 'none' : 'flex';
+          aiOpenBtn.classList.toggle('hidden', visible);
+        }
+      }
+    }
+
+    if(aiHideBtn && !aiHideBtn.dataset.fixedBound){
+      aiHideBtn.dataset.fixedBound = '1';
+      aiHideBtn.onclick = function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        forceSetAiVisible(false);
+        return false;
+      };
+    }
+
+    if(aiOpenBtn && !aiOpenBtn.dataset.fixedBound){
+      aiOpenBtn.dataset.fixedBound = '1';
+      aiOpenBtn.onclick = function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        forceSetAiVisible(false);
+        return false;
+      };
+    }
+
+    forceSetAiVisible(false);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bindAiHideControls);
+  }else{
+    bindAiHideControls();
+  }
 })();
 </script>
 
