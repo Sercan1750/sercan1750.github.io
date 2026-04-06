@@ -5,116 +5,500 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sercan Düzel</title>
 <style>
-body{font-family:Arial;background:#0b0f1a;color:white;margin:0}
-#spaceShip{position:fixed;top:100px;left:20px;background:#111827;padding:15px;border-radius:50px;cursor:pointer;z-index:999}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,0.8);display:none;align-items:center;justify-content:center}
-.modal.open{display:flex}
-.box{background:#111;padding:20px;border-radius:12px;text-align:center}
-.gbtn{margin:5px;padding:10px 15px;background:#1f2937;border:none;color:white;border-radius:8px;cursor:pointer}
-.dashboard{padding:40px}
-.card{background:#111827;padding:20px;border-radius:12px;margin:10px;display:inline-block}
+  :root{
+    --bg:#0b0f1a; --card:#111827; --card2:#0f172a; --text:#fff; --muted:#cbd5e1;
+    --accent:#8b5cf6; --accent2:#22c55e; --danger:#ef4444; --gold:#f59e0b;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family:Arial,sans-serif;background:linear-gradient(180deg,#0b0f1a,#09101f);
+    color:var(--text);margin:0;min-height:100vh;
+  }
+  .topbar{
+    padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08);
+    position:sticky;top:0;background:rgba(11,15,26,.85);backdrop-filter:blur(8px);z-index:10;
+  }
+  .title{margin:0;font-size:20px}
+  .subtitle{margin:6px 0 0;color:var(--muted);font-size:14px}
+  #spaceShip{
+    position:fixed;top:100px;left:20px;background:linear-gradient(135deg,#111827,#1f2937);
+    padding:14px 18px;border-radius:999px;cursor:pointer;z-index:20;border:1px solid rgba(255,255,255,.1);
+    box-shadow:0 8px 30px rgba(0,0,0,.25); user-select:none;
+    animation: floatUfo 18s linear infinite;
+  }
+  @keyframes floatUfo{
+    0%{transform:translate(0,0)} 25%{transform:translate(38vw,10vh)}
+    50%{transform:translate(55vw,48vh)} 75%{transform:translate(8vw,34vh)} 100%{transform:translate(0,0)}
+  }
+  .modal{
+    position:fixed;inset:0;background:rgba(0,0,0,0.78);display:none;
+    align-items:center;justify-content:center;padding:18px;z-index:30;
+  }
+  .modal.open{display:flex}
+  .box{
+    width:min(100%,720px);background:var(--card2);padding:20px;border-radius:16px;text-align:center;
+    border:1px solid rgba(255,255,255,.08); box-shadow:0 18px 50px rgba(0,0,0,.4);
+  }
+  .box h2{margin-top:0}
+  .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .gbtn{
+    margin:0;padding:11px 16px;background:#1f2937;border:1px solid rgba(255,255,255,.1);color:white;
+    border-radius:10px;cursor:pointer;font-weight:700;
+  }
+  .gbtn:hover{background:#2b3447}
+  .close-btn{background:#2a1320;border-color:rgba(239,68,68,.35)}
+  .dashboard{
+    padding:26px 20px 40px;max-width:1100px;margin:0 auto;
+  }
+  .cards{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;
+  }
+  .card{
+    background:rgba(17,24,39,.92);padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
+  }
+  .card h3{margin:0 0 10px;font-size:15px;color:var(--muted)}
+  .metric{font-size:28px;font-weight:700}
+  .small{margin-top:8px;color:var(--muted);font-size:13px}
+  .game-wrap{margin-top:18px}
+  #gameCanvas{
+    width:min(100%,420px);height:auto;background:#050816;border-radius:14px;border:1px solid rgba(255,255,255,.08);
+    display:block;margin:12px auto 0;
+  }
+  .help{color:var(--muted);font-size:13px;margin-top:8px}
+  .hidden{display:none}
 </style>
 </head>
 <body>
-
-<div id="spaceShip">🛸 Play Game</div>
-
-<div class="modal" id="gameModal">
-  <div class="box">
-    <h2>Select Game</h2>
-    <button class="gbtn" onclick="startGame('ufo')">UFO Run</button>
-    <button class="gbtn" onclick="startGame('snake')">Snake</button>
-    <button class="gbtn" onclick="startGame('flappy')">Flappy</button>
-    <br><br>
-    <canvas id="gameCanvas" width="300" height="400"></canvas>
+  <div class="topbar">
+    <h1 class="title">Sercan Düzel</h1>
+    <p class="subtitle">Mini games + privacy-safe local analytics</p>
   </div>
-</div>
 
-<div class="dashboard">
-  <div class="card">
-    <h3>Game Clicks</h3>
-    <strong id="gameClicks">0</strong>
+  <div id="spaceShip" title="Open games">🛸 Play Game</div>
+
+  <div class="dashboard">
+    <div class="cards">
+      <div class="card">
+        <h3>Game Launcher Clicks</h3>
+        <div class="metric" id="gameClicks">0</div>
+        <div class="small">Stored only in this browser</div>
+      </div>
+      <div class="card">
+        <h3>Today Visits</h3>
+        <div class="metric" id="todayVisits">0</div>
+        <div class="small">Local daily counter</div>
+      </div>
+      <div class="card">
+        <h3>Selected Game</h3>
+        <div class="metric" id="selectedGame">-</div>
+        <div class="small">Current session</div>
+      </div>
+    </div>
   </div>
-  <div class="card">
-    <h3>Today Visits</h3>
-    <strong id="todayVisits">0</strong>
+
+  <div class="modal" id="gameModal" aria-hidden="true">
+    <div class="box">
+      <h2>Select Game</h2>
+      <div class="actions">
+        <button class="gbtn" onclick="startGame('ufo')">UFO Run</button>
+        <button class="gbtn" onclick="startGame('snake')">Snake</button>
+        <button class="gbtn" onclick="startGame('flappy')">Flappy</button>
+        <button class="gbtn close-btn" onclick="closeGame()">Close</button>
+      </div>
+      <div class="game-wrap">
+        <canvas id="gameCanvas" width="420" height="520"></canvas>
+        <div class="help" id="gameHelp">Choose a game to start.</div>
+      </div>
+    </div>
   </div>
-</div>
 
 <script>
+/* ======================
+   PRIVACY-SAFE ANALYTICS
+====================== */
 const today = new Date().toISOString().slice(0,10);
-let visits = JSON.parse(localStorage.getItem("visits") || "{}");
-if(!visits[today]) visits[today]=0;
+const visits = JSON.parse(localStorage.getItem("visits") || "{}");
+if (!visits[today]) visits[today] = 0;
 visits[today]++;
 localStorage.setItem("visits", JSON.stringify(visits));
-document.getElementById("todayVisits").innerText = visits[today];
+document.getElementById("todayVisits").textContent = visits[today];
 
-let gameClicks = parseInt(localStorage.getItem("gameClicks") || 0);
-document.getElementById("gameClicks").innerText = gameClicks;
+let gameClicks = parseInt(localStorage.getItem("gameClicks") || "0", 10);
+document.getElementById("gameClicks").textContent = gameClicks;
 
-document.getElementById("spaceShip").onclick = () => {
-  document.getElementById("gameModal").classList.add("open");
+/* ======================
+   UI / MODAL
+====================== */
+const modal = document.getElementById("gameModal");
+const spaceShip = document.getElementById("spaceShip");
+const selectedGameEl = document.getElementById("selectedGame");
+const helpEl = document.getElementById("gameHelp");
+
+spaceShip.addEventListener("click", () => {
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
   gameClicks++;
-  localStorage.setItem("gameClicks", gameClicks);
-  document.getElementById("gameClicks").innerText = gameClicks;
+  localStorage.setItem("gameClicks", String(gameClicks));
+  document.getElementById("gameClicks").textContent = gameClicks;
+});
+
+function closeGame() {
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  stopCurrentGame();
+  clearCanvas();
+  selectedGameEl.textContent = "-";
+  helpEl.textContent = "Choose a game to start.";
 }
 
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) closeGame();
+});
+
+/* ======================
+   CANVAS / GAME ENGINE
+====================== */
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-function startGame(type){
-  if(type==="snake") snakeGame();
-  if(type==="flappy") flappyGame();
-  if(type==="ufo") ufoGame();
+let gameInterval = null;
+let animationFrameId = null;
+let currentCleanup = null;
+let keyHandler = null;
+let clickHandler = null;
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function snakeGame(){
-  let snake=[{x:150,y:150}],food={x:100,y:100},dx=10,dy=0;
-  document.onkeydown=e=>{
-    if(e.key==="ArrowUp"){dx=0;dy=-10}
-    if(e.key==="ArrowDown"){dx=0;dy=10}
-    if(e.key==="ArrowLeft"){dx=-10;dy=0}
-    if(e.key==="ArrowRight"){dx=10;dy=0}
+function stopCurrentGame() {
+  if (gameInterval) {
+    clearInterval(gameInterval);
+    gameInterval = null;
   }
-  setInterval(()=>{
-    ctx.clearRect(0,0,300,400);
-    let head={x:snake[0].x+dx,y:snake[0].y+dy};
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+  if (keyHandler) {
+    window.removeEventListener("keydown", keyHandler);
+    keyHandler = null;
+  }
+  if (clickHandler) {
+    canvas.removeEventListener("click", clickHandler);
+    clickHandler = null;
+  }
+  if (typeof currentCleanup === "function") {
+    currentCleanup();
+    currentCleanup = null;
+  }
+}
+
+function startGame(type) {
+  stopCurrentGame();
+  clearCanvas();
+  selectedGameEl.textContent = type.toUpperCase();
+
+  if (type === "snake") snakeGame();
+  if (type === "flappy") flappyGame();
+  if (type === "ufo") ufoGame();
+}
+
+/* ======================
+   SNAKE
+====================== */
+function snakeGame() {
+  helpEl.textContent = "Snake: Use arrow keys. Eat food, grow longer, avoid walls and yourself.";
+
+  const grid = 20;
+  let snake = [{x: 200, y: 260}];
+  let direction = {x: grid, y: 0};
+  let pendingDirection = {...direction};
+  let food = randomFood(snake, grid);
+  let score = 0;
+  let gameOver = false;
+
+  keyHandler = (e) => {
+    if (e.key === "ArrowUp" && direction.y === 0) pendingDirection = {x: 0, y: -grid};
+    if (e.key === "ArrowDown" && direction.y === 0) pendingDirection = {x: 0, y: grid};
+    if (e.key === "ArrowLeft" && direction.x === 0) pendingDirection = {x: -grid, y: 0};
+    if (e.key === "ArrowRight" && direction.x === 0) pendingDirection = {x: grid, y: 0};
+  };
+  window.addEventListener("keydown", keyHandler);
+
+  function drawText(text, y, color = "#fff") {
+    ctx.fillStyle = color;
+    ctx.font = "bold 18px Arial";
+    ctx.fillText(text, 14, y);
+  }
+
+  function tick() {
+    if (gameOver) return;
+    direction = pendingDirection;
+    const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+
+    const hitWall = head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height;
+    const hitSelf = snake.some(seg => seg.x === head.x && seg.y === head.y);
+    if (hitWall || hitSelf) {
+      gameOver = true;
+      render();
+      ctx.fillStyle = "rgba(0,0,0,.55)";
+      ctx.fillRect(70, 210, 280, 80);
+      ctx.fillStyle = "#ef4444";
+      ctx.font = "bold 28px Arial";
+      ctx.fillText("Game Over", 135, 255);
+      ctx.fillStyle = "#fff";
+      ctx.font = "16px Arial";
+      ctx.fillText("Choose Snake again to restart", 114, 285);
+      return;
+    }
+
     snake.unshift(head);
-    if(head.x===food.x && head.y===food.y){
-      food={x:Math.floor(Math.random()*30)*10,y:Math.floor(Math.random()*40)*10}
-    } else snake.pop();
-    ctx.fillStyle="lime";
-    snake.forEach(s=>ctx.fillRect(s.x,s.y,10,10));
-    ctx.fillStyle="red";
-    ctx.fillRect(food.x,food.y,10,10);
-  },100);
-}
 
-function flappyGame(){
-  let y=200,velocity=0;
-  document.onclick=()=>velocity=-5;
-  setInterval(()=>{
-    ctx.clearRect(0,0,300,400);
-    velocity+=0.3;
-    y+=velocity;
-    ctx.fillStyle="yellow";
-    ctx.fillRect(100,y,20,20);
-  },30);
-}
-
-function ufoGame(){
-  let x=150;
-  document.onkeydown=e=>{
-    if(e.key==="ArrowLeft") x-=10;
-    if(e.key==="ArrowRight") x+=10;
+    if (head.x === food.x && head.y === food.y) {
+      score++;
+      food = randomFood(snake, grid);
+    } else {
+      snake.pop();
+    }
+    render();
   }
-  setInterval(()=>{
-    ctx.clearRect(0,0,300,400);
-    ctx.fillStyle="white";
-    ctx.fillRect(x,350,20,20);
-  },50);
+
+  function render() {
+    clearCanvas();
+
+    ctx.fillStyle = "#07101f";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ef4444";
+    ctx.fillRect(food.x, food.y, grid, grid);
+
+    snake.forEach((seg, i) => {
+      ctx.fillStyle = i === 0 ? "#22c55e" : "#86efac";
+      ctx.fillRect(seg.x, seg.y, grid, grid);
+    });
+
+    drawText("Score: " + score, 26, "#f8fafc");
+  }
+
+  render();
+  gameInterval = setInterval(tick, 110);
+}
+
+function randomFood(snake, grid) {
+  let food;
+  do {
+    food = {
+      x: Math.floor(Math.random() * (canvas.width / grid)) * grid,
+      y: Math.floor(Math.random() * (canvas.height / grid)) * grid
+    };
+  } while (snake.some(seg => seg.x === food.x && seg.y === food.y));
+  return food;
+}
+
+/* ======================
+   FLAPPY
+====================== */
+function flappyGame() {
+  helpEl.textContent = "Flappy: Click inside the game area to flap. Pass through pipes.";
+
+  let bird = {x: 95, y: 200, w: 24, h: 24, velocity: 0};
+  const gravity = 0.35;
+  const flap = -5.8;
+  let pipes = [];
+  let frame = 0;
+  let score = 0;
+  let gameOver = false;
+
+  clickHandler = () => {
+    if (!gameOver) bird.velocity = flap;
+  };
+  canvas.addEventListener("click", clickHandler);
+
+  function resetPipe() {
+    const gap = 140;
+    const topHeight = 60 + Math.random() * 190;
+    pipes.push({
+      x: canvas.width,
+      w: 54,
+      top: topHeight,
+      bottom: topHeight + gap,
+      counted: false
+    });
+  }
+
+  function draw() {
+    clearCanvas();
+    ctx.fillStyle = "#0a1022";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // bird
+    ctx.fillStyle = "#facc15";
+    ctx.fillRect(bird.x, bird.y, bird.w, bird.h);
+
+    // pipes
+    ctx.fillStyle = "#22c55e";
+    pipes.forEach(p => {
+      ctx.fillRect(p.x, 0, p.w, p.top);
+      ctx.fillRect(p.x, p.bottom, p.w, canvas.height - p.bottom);
+    });
+
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 18px Arial";
+    ctx.fillText("Score: " + score, 14, 26);
+
+    if (gameOver) {
+      ctx.fillStyle = "rgba(0,0,0,.55)";
+      ctx.fillRect(70, 210, 280, 80);
+      ctx.fillStyle = "#ef4444";
+      ctx.font = "bold 28px Arial";
+      ctx.fillText("Game Over", 135, 255);
+      ctx.fillStyle = "#fff";
+      ctx.font = "16px Arial";
+      ctx.fillText("Choose Flappy again to restart", 112, 285);
+    }
+  }
+
+  function loop() {
+    if (gameOver) {
+      draw();
+      return;
+    }
+
+    frame++;
+    bird.velocity += gravity;
+    bird.y += bird.velocity;
+
+    if (frame % 100 === 0) resetPipe();
+
+    pipes.forEach(p => {
+      p.x -= 2.4;
+      if (!p.counted && p.x + p.w < bird.x) {
+        p.counted = true;
+        score++;
+      }
+
+      const hitPipe =
+        bird.x < p.x + p.w &&
+        bird.x + bird.w > p.x &&
+        (bird.y < p.top || bird.y + bird.h > p.bottom);
+
+      if (hitPipe) gameOver = true;
+    });
+
+    pipes = pipes.filter(p => p.x + p.w > -20);
+
+    const outOfBounds = bird.y < 0 || bird.y + bird.h > canvas.height;
+    if (outOfBounds) gameOver = true;
+
+    draw();
+    animationFrameId = requestAnimationFrame(loop);
+  }
+
+  draw();
+  animationFrameId = requestAnimationFrame(loop);
+}
+
+/* ======================
+   UFO RUNNER
+====================== */
+function ufoGame() {
+  helpEl.textContent = "UFO Run: Use left and right arrows. Avoid falling obstacles.";
+
+  let player = {x: canvas.width / 2 - 18, y: canvas.height - 42, w: 36, h: 18, speed: 18};
+  let obstacles = [];
+  let score = 0;
+  let gameOver = false;
+  let ticks = 0;
+
+  keyHandler = (e) => {
+    if (gameOver) return;
+    if (e.key === "ArrowLeft") player.x -= player.speed;
+    if (e.key === "ArrowRight") player.x += player.speed;
+    player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
+  };
+  window.addEventListener("keydown", keyHandler);
+
+  function drawUfo(x, y) {
+    ctx.fillStyle = "#c4b5fd";
+    ctx.fillRect(x, y + 6, player.w, 8);
+    ctx.fillStyle = "#a78bfa";
+    ctx.fillRect(x + 8, y, 20, 8);
+  }
+
+  function render() {
+    clearCanvas();
+    ctx.fillStyle = "#050816";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // stars
+    for (let i = 0; i < 18; i++) {
+      ctx.fillStyle = "rgba(255,255,255,.7)";
+      ctx.fillRect((i * 29 + ticks * 2) % canvas.width, (i * 47) % canvas.height, 2, 2);
+    }
+
+    drawUfo(player.x, player.y);
+
+    ctx.fillStyle = "#f59e0b";
+    obstacles.forEach(o => ctx.fillRect(o.x, o.y, o.w, o.h));
+
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 18px Arial";
+    ctx.fillText("Score: " + score, 14, 26);
+
+    if (gameOver) {
+      ctx.fillStyle = "rgba(0,0,0,.55)";
+      ctx.fillRect(70, 210, 280, 80);
+      ctx.fillStyle = "#ef4444";
+      ctx.font = "bold 28px Arial";
+      ctx.fillText("Game Over", 135, 255);
+      ctx.fillStyle = "#fff";
+      ctx.font = "16px Arial";
+      ctx.fillText("Choose UFO Run again to restart", 102, 285);
+    }
+  }
+
+  function tick() {
+    if (gameOver) {
+      render();
+      return;
+    }
+
+    ticks++;
+    if (ticks % 18 === 0) {
+      obstacles.push({
+        x: Math.random() * (canvas.width - 24),
+        y: -20,
+        w: 18 + Math.random() * 18,
+        h: 18 + Math.random() * 28,
+        speed: 3 + Math.random() * 2.4
+      });
+    }
+
+    obstacles.forEach(o => {
+      o.y += o.speed;
+      const hit =
+        player.x < o.x + o.w &&
+        player.x + player.w > o.x &&
+        player.y < o.y + o.h &&
+        player.y + player.h > o.y;
+      if (hit) gameOver = true;
+    });
+
+    obstacles = obstacles.filter(o => {
+      if (o.y > canvas.height + 30) {
+        score++;
+        return false;
+      }
+      return true;
+    });
+
+    render();
+  }
+
+  render();
+  gameInterval = setInterval(tick, 40);
 }
 </script>
-
 </body>
 </html>
