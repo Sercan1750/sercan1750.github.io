@@ -305,6 +305,31 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 .ai-helper-form input:focus{border-color:var(--violet2);box-shadow:0 0 0 3px rgba(124,58,237,.10)}
 .ai-send-btn{border:none;border-radius:12px;padding:0 14px;background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;font:700 13px var(--fb);cursor:pointer}
 .ai-helper-response{margin-top:10px;font-size:12px;color:var(--tx2);line-height:1.55}
+
+.ai-helper-topbar{display:flex;justify-content:flex-end;margin-bottom:8px}
+.ai-hide-btn,.ai-open-btn{
+  border:1px solid rgba(255,255,255,.14);
+  background:var(--su);
+  color:var(--tx);
+  border-radius:10px;
+  cursor:pointer;
+  font:600 12px var(--fb);
+}
+.ai-hide-btn{
+  width:30px;height:30px;padding:0;border-radius:999px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;line-height:1;
+}
+.ai-open-btn{
+  position:fixed;top:86px;right:18px;z-index:346;
+  width:46px;height:46px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 28px rgba(0,0,0,.26);
+  font-size:22px;
+}
+.ai-open-btn.hidden{display:none}
+.ai-helper.hidden{display:none !important}
+
 .game-controls{display:grid;grid-template-columns:repeat(3,minmax(72px,1fr));grid-template-areas:". up ." "left flap right" ". down .";gap:10px;justify-items:center;align-items:center;margin-top:14px}
 .control-btn{width:100%;max-width:120px}
 #moveUpBtn{grid-area:up}
@@ -329,6 +354,7 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 }
 @media(max-width:640px){
   .ai-helper{top:auto;bottom:104px}
+  .ai-open-btn{top:auto;bottom:104px;right:12px}
   .game-controls{grid-template-columns:repeat(3,minmax(64px,1fr))}
 }
 
@@ -527,21 +553,26 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
   </div>
 </div>
 
+
 <div class="ai-helper" id="aiHelper">
+  <div class="ai-helper-topbar">
+    <button type="button" class="ai-hide-btn" id="aiHideBtn" aria-label="Close AI box">✕</button>
+  </div>
   <div class="ai-helper-head">
     <div class="ai-robot">🤖</div>
     <div class="ai-helper-text">
-      <strong>Ask me question for AI</strong>
-      <span>Your question is saved locally.</span>
+      <strong id="aiHelperTitle">Ask me a question for AI</strong>
+      <span id="aiHelperSubtext">Your question is saved locally.</span>
     </div>
   </div>
   <form id="aiQuestionForm" class="ai-helper-form">
     <input id="aiQuestionInput" type="text" maxlength="220" placeholder="Ask something about me, projects, or this site..." />
-    <button type="submit" class="ai-send-btn">Send</button>
+    <button type="submit" class="ai-send-btn" id="aiSendBtn">Send</button>
   </form>
   <p class="ai-helper-response" id="aiQuestionResponse">Ask a question and I will log it here. You will see a note saying I will review it and get back to you soon.</p>
 </div>
 
+<button type="button" class="ai-open-btn hidden" id="aiOpenBtn" aria-label="Open AI question box" title="Open AI question box">🤖</button>
 
 <div class="mb" id="gameModal">
   <div class="mo" style="max-width:560px;text-align:center;">
@@ -713,6 +744,88 @@ const TX={
 let lg='en', dk=true;
 const g=k=>(TX[lg]||TX.en)[k]||TX.en[k]||k;
 
+let aiHelperVisible=true;
+
+function getAiLangPack(){
+  const packs={
+    en:{
+      title:'Ask me a question for AI',
+      sub:'Your question is saved locally.',
+      ph:'Ask something about me, projects, or this site...',
+      send:'Send',
+      response:'Ask a question and I will log it here. You will see a note saying I will review it and get back to you soon.',
+      saved:'Thanks. Your question has been saved. I will review it and get back to you soon.',
+      empty:'Please write a question first.',
+      hide:'✕',
+      show:'🤖'
+    },
+    tr:{
+      title:'Yapay zekâ için bana soru sor',
+      sub:'Sorun tarayıcıda yerel olarak kaydedilir.',
+      ph:'Benim hakkımda, projelerim veya bu siteyle ilgili bir soru sor...',
+      send:'Gönder',
+      response:'Bir soru sor; burada kaydedeyim. Yakında inceleyip sizi bilgilendireceğim.',
+      saved:'Teşekkürler. Sorunuz kaydedildi. Yakında inceleyip sizi bilgilendireceğim.',
+      empty:'Lütfen önce bir soru yazın.',
+      hide:'✕',
+      show:'🤖'
+    },
+    de:{
+      title:'Stell mir eine Frage für KI',
+      sub:'Deine Frage wird lokal im Browser gespeichert.',
+      ph:'Frage etwas über mich, meine Projekte oder diese Website...',
+      send:'Senden',
+      response:'Stelle eine Frage; ich speichere sie hier. Ich prüfe sie bald und informiere dich.',
+      saved:'Danke. Deine Frage wurde gespeichert. Ich werde sie bald prüfen und dich informieren.',
+      empty:'Bitte zuerst eine Frage eingeben.',
+      hide:'✕',
+      show:'🤖'
+    }
+  };
+  return packs[lg] || packs.en;
+}
+
+function updateAiHelperLanguage(){
+  const p=getAiLangPack();
+  if(aiHelperTitle) aiHelperTitle.textContent=p.title;
+  if(aiHelperSubtext) aiHelperSubtext.textContent=p.sub;
+  if(aiQuestionInput) aiQuestionInput.placeholder=p.ph;
+  if(aiSendBtn) aiSendBtn.textContent=p.send;
+  if(aiQuestionResponse && !aiQuestionResponse.dataset.userSet){
+    aiQuestionResponse.textContent=p.response;
+  }
+  if(aiHideBtn) aiHideBtn.textContent=aiHelperVisible ? p.hide : p.show;
+}
+
+function setAiHelperVisible(visible){
+  aiHelperVisible=!!visible;
+  if(aiHelper){
+    if(aiHelperVisible){
+      aiHelper.classList.remove('hidden');
+      aiHelper.style.display='block';
+      aiHelper.style.visibility='visible';
+      aiHelper.style.opacity='1';
+      aiHelper.style.pointerEvents='auto';
+    }else{
+      aiHelper.classList.add('hidden');
+      aiHelper.style.display='none';
+      aiHelper.style.visibility='hidden';
+      aiHelper.style.opacity='0';
+      aiHelper.style.pointerEvents='none';
+    }
+  }
+  if(aiOpenBtn){
+    if(aiHelperVisible){
+      aiOpenBtn.classList.add('hidden');
+      aiOpenBtn.style.display='none';
+    }else{
+      aiOpenBtn.classList.remove('hidden');
+      aiOpenBtn.style.display='flex';
+    }
+  }
+  updateAiHelperLanguage();
+}
+
 function L(l){
   lg=l;
   document.documentElement.lang=l;
@@ -734,24 +847,9 @@ function L(l){
   const bmh=document.getElementById('bmh');
   if(bmh && !document.getElementById('bmod').classList.contains('open')) bmh.textContent=g('bmh');
   RC();
-  if(questionToggleBtn) questionToggleBtn.addEventListener('click',()=>{
-  const hidden=questionList ? questionList.classList.contains('hidden') : true;
-  if(questionList) questionList.classList.toggle('hidden', !hidden);
-  questionToggleBtn.textContent=hidden ? 'Hide Questions' : 'Show Questions';
-});
-if(aiQuestionForm) aiQuestionForm.addEventListener('submit',e=>{
-  e.preventDefault();
-  const question=(aiQuestionInput?.value || '').trim();
-  if(!question) return;
-  recordAiQuestion(question);
-  if(aiQuestionResponse) aiQuestionResponse.textContent='Thanks. Your question has been saved. I will review it and get back to you soon.';
-  if(aiQuestionInput) aiQuestionInput.value='';
-  renderAiQuestionAnalytics();
   renderArcadeAnalytics();
-});
-if(analyticsToggleBtn) analyticsToggleBtn.addEventListener('click',()=>toggleAnalytics());
-renderArcadeAnalytics();
 updateGameLanguageUI();
+updateAiHelperLanguage();
 renderAiQuestionAnalytics();
 }
 
@@ -931,9 +1029,12 @@ const arcade={
   gameOver:false,
   score:0,
   best:0,
+  bestSession:0,
   cleanup:null,
   state:{},
-  controls:{left:false,right:false}
+  controls:{left:false,right:false},
+  counted:false,
+  interacted:false
 };
 const birdImage=new Image();
 birdImage.src='data:image/svg+xml;utf8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><ellipse cx="30" cy="34" rx="18" ry="16" fill="#fbbf24"/><circle cx="40" cy="26" r="10" fill="#fcd34d"/><circle cx="43" cy="24" r="2.5" fill="#111827"/><polygon points="49,27 60,31 49,35" fill="#f97316"/><path d="M16 31c-6-5-10-3-10 0s4 5 10 0z" fill="#f59e0b"/><path d="M25 46c4 5 12 5 16 0" fill="none" stroke="#92400e" stroke-width="3" stroke-linecap="round"/><path d="M18 22c4-7 14-11 23-8" fill="none" stroke="#fff7ed" stroke-width="3" stroke-linecap="round" opacity=".8"/></svg>`);
@@ -950,6 +1051,21 @@ const questionList=document.getElementById('questionList');
 const aiQuestionForm=document.getElementById('aiQuestionForm');
 const aiQuestionInput=document.getElementById('aiQuestionInput');
 const aiQuestionResponse=document.getElementById('aiQuestionResponse');
+
+if(aiHideBtn && !aiHideBtn.dataset.bound){
+  aiHideBtn.dataset.bound='1';
+  aiHideBtn.addEventListener('click',()=>setAiHelperVisible(false));
+}
+if(aiOpenBtn && !aiOpenBtn.dataset.bound){
+  aiOpenBtn.dataset.bound='1';
+  aiOpenBtn.addEventListener('click',()=>setAiHelperVisible(true));
+}
+const aiHelper=document.getElementById('aiHelper');
+const aiOpenBtn=document.getElementById('aiOpenBtn');
+const aiHideBtn=document.getElementById('aiHideBtn');
+const aiHelperTitle=document.getElementById('aiHelperTitle');
+const aiHelperSubtext=document.getElementById('aiHelperSubtext');
+const aiSendBtn=document.getElementById('aiSendBtn');
 const GAME_LABELS={ufo:'🛸 UFO Run',snake:'🐍 Snake',flappy:'🐦 Flappy'};
 const AI_QUESTIONS_KEY='sd_ai_questions_v1';
 
@@ -1044,6 +1160,21 @@ function recordArcadeBest(game, score){
     saveArcadeAnalytics(data);
     renderArcadeAnalytics();
   }
+}
+
+function arcadeMarkPlayed(){
+  if(arcade.counted) return;
+  arcade.counted=true;
+  arcade.interacted=true;
+  recordArcadePlay(arcade.active);
+}
+function arcadeRegisterScore(value){
+  arcade.interacted=true;
+  if(typeof value==='number' && value>arcade.bestSession){
+    arcade.bestSession=value;
+  }
+  recordArcadeBest(arcade.active, arcade.bestSession);
+  renderArcadeAnalytics();
 }
 function toggleAnalytics(force){
   if(!analyticsDock) return;
@@ -1181,10 +1312,13 @@ function startArcadeGame(game){
   clearGameCanvas();
   arcade.active=game;
   arcade.gameOver=false;
+  arcade.counted=false;
+  arcade.interacted=false;
+  arcade.bestSession=0;
   arcadeSetScore(0);
   arcadeLoadBest(game);
-  recordArcadePlay(game);
   setActiveGameCard(game);
+  renderArcadeAnalytics();
   if(game==='ufo') initUfoGame();
   else if(game==='snake') initSnakeGame();
   else initFlappyGame();
@@ -1508,7 +1642,7 @@ function initFlappyGame(){
   };
   arcade.state=state;
 
-  const flap=()=>{ if(!arcade.gameOver) state.bird.vy=-5.6; };
+  const flap=()=>{ if(!arcade.gameOver){ arcadeMarkPlayed(); state.bird.vy=-5.6; } };
   const pointerHandler=(e)=>{ e.preventDefault(); if(arcade.active==='flappy') flap(); };
   gameCanvas.addEventListener('pointerdown', pointerHandler);
   arcade.cleanup=()=> gameCanvas.removeEventListener('pointerdown', pointerHandler);
@@ -1647,6 +1781,8 @@ window.addEventListener('keyup',e=>{
 if(analyticsToggleBtn) analyticsToggleBtn.addEventListener('click',()=>toggleAnalytics());
 renderArcadeAnalytics();
 updateGameLanguageUI();
+setAiHelperVisible(true);
+updateAiHelperLanguage();
 
 </script>
 
@@ -1679,13 +1815,13 @@ updateGameLanguageUI();
 
         const question = (input && input.value ? input.value : '').trim();
         if (!question) {
-          if (response) response.textContent = 'Please write a question first.';
+          if (response) { response.dataset.userSet='1'; response.textContent = getAiLangPack().empty; }
           return false;
         }
 
         try {
           if (typeof recordAiQuestion === 'function') recordAiQuestion(question);
-          if (response) response.textContent = 'Thanks. Your question has been saved. I will review it and get back to you soon.';
+          if (response) { response.dataset.userSet='1'; response.textContent = getAiLangPack().saved; }
           if (input) input.value = '';
           if (typeof renderAiQuestionAnalytics === 'function') renderAiQuestionAnalytics();
           if (typeof renderArcadeAnalytics === 'function') renderArcadeAnalytics();
@@ -1705,6 +1841,60 @@ updateGameLanguageUI();
     document.addEventListener('DOMContentLoaded', bindAiQuestionPatch);
   } else {
     bindAiQuestionPatch();
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  function bindAiHideControls(){
+    const aiHelper = document.getElementById('aiHelper');
+    const aiOpenBtn = document.getElementById('aiOpenBtn');
+    const aiHideBtn = document.getElementById('aiHideBtn');
+
+    function forceSetAiVisible(visible){
+      if(typeof setAiHelperVisible === 'function'){
+        setAiHelperVisible(visible);
+      }else{
+        if(aiHelper){
+          aiHelper.style.display = visible ? 'block' : 'none';
+          aiHelper.classList.toggle('hidden', !visible);
+        }
+        if(aiOpenBtn){
+          aiOpenBtn.style.display = visible ? 'none' : 'flex';
+          aiOpenBtn.classList.toggle('hidden', visible);
+        }
+      }
+    }
+
+    if(aiHideBtn && !aiHideBtn.dataset.fixedBound){
+      aiHideBtn.dataset.fixedBound = '1';
+      aiHideBtn.onclick = function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        forceSetAiVisible(false);
+        return false;
+      };
+    }
+
+    if(aiOpenBtn && !aiOpenBtn.dataset.fixedBound){
+      aiOpenBtn.dataset.fixedBound = '1';
+      aiOpenBtn.onclick = function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        forceSetAiVisible(false);
+        return false;
+      };
+    }
+
+    forceSetAiVisible(false);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', bindAiHideControls);
+  }else{
+    bindAiHideControls();
   }
 })();
 </script>
