@@ -1,504 +1,1274 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sercan Düzel</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Sercan Düzel — Software Support & Implementation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-  :root{
-    --bg:#0b0f1a; --card:#111827; --card2:#0f172a; --text:#fff; --muted:#cbd5e1;
-    --accent:#8b5cf6; --accent2:#22c55e; --danger:#ef4444; --gold:#f59e0b;
-  }
-  *{box-sizing:border-box}
-  body{
-    font-family:Arial,sans-serif;background:linear-gradient(180deg,#0b0f1a,#09101f);
-    color:var(--text);margin:0;min-height:100vh;
-  }
-  .topbar{
-    padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.08);
-    position:sticky;top:0;background:rgba(11,15,26,.85);backdrop-filter:blur(8px);z-index:10;
-  }
-  .title{margin:0;font-size:20px}
-  .subtitle{margin:6px 0 0;color:var(--muted);font-size:14px}
-  #spaceShip{
-    position:fixed;top:100px;left:20px;background:linear-gradient(135deg,#111827,#1f2937);
-    padding:14px 18px;border-radius:999px;cursor:pointer;z-index:20;border:1px solid rgba(255,255,255,.1);
-    box-shadow:0 8px 30px rgba(0,0,0,.25); user-select:none;
-    animation: floatUfo 18s linear infinite;
-  }
-  @keyframes floatUfo{
-    0%{transform:translate(0,0)} 25%{transform:translate(38vw,10vh)}
-    50%{transform:translate(55vw,48vh)} 75%{transform:translate(8vw,34vh)} 100%{transform:translate(0,0)}
-  }
-  .modal{
-    position:fixed;inset:0;background:rgba(0,0,0,0.78);display:none;
-    align-items:center;justify-content:center;padding:18px;z-index:30;
-  }
-  .modal.open{display:flex}
-  .box{
-    width:min(100%,720px);background:var(--card2);padding:20px;border-radius:16px;text-align:center;
-    border:1px solid rgba(255,255,255,.08); box-shadow:0 18px 50px rgba(0,0,0,.4);
-  }
-  .box h2{margin-top:0}
-  .actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-  .gbtn{
-    margin:0;padding:11px 16px;background:#1f2937;border:1px solid rgba(255,255,255,.1);color:white;
-    border-radius:10px;cursor:pointer;font-weight:700;
-  }
-  .gbtn:hover{background:#2b3447}
-  .close-btn{background:#2a1320;border-color:rgba(239,68,68,.35)}
-  .dashboard{
-    padding:26px 20px 40px;max-width:1100px;margin:0 auto;
-  }
-  .cards{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;
-  }
-  .card{
-    background:rgba(17,24,39,.92);padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,.08);
-  }
-  .card h3{margin:0 0 10px;font-size:15px;color:var(--muted)}
-  .metric{font-size:28px;font-weight:700}
-  .small{margin-top:8px;color:var(--muted);font-size:13px}
-  .game-wrap{margin-top:18px}
-  #gameCanvas{
-    width:min(100%,420px);height:auto;background:#050816;border-radius:14px;border:1px solid rgba(255,255,255,.08);
-    display:block;margin:12px auto 0;
-  }
-  .help{color:var(--muted);font-size:13px;margin-top:8px}
-  .hidden{display:none}
+:root{
+  --blue:#3b82f6;--blue2:#60a5fa;--violet:#7c3aed;--violet2:#a78bfa;
+  --gold:#f59e0b;--gold2:#fbbf24;
+  --r:12px;--r2:20px;--t:0.3s cubic-bezier(0.4,0,0.2,1);
+  --ff:'Playfair Display',serif;--fb:'DM Sans',sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#080a0f;--bg2:#0d0f16;--su:#12151f;--su2:#181b28;
+  --bo:rgba(255,255,255,0.06);--bo2:rgba(255,255,255,0.12);
+  --tx:#e8eaf0;--tx2:#9ba3b8;--tx3:#6b7491;
+  --nav:rgba(8,10,15,0.92);--ch:#181b28;
+}
+[data-theme="light"]{
+  --bg:#f8f9fc;--bg2:#f0f2f8;--su:#fff;--su2:#f0f2fa;
+  --bo:rgba(0,0,0,0.07);--bo2:rgba(0,0,0,0.13);
+  --tx:#0f1018;--tx2:#4a5068;--tx3:#8a90a8;
+  --nav:rgba(248,249,252,0.94);--ch:#f5f6ff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:var(--fb);font-size:16px;line-height:1.7;overflow-x:hidden;transition:background .4s,color .4s}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--violet);border-radius:2px}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--bo) 1px,transparent 1px),linear-gradient(90deg,var(--bo) 1px,transparent 1px);background-size:72px 72px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+section{padding:96px 0}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--nav);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);transition:background .4s}
+.ni{max-width:1080px;margin:0 auto;height:64px;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-family:var(--ff);font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--gold2),var(--violet2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;flex-shrink:0}
+.nl{display:flex;align-items:center;gap:2px;list-style:none}
+.nl a{font-size:13px;font-weight:500;color:var(--tx2);text-decoration:none;padding:6px 12px;border-radius:8px;transition:var(--t)}
+.nl a:hover,.nl a.on{color:var(--tx);background:var(--su)}
+.nr{display:flex;align-items:center;gap:7px;flex-shrink:0}
+.lb{display:flex;align-items:center;background:var(--su);border:1px solid var(--bo2);border-radius:9px;padding:3px;gap:2px}
+.lb button{font-size:11px;font-weight:700;font-family:var(--fb);color:var(--tx3);background:none;border:none;cursor:pointer;padding:4px 9px;border-radius:6px;transition:var(--t)}
+.lb button.on{background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff}
+.tb{width:34px;height:34px;border-radius:8px;border:1px solid var(--bo2);background:var(--su);color:var(--tx2);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:var(--t)}
+.dp{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;background:var(--su);border:1px solid var(--bo2);border-radius:100px;padding:4px 11px;color:var(--tx3)}
+.dp .dot{width:6px;height:6px;border-radius:50%;background:#22c55e;box-shadow:0 0 6px #22c55e}
+.hb{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hb span{display:block;width:22px;height:2px;background:var(--tx2);border-radius:2px;transition:var(--t)}
+.dr{display:none;flex-direction:column;position:fixed;top:64px;left:0;right:0;z-index:199;background:var(--nav);backdrop-filter:blur(20px);border-bottom:1px solid var(--bo);padding:12px 20px 16px;gap:4px}
+.dr.open{display:flex}
+.dr a{font-size:15px;font-weight:500;color:var(--tx2);text-decoration:none;padding:11px 14px;border-radius:10px;transition:var(--t)}
+.dr a:hover{color:var(--tx);background:var(--su)}
+.sb{position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--gold),var(--violet2));z-index:300}
+.bt{position:fixed;bottom:24px;right:24px;width:40px;height:40px;background:var(--su);border:1px solid var(--bo2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--tx2);text-decoration:none;cursor:pointer;transition:var(--t);opacity:0;pointer-events:none;z-index:99}
+.bt.show{opacity:1;pointer-events:auto}
+.bt:hover{background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;border-color:transparent;transform:translateY(-2px)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:80px;position:relative;overflow:hidden}
+.glow{position:absolute;border-radius:50%;filter:blur(90px);pointer-events:none}
+.g1{width:600px;height:600px;top:-150px;left:-150px;background:radial-gradient(circle,rgba(124,58,237,.14) 0%,transparent 70%);animation:ga 10s ease-in-out infinite}
+.g2{width:500px;height:500px;bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(59,130,246,.12) 0%,transparent 70%);animation:gb 12s ease-in-out infinite}
+.g3{width:300px;height:300px;top:40%;left:40%;background:radial-gradient(circle,rgba(245,158,11,.08) 0%,transparent 70%);animation:ga 8s ease-in-out infinite reverse}
+@keyframes ga{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,50px)}}
+@keyframes gb{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,-40px)}}
+.hi{display:grid;grid-template-columns:1fr 380px;gap:80px;align-items:center}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--su);border:1px solid var(--bo2);border-radius:100px;padding:6px 16px 6px 10px;font-size:12px;font-weight:700;color:var(--gold2);margin-bottom:24px;animation:fu .8s ease both;letter-spacing:2px;text-transform:uppercase}
+.badge .dot{width:7px;height:7px;background:#22c55e;border-radius:50%;box-shadow:0 0 8px #22c55e;animation:pu 2s infinite}
+@keyframes pu{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.85)}}
+.hero h1{font-family:var(--ff);font-size:clamp(38px,5.5vw,68px);font-weight:800;line-height:1.08;letter-spacing:-1.5px;margin-bottom:8px;animation:fu .8s .1s ease both}
+.nl2{display:block}
+.gr{background:linear-gradient(135deg,var(--gold2) 0%,var(--violet2) 50%,var(--blue2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hr{font-size:clamp(14px,1.8vw,18px);color:var(--tx2);margin-bottom:20px;animation:fu .8s .2s ease both;font-weight:400}
+.hr span{color:var(--blue2);font-weight:500}
+.hd{font-size:15px;color:var(--tx2);line-height:1.85;margin-bottom:32px;animation:fu .8s .3s ease both;max-width:500px}
+.ha{display:flex;gap:12px;flex-wrap:wrap;animation:fu .8s .4s ease both}
+@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* PHOTO */
+.pw{position:relative;animation:fu .8s .2s ease both;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.pr{position:absolute;inset:-12px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--violet),var(--blue));padding:2px;animation:sp 8s linear infinite}
+@keyframes sp{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.pri{width:100%;height:100%;border-radius:50%;background:var(--bg)}
+.pi{width:260px;height:260px;border-radius:50%;object-fit:cover;object-position:center top;position:relative;z-index:1;display:block}
+.pc{position:absolute;bottom:-16px;right:-16px;background:var(--su);border:1px solid var(--bo2);border-radius:14px;padding:12px 16px;z-index:2}
+.pc p{font-size:11px;color:var(--tx3);font-weight:500;margin-bottom:2px}
+.pc strong{font-size:13px;color:var(--gold2);font-weight:700;display:block}
+
+/* BTNS */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:var(--r);font-family:var(--fb);font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:var(--t);border:none}
+.bp{background:linear-gradient(135deg,var(--violet),var(--blue));color:#fff;box-shadow:0 0 24px rgba(124,58,237,.3)}
+.bp:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(124,58,237,.5)}
+.bo2b{background:transparent;color:var(--tx);border:1px solid var(--bo2)}
+.bo2b:hover{background:var(--su);transform:translateY(-2px)}
+
+/* SECTIONS */
+.sl{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold2);margin-bottom:10px}
+.st{font-family:var(--ff);font-size:clamp(24px,3.5vw,38px);font-weight:700;letter-spacing:-.5px;line-height:1.2;margin-bottom:14px}
+.dv{width:48px;height:2px;background:linear-gradient(90deg,var(--gold),var(--violet2));border-radius:2px;margin-bottom:48px}
+
+/* ABOUT */
+.ag{display:grid;grid-template-columns:1fr;gap:64px;align-items:start;max-width:820px}
+.at p{color:var(--tx2);font-size:15px;line-height:1.95;margin-bottom:16px}
+.at p:last-child{margin-bottom:0}
+.at strong{color:var(--tx);font-weight:600}
+.sc{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.sk{display:inline-flex;align-items:center;gap:6px;background:var(--su);border:1px solid var(--bo);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:500;color:var(--tx2);transition:var(--t)}
+.sk:hover{border-color:var(--violet);color:var(--violet2);background:rgba(124,58,237,.08)}
+
+/* TIMELINE */
+.tl{position:relative;padding-left:28px}
+.tl::before{content:'';position:absolute;left:7px;top:6px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--violet),transparent)}
+.ti{position:relative;margin-bottom:36px}
+.ti:last-child{margin-bottom:0}
+.td{position:absolute;left:-24px;top:4px;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--violet2));border:2px solid var(--bg);box-shadow:0 0 8px rgba(245,158,11,.4)}
+.tp{font-size:11px;font-weight:700;color:var(--gold2);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px}
+.tt{font-family:var(--ff);font-size:17px;font-weight:600;margin-bottom:3px;color:var(--tx)}
+.tc{font-size:13px;color:var(--blue2);font-weight:500;margin-bottom:8px}
+.tx2c{font-size:13px;color:var(--tx2);line-height:1.75}
+
+/* PROJECTS / BLOG WIP */
+.wb{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(59,130,246,.07),rgba(124,58,237,.05));border:1px solid rgba(59,130,246,.2);border-radius:14px;padding:16px 20px;margin-bottom:28px}
+.wb p{font-size:14px;color:var(--tx2)}.wb p strong{color:var(--blue2)}
+.wbb{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(245,158,11,.07),rgba(124,58,237,.05));border:1px solid rgba(245,158,11,.18);border-radius:14px;padding:16px 20px;margin-bottom:28px}
+.wbb p{font-size:14px;color:var(--tx2)}.wbb p strong{color:var(--gold2)}
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.pc2{background:var(--su);border:1px solid var(--bo);border-radius:var(--r2);padding:24px;transition:var(--t);position:relative;overflow:hidden}
+.pc2::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--violet2));transform:scaleX(0);transform-origin:left;transition:var(--t)}
+.pc2:hover{border-color:var(--bo2);background:var(--ch);transform:translateY(-4px);box-shadow:0 16px 44px rgba(0,0,0,.22)}
+.pc2:hover::before{transform:scaleX(1)}
+.pio{width:44px;height:44px;background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(124,58,237,.15));border:1px solid rgba(245,158,11,.2);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.ptit{font-family:var(--ff);font-size:16px;font-weight:600;margin-bottom:8px}
+.pde{font-size:13px;color:var(--tx2);line-height:1.75;margin-bottom:14px}
+.ptags{display:flex;flex-wrap:wrap;gap:6px}
+.ptag{font-size:11px;font-weight:600;padding:3px 10px;border-radius:100px;background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.2);color:var(--violet2)}
+
+/* BLOG */
+.bg2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.bc{background:var(--su);border:1px solid var(--bo);border-radius:var(--r2);padding:24px;transition:var(--t);display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.bc.f{grid-column:1/-1;flex-direction:row;gap:26px;align-items:flex-start}
+.bc:hover{border-color:var(--bo2);background:var(--ch);transform:translateY(-3px);box-shadow:0 12px 36px rgba(0,0,0,.18)}
+.bth{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(124,58,237,.12));border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:32px;margin-bottom:16px;flex-shrink:0}
+.bc.f .bth{width:190px;height:130px;aspect-ratio:unset;margin-bottom:0}
+.bco{flex:1}
+.bm{display:flex;align-items:center;gap:9px;margin-bottom:8px;flex-wrap:wrap}
+.bcat{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold2);background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);padding:2px 8px;border-radius:100px}
+.bdt{font-size:11px;color:var(--tx3)}
+.btit{font-family:var(--ff);font-size:16px;font-weight:600;line-height:1.35;margin-bottom:8px}
+.bc.f .btit{font-size:18px}
+.bex{font-size:13px;color:var(--tx2);line-height:1.7;flex:1}
+.brm{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--gold2);margin-top:12px;transition:gap var(--t)}
+.bc:hover .brm{gap:9px}
+.ber{display:flex;gap:7px;margin-top:10px;border-top:1px solid var(--bo);padding-top:10px}
+.bab{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--fb);background:var(--su);border:1px solid var(--bo2);color:var(--tx2);transition:var(--t)}
+.bab:hover{border-color:var(--blue);color:var(--blue2)}
+.bab.dl:hover{border-color:#ef4444;color:#ef4444}
+
+/* CONTACT */
+.cw{display:flex;flex-direction:column;gap:14px;max-width:560px}
+.cl{display:flex;align-items:center;gap:14px;background:var(--su);border:1px solid var(--bo);border-radius:var(--r);padding:16px 20px;text-decoration:none;color:var(--tx);font-size:14px;font-weight:500;transition:var(--t)}
+.cl:hover{border-color:var(--gold);background:rgba(245,158,11,.04);color:var(--gold2);transform:translateX(4px)}
+.cl .li{width:38px;height:38px;background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(124,58,237,.12));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.cli{display:flex;flex-direction:column;gap:2px}
+.cll{font-size:11px;color:var(--tx3);font-weight:500}
+
+/* MODAL */
+.mb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(8px)}
+.mb.open{display:flex}
+.mo{background:var(--bg2);border:1px solid var(--bo2);border-radius:var(--r2);padding:28px;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;position:relative;animation:mi .28s ease}
+@keyframes mi{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.mo h3{font-family:var(--ff);font-size:18px;font-weight:700;margin-bottom:20px}
+.mc{position:absolute;top:14px;right:14px;width:30px;height:30px;background:var(--su);border:1px solid var(--bo2);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;color:var(--tx2);transition:var(--t)}
+.mc:hover{background:var(--su2)}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.fg label{font-size:11px;font-weight:700;color:var(--tx2);letter-spacing:.5px;text-transform:uppercase}
+.fg input,.fg textarea{background:var(--su);border:1px solid var(--bo2);border-radius:var(--r);padding:10px 13px;font-family:var(--fb);font-size:14px;color:var(--tx);outline:none;transition:var(--t);resize:vertical;width:100%}
+.fg input:focus,.fg textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
+.fg textarea{min-height:80px}
+.ma{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-index:1}
+.fi{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.fi p{font-size:12px;color:var(--tx3)}
+.fl{display:flex;gap:18px}
+.fl a{font-size:12px;color:var(--tx3);text-decoration:none;transition:color var(--t)}
+.fl a:hover{color:var(--gold2)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.vis{opacity:1;transform:translateY(0)}
+
+/* LANGS */
+.lg-info{display:flex;flex-direction:column;gap:10px}
+.lg-row{display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--tx2)}
+.lg-row span:last-child{font-weight:600}
+.ln{color:var(--gold2)}.lf{color:var(--blue2)}.lp{color:var(--blue2)}.li2{color:var(--tx3)}
+.edu-h{font-family:var(--ff);font-size:18px;font-weight:600;margin-bottom:24px;color:var(--tx)}
+.edu-h2{font-family:var(--ff);font-size:18px;font-weight:600;margin:36px 0 16px;color:var(--tx)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .nl{display:none}.hb{display:flex}
+  .hi{grid-template-columns:1fr;gap:48px}
+  .pw{order:-1;justify-content:center}
+  .pi{width:200px;height:200px}
+  .ag{grid-template-columns:1fr}
+  .bg2{grid-template-columns:1fr}
+  .bc.f{flex-direction:column;grid-column:1}
+  .bc.f .bth{width:100%;height:auto;aspect-ratio:16/9;margin-bottom:16px}
+  section{padding:72px 0}
+}
+@media(max-width:600px){
+  .pg{grid-template-columns:1fr}
+  .hero h1{letter-spacing:-1px}
+  .dp{display:none}
+  .nr{gap:5px}
+  .lb button{padding:3px 7px;font-size:10px}
+  .pi{width:170px;height:170px}
+}
+
+/* LIVE STATS */
+.site-stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:22px;animation:fu .8s .5s ease both}
+.stat-card{min-width:170px;background:var(--su);border:1px solid var(--bo2);border-radius:14px;padding:14px 18px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+.stat-label{display:block;font-size:11px;color:var(--tx3);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+.stat-card strong{font-size:18px;color:var(--gold2);font-weight:700}
+.stat-card em{display:block;font-style:normal;font-size:12px;color:var(--tx2);margin-top:4px}
+
+/* SPACE SHIP */
+#spaceShip{position:fixed;left:20px;top:108px;min-width:188px;min-height:88px;padding:12px 18px 12px 16px;border-radius:999px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(10,14,26,.92),rgba(33,18,66,.88));border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);box-shadow:0 0 26px rgba(124,58,237,.28),0 14px 38px rgba(0,0,0,.28);cursor:pointer;z-index:350;animation:spaceFloat 30s linear infinite;user-select:none;transition:transform var(--t),box-shadow var(--t)}
+#spaceShip:hover{transform:scale(1.05);box-shadow:0 0 34px rgba(245,158,11,.34),0 18px 44px rgba(0,0,0,.34)}
+#spaceShip .ufo-icon{font-size:52px;line-height:1;filter:drop-shadow(0 0 14px rgba(255,255,255,.28)) drop-shadow(0 0 22px rgba(124,58,237,.30))}
+#spaceShip .ufo-text{display:flex;flex-direction:column;line-height:1.1}
+#spaceShip .ufo-text strong{font-size:16px;color:#fff;font-weight:800;letter-spacing:.2px;text-shadow:0 0 16px rgba(124,58,237,.4)}
+#spaceShip .ufo-text span{font-size:11px;color:var(--gold2);letter-spacing:.7px;text-transform:uppercase}
+@keyframes spaceFloat{0%{transform:translate(0,0) rotate(0deg)}18%{transform:translate(70vw,8vh) rotate(6deg)}36%{transform:translate(52vw,62vh) rotate(-5deg)}54%{transform:translate(10vw,54vh) rotate(5deg)}72%{transform:translate(74vw,28vh) rotate(-6deg)}100%{transform:translate(0,0) rotate(0deg)}}
+.game-controls{display:flex;gap:10px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.gbtn{min-width:120px;padding:10px 14px;border-radius:12px;border:1px solid var(--bo2);background:var(--su);color:var(--tx);font:600 14px var(--fb);cursor:pointer;touch-action:manipulation;transition:var(--t)}
+.gbtn:hover,.gbtn:active{transform:translateY(-1px);background:var(--ch);border-color:var(--violet2)}
+.game-note{font-size:12px;color:var(--tx3);margin-top:10px}
+.gscore{font-size:12px;color:var(--tx2);margin:10px 0 2px}
+#spaceGame{width:100%;max-width:420px;height:auto;background:radial-gradient(circle at 50% 18%,rgba(76,29,149,.45),rgba(5,8,18,.96) 38%,#02030a 100%);border-radius:16px;border:1px solid rgba(124,58,237,.28);box-shadow:0 0 24px rgba(124,58,237,.24), inset 0 0 35px rgba(59,130,246,.10);display:block;margin:14px auto 0}
+@media(max-width:960px){#spaceShip{min-width:180px;min-height:86px;padding:12px 16px;top:auto;bottom:90px;left:14px}#spaceShip .ufo-icon{font-size:32px}#spaceShip .ufo-text strong{font-size:12px}#spaceShip .ufo-text span{font-size:10px}.site-stats{gap:10px}.stat-card{min-width:145px;padding:12px 14px}}
+
+
+.game-chooser{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+.game-card-btn{background:var(--su);border:1px solid var(--bo2);border-radius:14px;padding:14px 12px;color:var(--tx);cursor:pointer;transition:var(--t);font-family:var(--fb);text-align:left}
+.game-card-btn:hover,.game-card-btn.active{transform:translateY(-2px);border-color:var(--violet2);background:var(--ch);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.game-card-btn strong{display:block;font-size:14px;margin-bottom:4px}
+.game-card-btn span{display:block;font-size:12px;color:var(--tx3);line-height:1.45}
+.game-status{font-size:12px;color:var(--tx3);margin-top:10px}
+.game-controls.hidden{display:none}
+@media(max-width:640px){.game-chooser{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
-  <div class="topbar">
-    <h1 class="title">Sercan Düzel</h1>
-    <p class="subtitle">Mini games + privacy-safe local analytics</p>
+
+<div class="sb" id="sb"></div>
+<a href="#hero" class="bt" id="bt">↑</a>
+
+<!-- NAV -->
+<nav>
+  <div class="ni">
+    <a href="#hero" class="logo">Sercan Düzel</a>
+    <ul class="nl" id="nl">
+      <li><a href="#about"      data-k="na">About</a></li>
+      <li><a href="#experience" data-k="ne">Experience</a></li>
+      <li><a href="#projects"   data-k="np">Projects</a></li>
+      <li><a href="#blog"       data-k="nb">Blog</a></li>
+      <li><a href="#contact"    data-k="nc">Contact</a></li>
+    </ul>
+    <div class="nr">
+      <div class="dp"><span class="dot"></span><span id="dl">🖥️ Web</span></div>
+      <div class="lb">
+        <button id="len" onclick="L('en')" class="on">EN</button>
+        <button id="ltr" onclick="L('tr')">TR</button>
+        <button id="lde" onclick="L('de')">DE</button>
+      </div>
+      <button class="tb" id="tb" onclick="TH()">🌙</button>
+      <button class="hb" id="hb"><span></span><span></span><span></span></button>
+    </div>
   </div>
+</nav>
+<div class="dr" id="dr">
+  <a href="#about"      data-k="na" onclick="CD()">About</a>
+  <a href="#experience" data-k="ne" onclick="CD()">Experience</a>
+  <a href="#projects"   data-k="np" onclick="CD()">Projects</a>
+  <a href="#blog"       data-k="nb" onclick="CD()">Blog</a>
+  <a href="#contact"    data-k="nc" onclick="CD()">Contact</a>
+</div>
 
-  <div id="spaceShip" title="Open games">🛸 Play Game</div>
-
-  <div class="dashboard">
-    <div class="cards">
-      <div class="card">
-        <h3>Game Launcher Clicks</h3>
-        <div class="metric" id="gameClicks">0</div>
-        <div class="small">Stored only in this browser</div>
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+  <div class="wrap">
+    <div class="hi">
+      <div>
+        <div class="badge"><span class="dot"></span>SRCNDZL</div>
+        <h1><span class="nl2">Sercan</span><span class="nl2 gr">Düzel</span></h1>
+        <p class="hr" data-k="ro">Software Support &amp; Implementation Engineer · <span>Globit</span></p>
+        <p class="hd" data-k="hd">Operating at the intersection of technology and finance — building, integrating, and leading critical banking and trading systems.</p>
+        <div class="ha">
+          <a href="#experience" class="btn bp"><span data-k="c1">View Experience</span> →</a>
+          <a href="#contact"    class="btn bo2b"><span data-k="c2">Get in Touch</span></a>
+        </div>
       </div>
-      <div class="card">
-        <h3>Today Visits</h3>
-        <div class="metric" id="todayVisits">0</div>
-        <div class="small">Local daily counter</div>
-      </div>
-      <div class="card">
-        <h3>Selected Game</h3>
-        <div class="metric" id="selectedGame">-</div>
-        <div class="small">Current session</div>
+      <div class="pw">
+        <div class="pr"><div class="pri"></div></div>
+        <img class="pi" src="data:image/jpeg;base64,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" alt="Sercan Düzel"/>
+        <div class="pc">
+          <p data-k="cp">Current Position</p>
+          <strong>Globit · Istanbul</strong>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="modal" id="gameModal" aria-hidden="true">
-    <div class="box">
-      <h2>Select Game</h2>
-      <div class="actions">
-        <button class="gbtn" onclick="startGame('ufo')">UFO Run</button>
-        <button class="gbtn" onclick="startGame('snake')">Snake</button>
-        <button class="gbtn" onclick="startGame('flappy')">Flappy</button>
-        <button class="gbtn close-btn" onclick="closeGame()">Close</button>
-      </div>
-      <div class="game-wrap">
-        <canvas id="gameCanvas" width="420" height="520"></canvas>
-        <div class="help" id="gameHelp">Choose a game to start.</div>
+<!-- ABOUT -->
+<section id="about" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="sl" data-k="na">About</p>
+      <h2 class="st" data-k="at">Who I Am</h2>
+      <div class="dv"></div>
+    </div>
+    <div class="ag">
+      <div class="at rv">
+        <p data-k="ab1">I am an engineer operating at the intersection of <strong>technology and finance</strong> — someone who not only uses systems but understands, improves, and leads them.</p>
+        <p data-k="ab2">Currently, I work as a <strong>Software Support &amp; Implementation Engineer at Globit</strong>, where I take responsibility for developing, integrating, and maintaining critical banking and trading systems. My core strengths lie in <strong>system integration, data management, and financial reporting</strong>.</p>
+        <p data-k="ab3">During my academic journey at <strong>Marmara University</strong>, I completed my degree in just three years and graduated as the <strong>top student of my department</strong>. I later worked as an academic assistant, developing strong mentoring skills.</p>
+        <p data-k="ab4">My proficiency in <strong>German and Arabic</strong> enhances my ability to operate in international environments. For me, software engineering is about <strong>analyzing complex systems and building sustainable solutions</strong>.</p>
+        <div class="sc">
+          <span class="sk">⚙️ ERP Systems</span><span class="sk">🏦 Banking Systems</span>
+          <span class="sk">🗄️ SQL / Oracle</span><span class="sk">🔌 API Integration</span>
+          <span class="sk">☁️ Cloud Solutions</span><span class="sk">📊 Financial Reporting</span>
+          <span class="sk">🐍 Python</span><span class="sk">🌐 REST APIs</span>
+          <span class="sk">🐧 Linux</span><span class="sk">📋 Jira / Confluence</span>
+          <span class="sk">🇩🇪 German</span><span class="sk">🇸🇦 Arabic</span>
+          <span class="sk">🔄 CI/CD</span><span class="sk">🐳 Docker</span>
+        </div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="rv">
+      <p class="sl" data-k="ne">Experience</p>
+      <h2 class="st" data-k="xt">Work History</h2>
+      <div class="dv"></div>
+    </div>
+    <div class="tl rv" style="max-width:700px">
+      <div class="ti">
+        <div class="td"></div>
+        <div class="tp">2023 — Present</div>
+        <div class="tt" data-k="ex1t">Software Support &amp; Implementation Engineer</div>
+        <div class="tc" data-k="ex1c">Globit · Istanbul, Turkey</div>
+        <div class="tx2c" data-k="ex1d">Developing, integrating, and maintaining critical banking and trading systems. Managing data flows across financial institutions, simplifying complex architectures, and delivering tailored solutions. Core focus on system integration, data management, and financial reporting.</div>
+      </div>
+      <div class="ti">
+        <div class="td"></div>
+        <div class="tp">2021 — 2022</div>
+        <div class="tt" data-k="ex2t">Academic Assistant</div>
+        <div class="tc" data-k="ex2c">Marmara University · Istanbul, Turkey</div>
+        <div class="tx2c" data-k="ex2d">Guided students in technical subjects, communicated complex knowledge effectively, and developed strong mentoring and leadership skills alongside academic research.</div>
+      </div>
+      <div class="ti">
+        <div class="td"></div>
+        <div class="tp">2020 — 2021</div>
+        <div class="tt" data-k="ex3t">Business Analyst</div>
+        <div class="tc" data-k="ex3c">Universal Yazılım A.Ş. · Istanbul, Turkey</div>
+        <div class="tx2c" data-k="ex3d">Took an active role in large-scale integration projects. Bridged the gap between technical execution and business needs, strengthening skills in requirements analysis and stakeholder communication.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="sl" data-k="np">Projects</p>
+      <h2 class="st" data-k="pt">Featured Projects</h2>
+      <div class="dv"></div>
+    </div>
+    <div class="wb" id="pwip">
+      <span style="font-size:22px">🚧</span>
+      <div><p><strong data-k="wl">Work in Progress</strong> — <span data-k="wp">Projects will be added soon.</span></p></div>
+    </div>
+    <div class="pg" id="pgrid"></div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="wrap">
+    <div class="rv">
+      <p class="sl" data-k="nb">Blog</p>
+      <h2 class="st" data-k="blt">Latest Posts</h2>
+      <div class="dv"></div>
+    </div>
+    <div class="wbb" id="bwip">
+      <span style="font-size:26px">🚜</span>
+      <div><p><strong data-k="wl">Work in Progress</strong> — <span data-k="wb">Blog posts are being prepared.</span></p></div>
+    </div>
+    <div class="bg2" id="bgrid"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="rv">
+      <p class="sl" data-k="nc">Contact</p>
+      <h2 class="st" data-k="ct">Get in Touch</h2>
+      <div class="dv"></div>
+    </div>
+    <div class="cw rv">
+      <a href="mailto:srcndzl17@gmail.com" class="cl">
+        <div class="li">✉️</div>
+        <div class="cli"><span class="cll" data-k="em">Email</span><span>srcndzl17@gmail.com</span></div>
+      </a>
+      <a href="https://www.linkedin.com/in/sercan-duzel/" target="_blank" class="cl">
+        <div class="li">💼</div>
+        <div class="cli"><span class="cll">LinkedIn</span><span>linkedin.com/in/sercan-duzel</span></div>
+      </a>
+      <a href="https://github.com/Sercan1750" target="_blank" class="cl">
+        <div class="li">🐙</div>
+        <div class="cli"><span class="cll">GitHub</span><span>github.com/Sercan1750</span></div>
+      </a>
+      <a href="https://maps.google.com/?q=Istanbul,Turkey" target="_blank" class="cl">
+        <div class="li">📍</div>
+        <div class="cli"><span class="cll" data-k="lo">Location</span><span data-k="lc">Istanbul, Turkey · Remote Friendly</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div id="spaceShip" title="Click to Play">
+  <div class="ufo-icon">🛸</div>
+  <div class="ufo-text">
+    <strong id="ufoPlayText">Mini Arcade</strong>
+    <span id="ufoRunText">3 Games</span>
+  </div>
+</div>
+
+
+<div class="mb" id="gameModal">
+  <div class="mo" style="max-width:560px;text-align:center;">
+    <button class="mc" onclick="closeArcade()">✕</button>
+    <h3 id="gameTitle">Mini Arcade</h3>
+    <div class="game-chooser" id="gameChooser">
+      <button type="button" class="game-card-btn active" data-game="ufo" onclick="startArcadeGame('ufo', this)">
+        <strong>🛸 UFO Run</strong>
+        <span>Keep the original UFO game and dodge falling obstacles.</span>
+      </button>
+      <button type="button" class="game-card-btn" data-game="snake" onclick="startArcadeGame('snake', this)">
+        <strong>🐍 Snake</strong>
+        <span>Collect food, grow longer, and avoid walls or your own body.</span>
+      </button>
+      <button type="button" class="game-card-btn" data-game="flappy" onclick="startArcadeGame('flappy', this)">
+        <strong>🐦 Flappy</strong>
+        <span>Tap or press space to fly through the pipes without touching them.</span>
+      </button>
+    </div>
+    <p class="gscore"><span id="scoreLabel">Score</span>: <strong id="spaceScore">0</strong> · <span id="bestLabel">Best</span>: <strong id="bestScore">0</strong></p>
+    <canvas id="spaceGame" width="420" height="520"></canvas>
+    <div class="game-controls hidden" id="gameControls">
+      <button type="button" class="gbtn" id="moveLeftBtn">◀ Left</button>
+      <button type="button" class="gbtn" id="moveRightBtn">Right ▶</button>
+    </div>
+    <p class="game-note" id="gameNote">Choose a game to start.</p>
+    <p class="game-status" id="gameStatus">The previous game stops automatically when you switch.</p>
+  </div>
+</div>
+
+<!-- Analytics placeholder: replace with Cloudflare Web Analytics or GA4 after deploying -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="fi">
+    <p>© 2025 Sercan Düzel. <span data-k="fr">All rights reserved.</span></p>
+    <div class="fl">
+      <a href="#about"      data-k="na">About</a>
+      <a href="#experience" data-k="ne">Experience</a>
+      <a href="#contact"    data-k="nc">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- BLOG MODAL -->
+<div class="mb" id="bmod">
+  <div class="mo">
+    <button class="mc" onclick="CBM()">✕</button>
+    <h3 id="bmh" data-k="bmh">Add Blog Post</h3>
+    <div class="fg"><label data-k="bl1">Emoji</label><input id="bmi" type="text" placeholder="📝" maxlength="4"/></div>
+    <div class="fg"><label data-k="bl2">Title</label><input id="bmt" type="text" data-ph="bph1" placeholder="Post title"/></div>
+    <div class="fg"><label data-k="bl3">Category</label><input id="bmc" type="text" data-ph="bph2" placeholder="Technology"/></div>
+    <div class="fg"><label data-k="bl4">Date</label><input id="bmd" type="date"/></div>
+    <div class="fg"><label data-k="bl5">Excerpt</label><textarea id="bme" data-ph="bph3" placeholder="Short description..."></textarea></div>
+    <div class="fg"><label data-k="bl6">Link (optional)</label><input id="bml" type="url" data-ph="bph4" placeholder="https://..."/></div>
+    <div class="ma">
+      <button class="btn bo2b" id="blogCancelBtn" data-k="bl7" style="padding:8px 16px;font-size:13px" onclick="CBM()">Cancel</button>
+      <button class="btn bp" id="blogSaveBtn" data-k="bl8" style="padding:8px 16px;font-size:13px" onclick="SB()">💾 Save</button>
+    </div>
+  </div>
+</div>
 
 <script>
-/* ======================
-   PRIVACY-SAFE ANALYTICS
-====================== */
-const today = new Date().toISOString().slice(0,10);
-const visits = JSON.parse(localStorage.getItem("visits") || "{}");
-if (!visits[today]) visits[today] = 0;
-visits[today]++;
-localStorage.setItem("visits", JSON.stringify(visits));
-document.getElementById("todayVisits").textContent = visits[today];
+/* ══ TRANSLATIONS ══ */
+const TX={
+  en:{na:"About",ne:"Experience",np:"Projects",nb:"Blog",nc:"Contact",
+      ro:"Software Support &amp; Implementation Engineer · <span>Globit</span>",
+      hd:"Operating at the intersection of technology and finance — building, integrating, and leading critical banking and trading systems.",
+      c1:"View Experience",c2:"Get in Touch",cp:"Current Position",
+      at:"Who I Am",et:"Education",ed:"Management Information Systems",
+      en2:"Graduated in 3 years · Top student · Academic Assistant",
+      lt:"Languages",ln:"Native",lf:"Fluent",lp:"Professional",li:"Intermediate",
+      xt:"Work History",pt:"Featured Projects",blt:"Latest Posts",
+      wl:"Work in Progress",wp:"Projects will be added soon.",wb:"Blog posts are being prepared.",
+      ct:"Get in Touch",em:"Email",lo:"Location",lc:"Istanbul, Turkey · Remote Friendly",
+      fr:"All rights reserved.",rm:"Read More →",
+      sv1:"Local Views",sv1e:"This browser only",sv2:"Session Views",sv2e:"Preview counter",
+      ab1:"I am an engineer operating at the intersection of <strong>technology and finance</strong> — someone who not only uses systems but understands, improves, and leads them.",
+      ab2:"Currently, I work as a <strong>Software Support &amp; Implementation Engineer at Globit</strong>, where I take responsibility for developing, integrating, and maintaining critical banking and trading systems. My core strengths lie in <strong>system integration, data management, and financial reporting</strong>.",
+      ab3:"During my academic journey at <strong>Marmara University</strong>, I completed my degree in just three years and graduated as the <strong>top student of my department</strong>. I later worked as an academic assistant, developing strong mentoring skills.",
+      ab4:"My proficiency in <strong>German and Arabic</strong> enhances my ability to operate in international environments. For me, software engineering is about <strong>analyzing complex systems and building sustainable solutions</strong>.",
+      ak1:"Akademi",ak2:"Professional Development Program",ak3:"Focused on applied technology, systems thinking, and practical delivery skills.",
+      ex1t:"Software Support &amp; Implementation Engineer",ex1c:"Globit · Istanbul, Turkey",ex1d:"Developing, integrating, and maintaining critical banking and trading systems. Managing data flows across financial institutions, simplifying complex architectures, and delivering tailored solutions. Core focus on system integration, data management, and financial reporting.",
+      ex2t:"Academic Assistant",ex2c:"Marmara University · Istanbul, Turkey",ex2d:"Guided students in technical subjects, communicated complex knowledge effectively, and developed strong mentoring and leadership skills alongside academic research.",
+      ex3t:"Business Analyst",ex3c:"Universal Yazılım A.Ş. · Istanbul, Turkey",ex3d:"Took an active role in large-scale integration projects. Bridged the gap between technical execution and business needs, strengthening skills in requirements analysis and stakeholder communication.",
+      ufo1:"Click to Play",ufo2:"UFO Run",gs1:"Score",gc1:"◀ Left",gc2:"Right ▶",gn1:"Use ← → or A / D to move · On mobile, use the buttons below. Avoid asteroids and satellites.",
+      gh1:"SCORE",gh2:"BEST",go1:"Game Over",go2:"Click the UFO again to restart",
+      bmh:"Add Blog Post",bl1:"Emoji",bl2:"Title",bl3:"Category",bl4:"Date",bl5:"Excerpt",bl6:"Link (optional)",bl7:"Cancel",bl8:"💾 Save",
+      bph1:"Post title",bph2:"Technology",bph3:"Short description...",bph4:"https://..."},
+  tr:{na:"Hakkımda",ne:"Deneyim",np:"Projeler",nb:"Blog",nc:"İletişim",
+      ro:"Yazılım Destek &amp; Implementasyon Mühendisi · <span>Globit</span>",
+      hd:"Teknoloji ve finansın kesişiminde; kritik bankacılık ve trading sistemlerini geliştiren, entegre eden ve yöneten bir mühendis.",
+      c1:"Deneyimi Gör",c2:"İletişime Geç",cp:"Mevcut Pozisyon",
+      at:"Ben Kimim",et:"Eğitim",ed:"Yönetim Bilişim Sistemleri",
+      en2:"3 yılda mezun · Bölüm birincisi · Akademik asistan",
+      lt:"Diller",ln:"Anadil",lf:"Akıcı",lp:"Profesyonel",li:"Orta",
+      xt:"İş Geçmişi",pt:"Öne Çıkan Projeler",blt:"Son Yazılar",
+      wl:"Yapım Aşamasında",wp:"Projeler yakında eklenecek.",wb:"Blog yazıları hazırlanıyor.",
+      ct:"İletişime Geç",em:"E-posta",lo:"Konum",lc:"İstanbul, Türkiye · Uzaktan çalışmaya uygun",
+      fr:"Tüm hakları saklıdır.",rm:"Devamını Oku →",
+      sv1:"Toplam Görüntüleme",sv1e:"Sadece bu tarayıcı",sv2:"Oturum Görüntüleme",sv2e:"Önizleme sayacı",
+      ab1:"<strong>Teknoloji ve finans</strong> kesişiminde çalışan; sistemleri sadece kullanan değil, anlayan, geliştiren ve yön veren bir mühendisim.",
+      ab2:"Şu anda <strong>Globit’te Yazılım Destek &amp; Implementasyon Mühendisi</strong> olarak kritik bankacılık ve trading sistemlerinin geliştirilmesi, entegrasyonu ve sürekliliğinden sorumluyum. Güçlü olduğum ana alanlar <strong>sistem entegrasyonu, veri yönetimi ve finansal raporlama</strong>.",
+      ab3:"<strong>Marmara Üniversitesi</strong>'ndeki eğitim sürecimde lisansımı sadece üç yılda tamamladım ve <strong>bölüm birincisi</strong> olarak mezun oldum. Sonrasında akademik asistan olarak görev alıp mentorluk becerilerimi geliştirdim.",
+      ab4:"<strong>Almanca ve Arapça</strong> bilgim, uluslararası ortamlarda daha etkili hareket etmemi sağlıyor. Benim için yazılım mühendisliği; <strong>karmaşık sistemleri analiz etmek ve sürdürülebilir çözümler üretmek</strong> demek.",
+      ak1:"Akademi",ak2:"Profesyonel Gelişim Programı",ak3:"Uygulamalı teknoloji, sistem düşüncesi ve pratik teslim becerilerine odaklandı.",
+      ex1t:"Yazılım Destek &amp; Implementasyon Mühendisi",ex1c:"Globit · İstanbul, Türkiye",ex1d:"Kritik bankacılık ve trading sistemlerini geliştiriyor, entegre ediyor ve sürdürüyorum. Finans kuruluşları arasındaki veri akışlarını yönetiyor, karmaşık mimarileri sadeleştiriyor ve ihtiyaca özel çözümler sunuyorum. Ana odağım sistem entegrasyonu, veri yönetimi ve finansal raporlama.",
+      ex2t:"Akademik Asistan",ex2c:"Marmara Üniversitesi · İstanbul, Türkiye",ex2d:"Öğrencilere teknik konularda rehberlik ettim, karmaşık bilgileri etkili biçimde aktardım ve akademik araştırmalar eşliğinde güçlü mentorluk ve liderlik becerileri geliştirdim.",
+      ex3t:"İş Analisti",ex3c:"Universal Yazılım A.Ş. · İstanbul, Türkiye",ex3d:"Büyük ölçekli entegrasyon projelerinde aktif rol aldım. Teknik uygulama ile iş ihtiyaçları arasındaki boşluğu kapatarak gereksinim analizi ve paydaş iletişimi yeteneklerimi güçlendirdim.",
+      ufo1:"Oynamak için tıkla",ufo2:"UFO Kaçışı",gs1:"Skor",gc1:"◀ Sol",gc2:"Sağ ▶",gn1:"Hareket için ← → veya A / D kullan · Mobilde aşağıdaki butonları kullan. Asteroit ve uydulardan kaç.",
+      gh1:"SKOR",gh2:"EN İYİ",go1:"Oyun Bitti",go2:"Yeniden başlamak için UFO’ya tekrar tıkla",
+      bmh:"Blog Yazısı Ekle",bl1:"Emoji",bl2:"Başlık",bl3:"Kategori",bl4:"Tarih",bl5:"Özet",bl6:"Bağlantı (isteğe bağlı)",bl7:"Vazgeç",bl8:"💾 Kaydet",
+      bph1:"Yazı başlığı",bph2:"Teknoloji",bph3:"Kısa açıklama...",bph4:"https://..."},
+  de:{na:"Über mich",ne:"Erfahrung",np:"Projekte",nb:"Blog",nc:"Kontakt",
+      ro:"Software Support &amp; Implementation Engineer · <span>Globit</span>",
+      hd:"An der Schnittstelle von Technologie und Finanzen — Entwicklung, Integration und Führung kritischer Bank- und Handelssysteme.",
+      c1:"Erfahrung ansehen",c2:"Kontakt aufnehmen",cp:"Aktuelle Position",
+      at:"Wer ich bin",et:"Ausbildung",ed:"Wirtschaftsinformatik",
+      en2:"In 3 Jahren abgeschlossen · Jahrgangsbester · Wissenschaftlicher Assistent",
+      lt:"Sprachen",ln:"Muttersprache",lf:"Fließend",lp:"Professionell",li:"Mittelstufe",
+      xt:"Berufserfahrung",pt:"Ausgewählte Projekte",blt:"Neueste Beiträge",
+      wl:"In Bearbeitung",wp:"Projekte werden bald hinzugefügt.",wb:"Blogbeiträge werden vorbereitet.",
+      ct:"Kontakt aufnehmen",em:"E-Mail",lo:"Standort",lc:"Istanbul, Türkei · Remote-freundlich",
+      fr:"Alle Rechte vorbehalten.",rm:"Weiterlesen →",
+      sv1:"Lokale Aufrufe",sv1e:"Nur in diesem Browser",sv2:"Sitzungsaufrufe",sv2e:"Vorschau-Zähler",
+      ab1:"Ich bin ein Ingenieur an der Schnittstelle von <strong>Technologie und Finanzen</strong> — jemand, der Systeme nicht nur nutzt, sondern sie versteht, verbessert und führt.",
+      ab2:"Derzeit arbeite ich als <strong>Software Support &amp; Implementation Engineer bei Globit</strong>, wo ich für die Entwicklung, Integration und Wartung kritischer Bank- und Handelssysteme verantwortlich bin. Meine Kernstärken liegen in <strong>Systemintegration, Datenmanagement und Finanzreporting</strong>.",
+      ab3:"Während meines Studiums an der <strong>Marmara-Universität</strong> schloss ich mein Studium in nur drei Jahren ab und wurde <strong>Jahrgangsbester meines Fachbereichs</strong>. Später arbeitete ich als wissenschaftlicher Assistent und entwickelte starke Mentoring-Fähigkeiten.",
+      ab4:"Meine Kenntnisse in <strong>Deutsch und Arabisch</strong> helfen mir, in internationalen Umgebungen effektiv zu arbeiten. Für mich bedeutet Software Engineering, <strong>komplexe Systeme zu analysieren und nachhaltige Lösungen zu entwickeln</strong>.",
+      ak1:"Akademi",ak2:"Berufliches Entwicklungsprogramm",ak3:"Fokus auf angewandte Technologie, Systemdenken und praktische Umsetzung.",
+      ex1t:"Software Support &amp; Implementation Engineer",ex1c:"Globit · Istanbul, Türkei",ex1d:"Entwicklung, Integration und Wartung kritischer Bank- und Handelssysteme. Verwaltung von Datenflüssen zwischen Finanzinstituten, Vereinfachung komplexer Architekturen und Bereitstellung maßgeschneiderter Lösungen. Fokus auf Systemintegration, Datenmanagement und Finanzreporting.",
+      ex2t:"Wissenschaftlicher Assistent",ex2c:"Marmara-Universität · Istanbul, Türkei",ex2d:"Ich betreute Studierende in technischen Themen, vermittelte komplexes Wissen effektiv und entwickelte starke Mentoring- und Führungsfähigkeiten parallel zur Forschung.",
+      ex3t:"Business Analyst",ex3c:"Universal Yazılım A.Ş. · Istanbul, Türkei",ex3d:"Ich übernahm eine aktive Rolle in großen Integrationsprojekten. Dabei schlug ich die Brücke zwischen technischer Umsetzung und geschäftlichen Anforderungen und stärkte meine Fähigkeiten in Anforderungsanalyse und Stakeholder-Kommunikation.",
+      ufo1:"Zum Spielen klicken",ufo2:"UFO Run",gs1:"Punktzahl",gc1:"◀ Links",gc2:"Rechts ▶",gn1:"Nutze ← → oder A / D zum Bewegen · Auf Mobilgeräten die Tasten unten verwenden. Weiche Asteroiden und Satelliten aus.",
+      gh1:"PUNKTE",gh2:"BESTE",go1:"Spiel vorbei",go2:"Klicke erneut auf das UFO, um neu zu starten",
+      bmh:"Blogbeitrag hinzufügen",bl1:"Emoji",bl2:"Titel",bl3:"Kategorie",bl4:"Datum",bl5:"Auszug",bl6:"Link (optional)",bl7:"Abbrechen",bl8:"💾 Speichern",
+      bph1:"Beitragstitel",bph2:"Technologie",bph3:"Kurze Beschreibung...",bph4:"https://..."}
+};
 
-let gameClicks = parseInt(localStorage.getItem("gameClicks") || "0", 10);
-document.getElementById("gameClicks").textContent = gameClicks;
+let lg='en', dk=true;
+const g=k=>(TX[lg]||TX.en)[k]||TX.en[k]||k;
 
-/* ======================
-   UI / MODAL
-====================== */
-const modal = document.getElementById("gameModal");
-const spaceShip = document.getElementById("spaceShip");
-const selectedGameEl = document.getElementById("selectedGame");
-const helpEl = document.getElementById("gameHelp");
+function L(l){
+  lg=l;
+  document.documentElement.lang=l;
+  ['len','ltr','lde'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.toggle('on', id==='l'+l);
+  });
+  document.querySelectorAll('[data-k]').forEach(el=>{
+    const k=el.getAttribute('data-k');
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA') return;
+    el.innerHTML=g(k);
+  });
+  document.querySelectorAll('[data-ph]').forEach(el=>{
+    const k=el.getAttribute('data-ph');
+    el.placeholder=g(k);
+  });
+  const ship=document.getElementById('spaceShip');
+  if(ship) ship.title=g('ufo1');
+  const bmh=document.getElementById('bmh');
+  if(bmh && !document.getElementById('bmod').classList.contains('open')) bmh.textContent=g('bmh');
+  RC();
+  updateGameLanguageUI();
+}
 
-spaceShip.addEventListener("click", () => {
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
-  gameClicks++;
-  localStorage.setItem("gameClicks", String(gameClicks));
-  document.getElementById("gameClicks").textContent = gameClicks;
+function TH(){
+  dk=!dk;
+  document.documentElement.setAttribute('data-theme',dk?'dark':'light');
+  document.getElementById('tb').textContent=dk?'🌙':'☀️';
+}
+
+/* Device */
+(function(){
+  const m=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+  const el=document.getElementById('dl');
+  if(el) el.textContent=m?'📱 Mobile':'🖥️ Web';
+  if(m){
+    const p=document.querySelector('.dp');
+    if(p){p.style.borderColor='rgba(34,197,94,.35)';p.style.color='#22c55e';}
+  }
+})();
+
+/* Nav */
+const hb=document.getElementById('hb');
+const dr=document.getElementById('dr');
+if(hb) hb.addEventListener('click',()=>dr.classList.toggle('open'));
+function CD(){if(dr) dr.classList.remove('open');}
+
+window.addEventListener('scroll',()=>{
+  const d=document.documentElement;
+  const sb=document.getElementById('sb');
+  const bt=document.getElementById('bt');
+  if(sb) sb.style.width=(window.scrollY/(d.scrollHeight-d.clientHeight)*100)+'%';
+  if(bt) bt.classList.toggle('show',window.scrollY>400);
+  let cur='';
+  document.querySelectorAll('section[id]').forEach(s=>{if(window.scrollY>=s.offsetTop-90)cur=s.id;});
+  document.querySelectorAll('.nl a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
 });
 
-function closeGame() {
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
-  stopCurrentGame();
-  clearCanvas();
-  selectedGameEl.textContent = "-";
-  helpEl.textContent = "Choose a game to start.";
-}
+/* Reveal */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:0.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeGame();
-});
-
-/* ======================
-   CANVAS / GAME ENGINE
-====================== */
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
-
-let gameInterval = null;
-let animationFrameId = null;
-let currentCleanup = null;
-let keyHandler = null;
-let clickHandler = null;
-
-function clearCanvas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-function stopCurrentGame() {
-  if (gameInterval) {
-    clearInterval(gameInterval);
-    gameInterval = null;
+/* ══ CONTENT ══ */
+function RC(){
+  const pr=JSON.parse(localStorage.getItem('sd_projects')||'[]');
+  const pw=document.getElementById('pwip');
+  const pg=document.getElementById('pgrid');
+  if(pw) pw.style.display=pr.length?'none':'flex';
+  if(pg){
+    pg.innerHTML='';
+    pr.forEach(p=>{
+      const tags=(p.tags||[]).map((t,i)=>`<span class="ptag">${t}</span>`).join('');
+      const d=document.createElement('div');d.className='pc2';
+      d.innerHTML=`<div class="pio">${p.icon||'🚀'}</div><div class="ptit">${p.title}</div><div class="pde">${p.desc||''}</div><div class="ptags">${tags}</div>`;
+      pg.appendChild(d);
+    });
   }
-  if (animationFrameId) {
-    cancelAnimationFrame(animationFrameId);
-    animationFrameId = null;
-  }
-  if (keyHandler) {
-    window.removeEventListener("keydown", keyHandler);
-    keyHandler = null;
-  }
-  if (clickHandler) {
-    canvas.removeEventListener("click", clickHandler);
-    clickHandler = null;
-  }
-  if (typeof currentCleanup === "function") {
-    currentCleanup();
-    currentCleanup = null;
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  const bw=document.getElementById('bwip');
+  const bg=document.getElementById('bgrid');
+  if(bw) bw.style.display=bl.length?'none':'flex';
+  if(bg){
+    bg.innerHTML='';
+    bl.forEach((b,i)=>{
+      const feat=i===0;
+      const a=document.createElement('a');
+      a.className='bc'+(feat?' f':'');
+      a.href=b.link||'#';
+      if(b.link) a.target='_blank';
+      a.innerHTML=`<div class="bth">${b.icon||'📝'}</div><div class="bco"><div class="bm"><span class="bcat">${b.cat||''}</span><span class="bdt">${b.date||''}</span></div><div class="btit">${b.title}</div><div class="bex">${b.excerpt||''}</div><span class="brm">${g('rm')}</span><div class="ber"><button class="bab" onclick="event.preventDefault();OBM(${i})">✏️ Edit</button><button class="bab dl" onclick="event.preventDefault();DB(${i})">🗑️ Del</button></div></div>`;
+      bg.appendChild(a);
+    });
   }
 }
 
-function startGame(type) {
-  stopCurrentGame();
-  clearCanvas();
-  selectedGameEl.textContent = type.toUpperCase();
+/* ══ BLOG CRUD ══ */
+let ebi=null;
+function OBM(idx){
+  ebi=idx==null?null:idx;
+  const today=new Date().toISOString().split('T')[0];
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  const b=idx!=null?bl[idx]:null;
+  document.getElementById('bmh').textContent=b ? (lg==='tr' ? 'Yazıyı Düzenle' : lg==='de' ? 'Beitrag bearbeiten' : 'Edit Post') : g('bmh');
+  document.getElementById('bmi').value=b?b.icon||'📝':'📝';
+  document.getElementById('bmt').value=b?b.title:'';
+  document.getElementById('bmc').value=b?b.cat||'':'';
+  document.getElementById('bmd').value=b?b.dateRaw||today:today;
+  document.getElementById('bme').value=b?b.excerpt||'':'';
+  document.getElementById('bml').value=b?b.link||'':'';
+  document.getElementById('bmod').classList.add('open');
+}
+function CBM(){document.getElementById('bmod').classList.remove('open');}
+function SB(){
+  const icon=document.getElementById('bmi').value.trim()||'📝';
+  const title=document.getElementById('bmt').value.trim();
+  const cat=document.getElementById('bmc').value.trim()||(lg==='tr'?'Blog':lg==='de'?'Blog':'Blog');
+  const dateRaw=document.getElementById('bmd').value;
+  const excerpt=document.getElementById('bme').value.trim();
+  const link=document.getElementById('bml').value.trim();
+  if(!title) return;
+  const date=dateRaw?new Date(dateRaw).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}):'';
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  const post={icon,title,cat,dateRaw,date,excerpt,link};
+  if(ebi==null) bl.push(post); else bl[ebi]=post;
+  localStorage.setItem('sd_blogs',JSON.stringify(bl));
+  CBM(); RC();
+}
+function DB(i){
+  if(!confirm(lg==='tr' ? 'Bu yazı silinsin mi?' : lg==='de' ? 'Diesen Beitrag löschen?' : 'Delete this post?')) return;
+  const bl=JSON.parse(localStorage.getItem('sd_blogs')||'[]');
+  bl.splice(i,1);
+  localStorage.setItem('sd_blogs',JSON.stringify(bl));
+  RC();
+}
+document.getElementById('bmod').addEventListener('click',function(e){if(e.target===this)CBM();});
 
-  if (type === "snake") snakeGame();
-  if (type === "flappy") flappyGame();
-  if (type === "ufo") ufoGame();
+/* ══ LOCAL STATS + LOCATION ══ */
+function initLocalStats(){
+  const localKey='sd_local_views';
+  const sessionKey='sd_session_views';
+  let localViews=Number(localStorage.getItem(localKey)||'0')+1;
+  let sessionViews=Number(sessionStorage.getItem(sessionKey)||'0')+1;
+  localStorage.setItem(localKey,String(localViews));
+  sessionStorage.setItem(sessionKey,String(sessionViews));
+  const lv=document.getElementById('localVisitorCount');
+  const sv=document.getElementById('sessionVisitorCount');
+  if(lv) lv.textContent=localViews;
+  if(sv) sv.textContent=sessionViews;
 }
 
-/* ======================
-   SNAKE
-====================== */
-function snakeGame() {
-  helpEl.textContent = "Snake: Use arrow keys. Eat food, grow longer, avoid walls and yourself.";
 
-  const grid = 20;
-  let snake = [{x: 200, y: 260}];
-  let direction = {x: grid, y: 0};
-  let pendingDirection = {...direction};
-  let food = randomFood(snake, grid);
-  let score = 0;
-  let gameOver = false;
+function updateGameLanguageUI(){
+  const scoreLabel=document.getElementById('scoreLabel');
+  const bestLabel=document.getElementById('bestLabel');
+  const title=document.getElementById('gameTitle');
+  const play=document.getElementById('ufoPlayText');
+  const run=document.getElementById('ufoRunText');
+  const leftBtn=document.getElementById('moveLeftBtn');
+  const rightBtn=document.getElementById('moveRightBtn');
+  if(scoreLabel) scoreLabel.textContent='Score';
+  if(bestLabel) bestLabel.textContent='Best';
+  if(title) title.textContent='Mini Arcade';
+  if(play) play.textContent='Mini Arcade';
+  if(run) run.textContent='3 Games';
+  if(leftBtn) leftBtn.textContent='◀ Left';
+  if(rightBtn) rightBtn.textContent='Right ▶';
+}
 
-  keyHandler = (e) => {
-    if (e.key === "ArrowUp" && direction.y === 0) pendingDirection = {x: 0, y: -grid};
-    if (e.key === "ArrowDown" && direction.y === 0) pendingDirection = {x: 0, y: grid};
-    if (e.key === "ArrowLeft" && direction.x === 0) pendingDirection = {x: -grid, y: 0};
-    if (e.key === "ArrowRight" && direction.x === 0) pendingDirection = {x: grid, y: 0};
+/* ══ MINI ARCADE ══ */
+const gameModal=document.getElementById('gameModal');
+const shipTrigger=document.getElementById('spaceShip');
+const gameCanvas=document.getElementById('spaceGame');
+const scoreEl=document.getElementById('spaceScore');
+const bestEl=document.getElementById('bestScore');
+const titleEl=document.getElementById('gameTitle');
+const noteEl=document.getElementById('gameNote');
+const statusEl=document.getElementById('gameStatus');
+const controlsWrap=document.getElementById('gameControls');
+const moveLeftBtn=document.getElementById('moveLeftBtn');
+const moveRightBtn=document.getElementById('moveRightBtn');
+const gctx=gameCanvas ? gameCanvas.getContext('2d') : null;
+
+const arcade={
+  active:'ufo',
+  frame:null,
+  timer:null,
+  gameOver:false,
+  score:0,
+  best:0,
+  cleanup:null,
+  state:{},
+  controls:{left:false,right:false}
+};
+
+function arcadeSetScore(v){
+  arcade.score=v;
+  if(scoreEl) scoreEl.textContent=String(v);
+}
+function arcadeLoadBest(game){
+  arcade.best=Math.max(Number(localStorage.getItem('sd_best_'+game)||0),0);
+  if(bestEl) bestEl.textContent=String(arcade.best);
+}
+function arcadeSaveBest(){
+  if(arcade.score>arcade.best){
+    arcade.best=arcade.score;
+    localStorage.setItem('sd_best_'+arcade.active, String(arcade.best));
+    if(bestEl) bestEl.textContent=String(arcade.best);
+  }
+}
+function arcadeStop(){
+  if(arcade.frame){ cancelAnimationFrame(arcade.frame); arcade.frame=null; }
+  if(arcade.timer){ clearInterval(arcade.timer); arcade.timer=null; }
+  if(typeof arcade.cleanup==='function'){ arcade.cleanup(); arcade.cleanup=null; }
+  arcade.controls.left=false;
+  arcade.controls.right=false;
+}
+function clearGameCanvas(){
+  if(gctx) gctx.clearRect(0,0,gameCanvas.width,gameCanvas.height);
+}
+function setActiveGameCard(game){
+  document.querySelectorAll('.game-card-btn').forEach(btn=>btn.classList.toggle('active', btn.dataset.game===game));
+}
+function setGameControlsVisible(show){
+  if(controlsWrap) controlsWrap.classList.toggle('hidden', !show);
+}
+function openArcade(){
+  if(!gameModal || !gctx) return;
+  gameModal.classList.add('open');
+  startArcadeGame(arcade.active);
+}
+function closeArcade(){
+  arcadeStop();
+  if(gameModal) gameModal.classList.remove('open');
+}
+function startArcadeGame(game){
+  if(!gctx) return;
+  arcadeStop();
+  clearGameCanvas();
+  arcade.active=game;
+  arcade.gameOver=false;
+  arcadeSetScore(0);
+  arcadeLoadBest(game);
+  setActiveGameCard(game);
+  if(game==='ufo') initUfoGame();
+  else if(game==='snake') initSnakeGame();
+  else initFlappyGame();
+}
+
+function drawOverlayGameOver(message){
+  gctx.fillStyle='rgba(2,4,10,.72)';
+  gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+  gctx.fillStyle='#fff';
+  gctx.font='700 30px DM Sans, sans-serif';
+  gctx.fillText('Game Over', 120, 214);
+  gctx.fillStyle='#f59e0b';
+  gctx.font='700 18px DM Sans, sans-serif';
+  gctx.fillText('Score: '+arcade.score, 168, 248);
+  gctx.fillStyle='#9ba3b8';
+  gctx.font='500 14px DM Sans, sans-serif';
+  gctx.fillText(message, 92, 282);
+}
+
+/* UFO RUN */
+function initUfoGame(){
+  titleEl.textContent='UFO Run';
+  noteEl.textContent='Use ← → or A / D to move. On mobile, use the buttons below. Avoid asteroids and satellites.';
+  statusEl.textContent='Original UFO game preserved.';
+  setGameControlsVisible(true);
+
+  const state={
+    laneStars:Array.from({length:85},()=>({
+      x:Math.random()*gameCanvas.width,
+      y:Math.random()*gameCanvas.height,
+      r:Math.random()*1.9+0.3,
+      spd:Math.random()*1.8+0.7,
+      a:Math.random()*0.55+0.25
+    })),
+    nebulaDots:Array.from({length:18},()=>({
+      x:Math.random()*gameCanvas.width,
+      y:Math.random()*gameCanvas.height,
+      r:Math.random()*55+25,
+      c:Math.random()>0.5 ? '124,58,237' : '59,130,246',
+      a:Math.random()*0.10+0.03
+    })),
+    ufo:{x:gameCanvas.width/2-26,y:gameCanvas.height-92,w:52,h:34,speed:5.4,bob:0},
+    obstacles:[],
+    tick:0
   };
-  window.addEventListener("keydown", keyHandler);
+  arcade.state=state;
 
-  function drawText(text, y, color = "#fff") {
-    ctx.fillStyle = color;
-    ctx.font = "bold 18px Arial";
-    ctx.fillText(text, 14, y);
+  function spawnObstacle(){
+    const isAsteroid=Math.random()>0.38;
+    const size=isAsteroid ? 36+Math.random()*16 : 28+Math.random()*10;
+    state.obstacles.push({
+      x:Math.random()*(gameCanvas.width-size-22)+11,
+      y:-size-10,
+      w:size,
+      h:size,
+      speed:3.2+Math.random()*1.6+Math.min(arcade.score/300,1.8),
+      type:isAsteroid?'asteroid':'satellite',
+      rot:Math.random()*Math.PI
+    });
   }
+  function drawBackground(){
+    gctx.clearRect(0,0,gameCanvas.width,gameCanvas.height);
+    const grad=gctx.createLinearGradient(0,0,0,gameCanvas.height);
+    grad.addColorStop(0,'#090b16');
+    grad.addColorStop(0.45,'#050812');
+    grad.addColorStop(1,'#010208');
+    gctx.fillStyle=grad;
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
 
-  function tick() {
-    if (gameOver) return;
-    direction = pendingDirection;
-    const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
-
-    const hitWall = head.x < 0 || head.y < 0 || head.x >= canvas.width || head.y >= canvas.height;
-    const hitSelf = snake.some(seg => seg.x === head.x && seg.y === head.y);
-    if (hitWall || hitSelf) {
-      gameOver = true;
-      render();
-      ctx.fillStyle = "rgba(0,0,0,.55)";
-      ctx.fillRect(70, 210, 280, 80);
-      ctx.fillStyle = "#ef4444";
-      ctx.font = "bold 28px Arial";
-      ctx.fillText("Game Over", 135, 255);
-      ctx.fillStyle = "#fff";
-      ctx.font = "16px Arial";
-      ctx.fillText("Choose Snake again to restart", 114, 285);
-      return;
-    }
-
-    snake.unshift(head);
-
-    if (head.x === food.x && head.y === food.y) {
-      score++;
-      food = randomFood(snake, grid);
-    } else {
-      snake.pop();
-    }
-    render();
-  }
-
-  function render() {
-    clearCanvas();
-
-    ctx.fillStyle = "#07101f";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#ef4444";
-    ctx.fillRect(food.x, food.y, grid, grid);
-
-    snake.forEach((seg, i) => {
-      ctx.fillStyle = i === 0 ? "#22c55e" : "#86efac";
-      ctx.fillRect(seg.x, seg.y, grid, grid);
+    state.nebulaDots.forEach(n=>{
+      const ng=gctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r);
+      ng.addColorStop(0,`rgba(${n.c},${n.a})`);
+      ng.addColorStop(1,'rgba(0,0,0,0)');
+      gctx.fillStyle=ng;
+      gctx.beginPath();
+      gctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      gctx.fill();
     });
 
-    drawText("Score: " + score, 26, "#f8fafc");
+    state.laneStars.forEach(st=>{
+      st.y += st.spd;
+      if(st.y>gameCanvas.height+4){
+        st.y=-8;
+        st.x=Math.random()*gameCanvas.width;
+        st.r=Math.random()*1.9+0.3;
+        st.spd=Math.random()*1.8+0.7;
+        st.a=Math.random()*0.55+0.25;
+      }
+      gctx.fillStyle=`rgba(255,255,255,${st.a})`;
+      gctx.beginPath();
+      gctx.arc(st.x,st.y,st.r,0,Math.PI*2);
+      gctx.fill();
+    });
+
+    gctx.strokeStyle='rgba(96,165,250,.14)';
+    gctx.lineWidth=2;
+    gctx.strokeRect(8,8,gameCanvas.width-16,gameCanvas.height-16);
   }
+  function drawUfo(){
+    state.ufo.bob += 0.12;
+    const y=state.ufo.y + Math.sin(state.ufo.bob)*2;
+    const x=state.ufo.x;
+    gctx.save();
+    gctx.shadowColor='rgba(124,58,237,.55)';
+    gctx.shadowBlur=22;
+    const beam=gctx.createLinearGradient(x+state.ufo.w/2,y+18,x+state.ufo.w/2,y+50);
+    beam.addColorStop(0,'rgba(96,165,250,.28)');
+    beam.addColorStop(1,'rgba(96,165,250,0)');
+    gctx.fillStyle=beam;
+    gctx.beginPath();
+    gctx.moveTo(x+14,y+18);
+    gctx.lineTo(x+state.ufo.w-14,y+18);
+    gctx.lineTo(x+state.ufo.w-6,y+50);
+    gctx.lineTo(x+6,y+50);
+    gctx.closePath();
+    gctx.fill();
 
-  render();
-  gameInterval = setInterval(tick, 110);
+    const dome=gctx.createRadialGradient(x+state.ufo.w/2,y+10,2,x+state.ufo.w/2,y+10,18);
+    dome.addColorStop(0,'rgba(255,255,255,.95)');
+    dome.addColorStop(1,'rgba(96,165,250,.48)');
+    gctx.fillStyle=dome;
+    gctx.beginPath();
+    gctx.ellipse(x+state.ufo.w/2,y+12,15,11,0,Math.PI,0,true);
+    gctx.fill();
+
+    const hull=gctx.createLinearGradient(x,y+16,x+state.ufo.w,y+26);
+    hull.addColorStop(0,'#f8fafc');
+    hull.addColorStop(.55,'#cbd5e1');
+    hull.addColorStop(1,'#94a3b8');
+    gctx.fillStyle=hull;
+    gctx.beginPath();
+    gctx.ellipse(x+state.ufo.w/2,y+22,26,10,0,0,Math.PI*2);
+    gctx.fill();
+
+    gctx.fillStyle='rgba(245,158,11,.95)';
+    [10,22,34].forEach(dx=>{
+      gctx.beginPath();
+      gctx.arc(x+dx,y+23,2.2,0,Math.PI*2);
+      gctx.fill();
+    });
+    gctx.restore();
+  }
+  function obstacleIcon(type,x,y,size,rot=0){
+    gctx.save();
+    gctx.translate(x+size/2,y+size/2);
+    gctx.rotate(rot);
+    if(type==='asteroid'){
+      const grad=gctx.createRadialGradient(-4,-4,3,0,0,size/2);
+      grad.addColorStop(0,'#cbd5e1');
+      grad.addColorStop(.55,'#94a3b8');
+      grad.addColorStop(1,'#475569');
+      gctx.fillStyle=grad;
+      gctx.beginPath();
+      const r=size/2;
+      gctx.moveTo(-r*0.2,-r);
+      gctx.lineTo(r*0.55,-r*0.7);
+      gctx.lineTo(r*0.92,-r*0.1);
+      gctx.lineTo(r*0.6,r*0.75);
+      gctx.lineTo(-r*0.15,r*0.96);
+      gctx.lineTo(-r*0.85,r*0.35);
+      gctx.lineTo(-r*0.7,-r*0.35);
+      gctx.closePath();
+      gctx.fill();
+      gctx.fillStyle='rgba(15,23,42,.25)';
+      gctx.beginPath(); gctx.arc(-4,-2,4,0,Math.PI*2); gctx.fill();
+      gctx.beginPath(); gctx.arc(5,6,3,0,Math.PI*2); gctx.fill();
+    }else{
+      gctx.shadowColor='rgba(96,165,250,.4)';
+      gctx.shadowBlur=12;
+      gctx.fillStyle='#cbd5e1';
+      gctx.fillRect(-3,-size/2,6,size);
+      gctx.fillStyle='#60a5fa';
+      gctx.fillRect(-size/2,-3,size,6);
+      gctx.fillStyle='#f59e0b';
+      gctx.beginPath();
+      gctx.arc(0,0,4,0,Math.PI*2);
+      gctx.fill();
+      gctx.shadowBlur=0;
+    }
+    gctx.restore();
+  }
+  function drawObstacles(){
+    state.obstacles.forEach(ob=>{
+      ob.y += ob.speed;
+      ob.rot += ob.type==='asteroid' ? 0.02 : 0.01;
+      obstacleIcon(ob.type,ob.x,ob.y,ob.w,ob.rot);
+    });
+    state.obstacles=state.obstacles.filter(ob=>ob.y<gameCanvas.height+70);
+  }
+  function drawHud(){
+    gctx.fillStyle='rgba(8,10,15,.62)';
+    gctx.fillRect(14,14,118,52);
+    gctx.strokeStyle='rgba(255,255,255,.08)';
+    gctx.strokeRect(14,14,118,52);
+    gctx.fillStyle='#9ba3b8';
+    gctx.font='600 11px DM Sans, sans-serif';
+    gctx.fillText('SCORE',24,34);
+    gctx.fillStyle='#fff';
+    gctx.font='700 24px DM Sans, sans-serif';
+    gctx.fillText(String(arcade.score),24,57);
+  }
+  function rectHit(a,b){
+    return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
+  }
+  function loop(){
+    drawBackground();
+    drawObstacles();
+    if(!arcade.gameOver){
+      if(arcade.controls.left) state.ufo.x=Math.max(12,state.ufo.x-state.ufo.speed);
+      if(arcade.controls.right) state.ufo.x=Math.min(gameCanvas.width-state.ufo.w-12,state.ufo.x+state.ufo.speed);
+      state.tick++;
+      if(state.tick%24===0) spawnObstacle();
+      if(state.tick%8===0) arcadeSetScore(arcade.score+1);
+      const hitBox={x:state.ufo.x+6,y:state.ufo.y+7,w:state.ufo.w-12,h:state.ufo.h+10};
+      for(const ob of state.obstacles){
+        const obBox={x:ob.x+4,y:ob.y+4,w:ob.w-8,h:ob.h-8};
+        if(rectHit(hitBox,obBox)){
+          arcade.gameOver=true;
+          arcadeSaveBest();
+          break;
+        }
+      }
+    }
+    drawUfo();
+    drawHud();
+    if(arcade.gameOver){
+      drawOverlayGameOver('Select UFO Run again to restart.');
+    }else{
+      arcade.frame=requestAnimationFrame(loop);
+    }
+  }
+  loop();
 }
 
-function randomFood(snake, grid) {
-  let food;
-  do {
-    food = {
-      x: Math.floor(Math.random() * (canvas.width / grid)) * grid,
-      y: Math.floor(Math.random() * (canvas.height / grid)) * grid
-    };
-  } while (snake.some(seg => seg.x === food.x && seg.y === food.y));
-  return food;
-}
+/* SNAKE */
+function initSnakeGame(){
+  titleEl.textContent='Snake';
+  noteEl.textContent='Use arrow keys, W A S D, or the swipe/tap controls on your keyboard. Eat food, grow, and avoid walls or yourself.';
+  statusEl.textContent='Classic snake with growing tail.';
+  setGameControlsVisible(false);
 
-/* ======================
-   FLAPPY
-====================== */
-function flappyGame() {
-  helpEl.textContent = "Flappy: Click inside the game area to flap. Pass through pipes.";
-
-  let bird = {x: 95, y: 200, w: 24, h: 24, velocity: 0};
-  const gravity = 0.35;
-  const flap = -5.8;
-  let pipes = [];
-  let frame = 0;
-  let score = 0;
-  let gameOver = false;
-
-  clickHandler = () => {
-    if (!gameOver) bird.velocity = flap;
+  const cell=20;
+  const cols=Math.floor(gameCanvas.width/cell);
+  const rows=Math.floor(gameCanvas.height/cell);
+  const state={
+    snake:[{x:8,y:10},{x:7,y:10},{x:6,y:10}],
+    dir:{x:1,y:0},
+    nextDir:{x:1,y:0},
+    food:{x:14,y:10}
   };
-  canvas.addEventListener("click", clickHandler);
+  arcade.state=state;
 
-  function resetPipe() {
-    const gap = 140;
-    const topHeight = 60 + Math.random() * 190;
-    pipes.push({
-      x: canvas.width,
-      w: 54,
-      top: topHeight,
-      bottom: topHeight + gap,
-      counted: false
-    });
+  function randomFood(){
+    do{
+      state.food={x:Math.floor(Math.random()*cols),y:Math.floor(Math.random()*rows)};
+    }while(state.snake.some(s=>s.x===state.food.x && s.y===state.food.y));
   }
+  function draw(){
+    gctx.fillStyle='#050816';
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+    for(let y=0;y<rows;y++){
+      for(let x=0;x<cols;x++){
+        gctx.fillStyle=(x+y)%2===0?'rgba(255,255,255,.02)':'rgba(255,255,255,.035)';
+        gctx.fillRect(x*cell,y*cell,cell,cell);
+      }
+    }
+    gctx.fillStyle='#f59e0b';
+    gctx.beginPath();
+    gctx.arc(state.food.x*cell+cell/2,state.food.y*cell+cell/2,cell/2.8,0,Math.PI*2);
+    gctx.fill();
 
-  function draw() {
-    clearCanvas();
-    ctx.fillStyle = "#0a1022";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // bird
-    ctx.fillStyle = "#facc15";
-    ctx.fillRect(bird.x, bird.y, bird.w, bird.h);
-
-    // pipes
-    ctx.fillStyle = "#22c55e";
-    pipes.forEach(p => {
-      ctx.fillRect(p.x, 0, p.w, p.top);
-      ctx.fillRect(p.x, p.bottom, p.w, canvas.height - p.bottom);
+    state.snake.forEach((s,i)=>{
+      gctx.fillStyle=i===0?'#22c55e':'#86efac';
+      gctx.fillRect(s.x*cell+1,s.y*cell+1,cell-2,cell-2);
     });
 
-    ctx.fillStyle = "#fff";
-    ctx.font = "bold 18px Arial";
-    ctx.fillText("Score: " + score, 14, 26);
+    gctx.fillStyle='#fff';
+    gctx.font='700 18px DM Sans, sans-serif';
+    gctx.fillText('Score: '+arcade.score,14,26);
 
-    if (gameOver) {
-      ctx.fillStyle = "rgba(0,0,0,.55)";
-      ctx.fillRect(70, 210, 280, 80);
-      ctx.fillStyle = "#ef4444";
-      ctx.font = "bold 28px Arial";
-      ctx.fillText("Game Over", 135, 255);
-      ctx.fillStyle = "#fff";
-      ctx.font = "16px Arial";
-      ctx.fillText("Choose Flappy again to restart", 112, 285);
+    if(arcade.gameOver){
+      drawOverlayGameOver('Select Snake again to restart.');
     }
   }
-
-  function loop() {
-    if (gameOver) {
+  function tick(){
+    if(arcade.gameOver){ draw(); return; }
+    state.dir=state.nextDir;
+    const head={x:state.snake[0].x+state.dir.x,y:state.snake[0].y+state.dir.y};
+    const hitWall=head.x<0 || head.y<0 || head.x>=cols || head.y>=rows;
+    const hitSelf=state.snake.some(s=>s.x===head.x && s.y===head.y);
+    if(hitWall || hitSelf){
+      arcade.gameOver=true;
+      arcadeSaveBest();
       draw();
       return;
     }
+    state.snake.unshift(head);
+    if(head.x===state.food.x && head.y===state.food.y){
+      arcadeSetScore(arcade.score+1);
+      randomFood();
+    }else{
+      state.snake.pop();
+    }
+    draw();
+  }
+  draw();
+  arcade.timer=setInterval(tick,120);
+}
 
-    frame++;
-    bird.velocity += gravity;
-    bird.y += bird.velocity;
+/* FLAPPY */
+function initFlappyGame(){
+  titleEl.textContent='Flappy';
+  noteEl.textContent='Press Space, Arrow Up, W, or tap the canvas to flap. Pass through the pipes.';
+  statusEl.textContent='Simple flappy mode with local best score.';
+  setGameControlsVisible(false);
 
-    if (frame % 100 === 0) resetPipe();
+  const state={
+    bird:{x:92,y:220,w:28,h:22,vy:0},
+    pipes:[],
+    tick:0
+  };
+  arcade.state=state;
 
-    pipes.forEach(p => {
-      p.x -= 2.4;
-      if (!p.counted && p.x + p.w < bird.x) {
-        p.counted = true;
-        score++;
-      }
+  const flap=()=>{ if(!arcade.gameOver) state.bird.vy=-5.6; };
+  const pointerHandler=(e)=>{ e.preventDefault(); if(arcade.active==='flappy') flap(); };
+  gameCanvas.addEventListener('pointerdown', pointerHandler);
+  arcade.cleanup=()=> gameCanvas.removeEventListener('pointerdown', pointerHandler);
 
-      const hitPipe =
-        bird.x < p.x + p.w &&
-        bird.x + bird.w > p.x &&
-        (bird.y < p.top || bird.y + bird.h > p.bottom);
+  function spawnPipe(){
+    const gap=140;
+    const top=60+Math.random()*180;
+    state.pipes.push({x:gameCanvas.width+20,w:60,top,bottom:top+gap,passed:false});
+  }
+  function draw(){
+    gctx.fillStyle='#07111f';
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
+    const bg=gctx.createLinearGradient(0,0,0,gameCanvas.height);
+    bg.addColorStop(0,'rgba(59,130,246,.18)');
+    bg.addColorStop(1,'rgba(2,6,23,.1)');
+    gctx.fillStyle=bg;
+    gctx.fillRect(0,0,gameCanvas.width,gameCanvas.height);
 
-      if (hitPipe) gameOver = true;
+    state.pipes.forEach(p=>{
+      gctx.fillStyle='#22c55e';
+      gctx.fillRect(p.x,0,p.w,p.top);
+      gctx.fillRect(p.x,p.bottom,p.w,gameCanvas.height-p.bottom);
     });
 
-    pipes = pipes.filter(p => p.x + p.w > -20);
+    gctx.fillStyle='#fbbf24';
+    gctx.fillRect(state.bird.x,state.bird.y,state.bird.w,state.bird.h);
 
-    const outOfBounds = bird.y < 0 || bird.y + bird.h > canvas.height;
-    if (outOfBounds) gameOver = true;
+    gctx.fillStyle='#fff';
+    gctx.font='700 18px DM Sans, sans-serif';
+    gctx.fillText('Score: '+arcade.score,14,26);
+
+    if(arcade.gameOver){
+      drawOverlayGameOver('Select Flappy again to restart.');
+    }
+  }
+  function loop(){
+    if(!arcade.gameOver){
+      state.tick++;
+      if(state.tick%95===0) spawnPipe();
+      state.bird.vy += 0.32;
+      state.bird.y += state.bird.vy;
+
+      state.pipes.forEach(p=>{
+        p.x -= 2.6;
+        if(!p.passed && p.x + p.w < state.bird.x){
+          p.passed=true;
+          arcadeSetScore(arcade.score+1);
+        }
+        const hit = state.bird.x < p.x+p.w && state.bird.x+state.bird.w > p.x && (state.bird.y < p.top || state.bird.y+state.bird.h > p.bottom);
+        if(hit) arcade.gameOver=true;
+      });
+
+      state.pipes=state.pipes.filter(p=>p.x>-80);
+
+      if(state.bird.y<0 || state.bird.y+state.bird.h>gameCanvas.height){
+        arcade.gameOver=true;
+      }
+      if(arcade.gameOver) arcadeSaveBest();
+    }
 
     draw();
-    animationFrameId = requestAnimationFrame(loop);
+    if(!arcade.gameOver){
+      arcade.frame=requestAnimationFrame(loop);
+    }
   }
-
   draw();
-  animationFrameId = requestAnimationFrame(loop);
+  arcade.frame=requestAnimationFrame(loop);
 }
 
-/* ======================
-   UFO RUNNER
-====================== */
-function ufoGame() {
-  helpEl.textContent = "UFO Run: Use left and right arrows. Avoid falling obstacles.";
+if(shipTrigger) shipTrigger.addEventListener('click',openArcade);
+if(gameModal) gameModal.addEventListener('click',e=>{ if(e.target===gameModal) closeArcade(); });
 
-  let player = {x: canvas.width / 2 - 18, y: canvas.height - 42, w: 36, h: 18, speed: 18};
-  let obstacles = [];
-  let score = 0;
-  let gameOver = false;
-  let ticks = 0;
-
-  keyHandler = (e) => {
-    if (gameOver) return;
-    if (e.key === "ArrowLeft") player.x -= player.speed;
-    if (e.key === "ArrowRight") player.x += player.speed;
-    player.x = Math.max(0, Math.min(canvas.width - player.w, player.x));
-  };
-  window.addEventListener("keydown", keyHandler);
-
-  function drawUfo(x, y) {
-    ctx.fillStyle = "#c4b5fd";
-    ctx.fillRect(x, y + 6, player.w, 8);
-    ctx.fillStyle = "#a78bfa";
-    ctx.fillRect(x + 8, y, 20, 8);
-  }
-
-  function render() {
-    clearCanvas();
-    ctx.fillStyle = "#050816";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // stars
-    for (let i = 0; i < 18; i++) {
-      ctx.fillStyle = "rgba(255,255,255,.7)";
-      ctx.fillRect((i * 29 + ticks * 2) % canvas.width, (i * 47) % canvas.height, 2, 2);
-    }
-
-    drawUfo(player.x, player.y);
-
-    ctx.fillStyle = "#f59e0b";
-    obstacles.forEach(o => ctx.fillRect(o.x, o.y, o.w, o.h));
-
-    ctx.fillStyle = "#fff";
-    ctx.font = "bold 18px Arial";
-    ctx.fillText("Score: " + score, 14, 26);
-
-    if (gameOver) {
-      ctx.fillStyle = "rgba(0,0,0,.55)";
-      ctx.fillRect(70, 210, 280, 80);
-      ctx.fillStyle = "#ef4444";
-      ctx.font = "bold 28px Arial";
-      ctx.fillText("Game Over", 135, 255);
-      ctx.fillStyle = "#fff";
-      ctx.font = "16px Arial";
-      ctx.fillText("Choose UFO Run again to restart", 102, 285);
+window.addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();
+  if(arcade.active==='ufo'){
+    if(k==='arrowleft' || k==='a') arcade.controls.left=true;
+    if(k==='arrowright' || k==='d') arcade.controls.right=true;
+  }else if(arcade.active==='snake' && !arcade.gameOver){
+    const state=arcade.state;
+    if(!state || !state.nextDir) return;
+    if((k==='arrowup' || k==='w') && state.dir.y===0) state.nextDir={x:0,y:-1};
+    if((k==='arrowdown' || k==='s') && state.dir.y===0) state.nextDir={x:0,y:1};
+    if((k==='arrowleft' || k==='a') && state.dir.x===0) state.nextDir={x:-1,y:0};
+    if((k==='arrowright' || k==='d') && state.dir.x===0) state.nextDir={x:1,y:0};
+  }else if(arcade.active==='flappy'){
+    if(k===' ' || k==='arrowup' || k==='w'){
+      e.preventDefault();
+      const state=arcade.state;
+      if(state && !arcade.gameOver) state.bird.vy=-5.6;
     }
   }
+});
 
-  function tick() {
-    if (gameOver) {
-      render();
-      return;
-    }
+window.addEventListener('keyup',e=>{
+  const k=e.key.toLowerCase();
+  if(k==='arrowleft' || k==='a') arcade.controls.left=false;
+  if(k==='arrowright' || k==='d') arcade.controls.right=false;
+});
 
-    ticks++;
-    if (ticks % 18 === 0) {
-      obstacles.push({
-        x: Math.random() * (canvas.width - 24),
-        y: -20,
-        w: 18 + Math.random() * 18,
-        h: 18 + Math.random() * 28,
-        speed: 3 + Math.random() * 2.4
-      });
-    }
+[['pointerdown',true],['pointerup',false],['pointerleave',false],['pointercancel',false]].forEach(([evt,state])=>{
+  if(moveLeftBtn) moveLeftBtn.addEventListener(evt,e=>{ e.preventDefault(); if(arcade.active==='ufo') arcade.controls.left=state; });
+  if(moveRightBtn) moveRightBtn.addEventListener(evt,e=>{ e.preventDefault(); if(arcade.active==='ufo') arcade.controls.right=state; });
+});
 
-    obstacles.forEach(o => {
-      o.y += o.speed;
-      const hit =
-        player.x < o.x + o.w &&
-        player.x + player.w > o.x &&
-        player.y < o.y + o.h &&
-        player.y + player.h > o.y;
-      if (hit) gameOver = true;
-    });
+updateGameLanguageUI();
 
-    obstacles = obstacles.filter(o => {
-      if (o.y > canvas.height + 30) {
-        score++;
-        return false;
-      }
-      return true;
-    });
-
-    render();
-  }
-
-  render();
-  gameInterval = setInterval(tick, 40);
-}
 </script>
 </body>
 </html>
