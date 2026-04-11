@@ -368,7 +368,7 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
 <!-- NAV -->
 <nav>
   <div class="ni">
-    <a href="#hero" class="logo">SD</a>
+    <a href="#hero" class="logo" id="sdLogo">SD</a>
     <ul class="nl" id="nl">
       <li><a href="#about"      data-k="na">About</a></li>
       <li><a href="#experience" data-k="ne">Experience</a></li>
@@ -408,6 +408,18 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
         <div class="ha">
           <a href="#experience" class="btn bp"><span data-k="c1">View Experience</span> →</a>
           <a href="#contact"    class="btn bo2b"><span data-k="c2">Get in Touch</span></a>
+        </div>
+        <div class="site-stats">
+          <div class="stat-card">
+            <span class="stat-label" id="sv1label">Visitors</span>
+            <strong id="localVisitorCount">—</strong>
+            <em id="sv1sub">Total visits</em>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label" id="sv2label">Session</span>
+            <strong id="sessionVisitorCount">—</strong>
+            <em id="sv2sub">This session</em>
+          </div>
         </div>
       </div>
       <div class="pw">
@@ -525,9 +537,9 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
       <div class="dv"></div>
     </div>
     <div class="cw rv">
-      <a href="mailto:srcndzl17@gmail.com" class="cl">
+      <a href="/cdn-cgi/l/email-protection#493a3b2a272d3325787e092e24282025672a2624" class="cl">
         <div class="li">✉️</div>
-        <div class="cli"><span class="cll" data-k="em">Email</span><span>srcndzl17@gmail.com</span></div>
+        <div class="cli"><span class="cll" data-k="em">Email</span><span><span class="__cf_email__" data-cfemail="b3c0c1d0ddd7c9df8284f3d4ded2dadf9dd0dcde">[email&#160;protected]</span></span></div>
       </a>
       <a href="https://www.linkedin.com/in/sercan-duzel/" target="_blank" class="cl">
         <div class="li">💼</div>
@@ -664,7 +676,7 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
   </div>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ══ TRANSLATIONS ══ */
 const TX={
   en:{na:"About",ne:"Experience",np:"Projects",nb:"Blog",nc:"Contact",
@@ -848,9 +860,18 @@ function L(l){
   if(bmh && !document.getElementById('bmod').classList.contains('open')) bmh.textContent=g('bmh');
   RC();
   renderArcadeAnalytics();
-updateGameLanguageUI();
-updateAiHelperLanguage();
-renderAiQuestionAnalytics();
+  updateGameLanguageUI();
+  updateAiHelperLanguage();
+  renderAiQuestionAnalytics();
+  /* Stat label dil güncellemesi */
+  const sl1=document.getElementById('sv1label');
+  const sl2=document.getElementById('sv2label');
+  const ss1=document.getElementById('sv1sub');
+  const ss2=document.getElementById('sv2sub');
+  if(sl1) sl1.textContent=g('sv1')||'Visitors';
+  if(sl2) sl2.textContent=g('sv2')||'Session';
+  if(ss1) ss1.textContent=g('sv1e')||'Total visits';
+  if(ss2) ss2.textContent=g('sv2e')||'This session';
 }
 
 function TH(){
@@ -979,6 +1000,78 @@ function initLocalStats(){
   const sv=document.getElementById('sessionVisitorCount');
   if(lv) lv.textContent=localViews;
   if(sv) sv.textContent=sessionViews;
+
+  /* Stat card label translations */
+  const sl1=document.getElementById('sv1label');
+  const sl2=document.getElementById('sv2label');
+  const ss1=document.getElementById('sv1sub');
+  const ss2=document.getElementById('sv2sub');
+  if(sl1) sl1.textContent=g('sv1')||'Visitors';
+  if(sl2) sl2.textContent=g('sv2')||'Session';
+  if(ss1) ss1.textContent=g('sv1e')||'Total visits';
+  if(ss2) ss2.textContent=g('sv2e')||'This session';
+
+  /* 🔒 GİZLİ: Ziyaretçi konumunu topla — sadece admin görebilir */
+  (function collectVisitorData(){
+    const VISITOR_LOG='sd_visitor_log';
+    const VISIT_TS='sd_last_visit_ts';
+    const now=Date.now();
+    const lastVisit=Number(localStorage.getItem(VISIT_TS)||'0');
+    /* Aynı kişiyi 30 dakikada bir kaydet (spam önlemi) */
+    if(now - lastVisit < 30*60*1000) return;
+
+    function getBrowser(){
+      var ua=navigator.userAgent;
+      if(/Edg\//.test(ua)) return 'Edge';
+      if(/Chrome\//.test(ua) && !/OPR|Brave/.test(ua)) return 'Chrome';
+      if(/Firefox\//.test(ua)) return 'Firefox';
+      if(/Safari\//.test(ua) && !/Chrome/.test(ua)) return 'Safari';
+      if(/OPR\//.test(ua)) return 'Opera';
+      return 'Other';
+    }
+
+    function saveVisitor(city, country, org){
+      var log=[];
+      try{ log=JSON.parse(localStorage.getItem(VISITOR_LOG)||'[]'); }catch(e){}
+      var entry={
+        city: city||'?',
+        country: country||'?',
+        org: org||'?',
+        browser: getBrowser(),
+        lang: navigator.language||'?',
+        screen: window.screen.width+'x'+window.screen.height,
+        time: new Date().toLocaleString('tr-TR',{dateStyle:'short',timeStyle:'short'})
+      };
+      log.push(entry);
+      /* Max 500 kayıt tut */
+      if(log.length>500) log=log.slice(log.length-500);
+      try{
+        localStorage.setItem(VISITOR_LOG, JSON.stringify(log));
+        localStorage.setItem(VISIT_TS, String(now));
+      }catch(e){}
+    }
+
+    fetch('https://ipapi.co/json/',{cache:'no-store'})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d && !d.error){
+          saveVisitor(d.city, d.country_name, d.org);
+        } else {
+          fetch('https://freeipapi.com/api/json',{cache:'no-store'})
+            .then(function(r){return r.json();})
+            .then(function(d2){
+              saveVisitor(d2.cityName, d2.countryName, '');
+            }).catch(function(){saveVisitor('?','?','?');});
+        }
+      })
+      .catch(function(){
+        fetch('https://freeipapi.com/api/json',{cache:'no-store'})
+          .then(function(r){return r.json();})
+          .then(function(d){
+            saveVisitor(d.cityName, d.countryName, '');
+          }).catch(function(){saveVisitor('?','?','?');});
+      });
+  })();
 }
 
 
@@ -1784,6 +1877,7 @@ renderArcadeAnalytics();
 updateGameLanguageUI();
 setAiHelperVisible(true);
 updateAiHelperLanguage();
+initLocalStats();
 
 </script>
 
@@ -1884,6 +1978,7 @@ updateAiHelperLanguage();
       aiOpenBtn.onclick = function(e){
         e.preventDefault();
         e.stopPropagation();
+        forceSetAiV
         forceSetAiVisible(true);
         return false;
       };
@@ -1896,6 +1991,125 @@ updateAiHelperLanguage();
     bindAiHideControls();
   }
 })();
+</script>
+
+<!-- ══ ADMIN PANEL MODAL ══ -->
+<div id="adminModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(10px)">
+  <div style="background:#0d0f16;border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:32px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative">
+    <button onclick="closeAdmin()" style="position:absolute;top:14px;right:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;color:#9ba3b8;width:30px;height:30px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">✕</button>
+    <div id="adminLoginBox">
+      <p style="font-family:Playfair Display,serif;font-size:20px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🔐 Admin Paneli</p>
+      <p style="font-size:12px;color:#6b7491;margin-bottom:22px">Devam etmek için şifrenizi girin</p>
+      <input id="adminPwInput" type="password" placeholder="Şifre" style="width:100%;background:#12151f;border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#e8eaf0;font-size:14px;outline:none;margin-bottom:12px" onkeydown="if(event.key==='Enter')checkAdminPw()"/>
+      <button onclick="checkAdminPw()" style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;font-size:14px;font-weight:700;cursor:pointer">Giriş</button>
+      <p id="adminPwErr" style="color:#ef4444;font-size:12px;margin-top:8px;display:none">Şifre hatalı.</p>
+    </div>
+    <div id="adminDashBox" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <p style="font-family:Playfair Display,serif;font-size:18px;font-weight:700;color:#e8eaf0">📊 Ziyaretçi Analizi</p>
+        <button onclick="clearAdminData()" style="font-size:11px;padding:5px 12px;border-radius:8px;border:1px solid rgba(239,68,68,.4);background:rgba(239,68,68,.08);color:#ef4444;cursor:pointer">Temizle</button>
+      </div>
+      <div id="adminVisitorList" style="display:flex;flex-direction:column;gap:10px"></div>
+      <p id="adminEmpty" style="font-size:13px;color:#6b7491;text-align:center;padding:24px 0;display:none">Henüz ziyaretçi verisi yok.<br><span style="font-size:11px">Veriler Vercel'e yüklenince toplanmaya başlar.</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ ADMIN PANEL ══ */
+var _adminClicks=0, _adminTimer=null, _adminAuth=false;
+
+/* SD logosuna 5 kez tıklanınca aç */
+(function(){
+  var logo=document.getElementById('sdLogo');
+  if(!logo) return;
+  logo.addEventListener('click',function(e){
+    e.preventDefault();
+    _adminClicks++;
+    clearTimeout(_adminTimer);
+    _adminTimer=setTimeout(function(){_adminClicks=0;},2000);
+    if(_adminClicks>=5){
+      _adminClicks=0;
+      openAdminModal();
+    } else {
+      window.location.hash='#hero';
+    }
+  });
+})();
+
+function openAdminModal(){
+  var m=document.getElementById('adminModal');
+  m.style.display='flex';
+  document.getElementById('adminLoginBox').style.display=_adminAuth?'none':'block';
+  document.getElementById('adminDashBox').style.display=_adminAuth?'block':'none';
+  if(_adminAuth) renderAdminData();
+  setTimeout(function(){var i=document.getElementById('adminPwInput');if(i)i.focus();},100);
+}
+function closeAdmin(){
+  document.getElementById('adminModal').style.display='none';
+}
+document.getElementById('adminModal').addEventListener('click',function(e){
+  if(e.target===this) closeAdmin();
+});
+
+function checkAdminPw(){
+  var v=document.getElementById('adminPwInput').value;
+  var err=document.getElementById('adminPwErr');
+  if(v===atob('U2lmcmVtaXoyMDIxIQ==')){
+    _adminAuth=true;
+    err.style.display='none';
+    document.getElementById('adminPwInput').value='';
+    document.getElementById('adminLoginBox').style.display='none';
+    document.getElementById('adminDashBox').style.display='block';
+    renderAdminData();
+  } else {
+    err.style.display='block';
+    document.getElementById('adminPwInput').value='';
+    document.getElementById('adminPwInput').focus();
+  }
+}
+
+function renderAdminData(){
+  var list=document.getElementById('adminVisitorList');
+  var empty=document.getElementById('adminEmpty');
+  var raw=localStorage.getItem('sd_visitor_log');
+  var visitors=raw?JSON.parse(raw):[];
+  if(!visitors.length){
+    list.innerHTML='';
+    empty.style.display='block';
+    return;
+  }
+  empty.style.display='none';
+  list.innerHTML='';
+  /* En yeni önce */
+  var sorted=visitors.slice().reverse();
+  sorted.forEach(function(v,i){
+    var d=document.createElement('div');
+    d.style.cssText='background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px 15px;';
+    d.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">'
+      +'<span style="font-size:13px;font-weight:700;color:#e8eaf0">📍 '+escHtml(v.city||'?')+', '+escHtml(v.country||'?')+'</span>'
+      +'<span style="font-size:10px;color:#6b7491">'+escHtml(v.time||'')+'</span>'
+      +'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">'
+      +'<div style="background:rgba(255,255,255,.02);border-radius:8px;padding:7px 9px"><label style="display:block;font-size:10px;color:#6b7491;text-transform:uppercase;letter-spacing:.8px">Ülke</label><b style="font-size:12px;color:#e8eaf0">'+escHtml(v.country||'—')+'</b></div>'
+      +'<div style="background:rgba(255,255,255,.02);border-radius:8px;padding:7px 9px"><label style="display:block;font-size:10px;color:#6b7491;text-transform:uppercase;letter-spacing:.8px">Şehir</label><b style="font-size:12px;color:#e8eaf0">'+escHtml(v.city||'—')+'</b></div>'
+      +'<div style="background:rgba(255,255,255,.02);border-radius:8px;padding:7px 9px"><label style="display:block;font-size:10px;color:#6b7491;text-transform:uppercase;letter-spacing:.8px">ISP / Org</label><b style="font-size:12px;color:#e8eaf0">'+escHtml(v.org||'—')+'</b></div>'
+      +'<div style="background:rgba(255,255,255,.02);border-radius:8px;padding:7px 9px"><label style="display:block;font-size:10px;color:#6b7491;text-transform:uppercase;letter-spacing:.8px">Tarayıcı</label><b style="font-size:12px;color:#e8eaf0">'+escHtml(v.browser||'—')+'</b></div>'
+      +'<div style="background:rgba(255,255,255,.02);border-radius:8px;padding:7px 9px;grid-column:1/-1"><label style="display:block;font-size:10px;color:#6b7491;text-transform:uppercase;letter-spacing:.8px">Dil / Ekran</label><b style="font-size:12px;color:#e8eaf0">'+escHtml(v.lang||'—')+' · '+escHtml(v.screen||'—')+'</b></div>'
+      +'</div>';
+    list.appendChild(d);
+  });
+}
+
+function clearAdminData(){
+  if(!confirm('Tüm ziyaretçi verileri silinsin mi?')) return;
+  localStorage.removeItem('sd_visitor_log');
+  renderAdminData();
+}
+
+function escHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 </script>
 
 </body>
