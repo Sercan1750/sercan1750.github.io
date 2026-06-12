@@ -574,7 +574,7 @@ footer{border-top:1px solid var(--bo);padding:28px 24px;position:relative;z-inde
     <div class="ai-robot">🤖</div>
     <div class="ai-helper-text">
       <strong id="aiHelperTitle">Ask me a question for AI</strong>
-      <span id="aiHelperSubtext">Your question is saved locally.</span>
+      <span id="aiHelperSubtext">Your question will be sent to me by email.</span>
     </div>
   </div>
   <form id="aiQuestionForm" class="ai-helper-form">
@@ -762,7 +762,7 @@ function getAiLangPack(){
   const packs={
     en:{
       title:'Ask me a question for AI',
-      sub:'Your question is saved locally.',
+      sub:'Your question will be sent to me by email.',
       ph:'Ask something about me, projects, or this site...',
       send:'Send',
       response:'Ask a question and I will log it here. You will see a note saying I will review it and get back to you soon.',
@@ -784,7 +784,7 @@ function getAiLangPack(){
     },
     de:{
       title:'Stell mir eine Frage für KI',
-      sub:'Deine Frage wird lokal im Browser gespeichert.',
+      sub:'Deine Frage wird mir per E-Mail gesendet.',
       ph:'Frage etwas über mich, meine Projekte oder diese Website...',
       send:'Senden',
       response:'Stelle eine Frage; ich speichere sie hier. Ich prüfe sie bald und informiere dich.',
@@ -2110,6 +2110,83 @@ function clearAdminData(){
 function escHtml(s){
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+</script>
+
+
+<script>
+/* MAIL PATCH: Ask AI questions -> email via Formspree
+   1) Create a Formspree form
+   2) Replace https://formspree.io/f/xnjygoel with your endpoint, e.g. https://formspree.io/f/abcdwxyz
+   3) Commit index.html to GitHub. Vercel will deploy automatically.
+*/
+(function(){
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xnjygoel';
+
+  function currentLangPack(){
+    if (typeof getAiLangPack === 'function') return getAiLangPack();
+    return {
+      saved: 'Thanks. Your question has been sent.',
+      empty: 'Please write a question first.'
+    };
+  }
+
+  async function sendQuestionByEmail(question){
+    if (!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes('PASTE_FORMSPREE')) {
+      console.warn('Formspree endpoint is not configured yet.');
+      return { skipped:true };
+    }
+
+    const payload = {
+      subject: 'New Ask AI question from sercanduzel.com',
+      question: question,
+      page: window.location.href,
+      language: navigator.language || '',
+      userAgent: navigator.userAgent || '',
+      createdAt: new Date().toISOString()
+    };
+
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error('Formspree request failed: ' + res.status);
+    return { ok:true };
+  }
+
+  document.addEventListener('submit', function(e){
+    const form = e.target;
+    if (!form || form.id !== 'aiQuestionForm') return;
+
+    const input = document.getElementById('aiQuestionInput');
+    const response = document.getElementById('aiQuestionResponse');
+    const question = (input && input.value ? input.value : '').trim();
+
+    if (!question) return;
+
+    /* Do not block your current local-save flow. Send email in the background. */
+    sendQuestionByEmail(question)
+      .then(function(result){
+        if (response && !result.skipped) {
+          response.dataset.userSet = '1';
+          response.textContent = currentLangPack().saved || 'Thanks. Your question has been sent.';
+        }
+      })
+      .catch(function(err){
+        console.error('Ask AI email notification error:', err);
+        if (response) {
+          response.dataset.userSet = '1';
+          response.textContent = 'Your question was saved locally, but email notification could not be sent right now.';
+        }
+      });
+  }, true);
+
+  window.sendQuestionByEmail = sendQuestionByEmail;
+})();
 </script>
 
 </body>
